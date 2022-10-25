@@ -18,29 +18,23 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="背景一切源于同一份代码在开发机（云主机）中和测试环境（k8s容器）中运行的结果相关很大。如下图：左边是云主机，右边是优化前的 k8s 容器。  是何原因导致？刚开始找我查这个问题时也是一脸的懞。先说下我的怀疑路径：  代码有问题（新开发的框架）； 环境配置有问题； 引用的包有问题； OPCache 配置有问题； ……  怀疑的过程就是一一验证的过程，本文将一点一点的介绍我使用哪些工具，如何验证等等">
+    <meta name="description" content="删除 MySQL 表中重复行两种思路：  重建表 删除重复行  重建表重建表使用 INSERT INTO ... SELECT ...语句。具体流程则是：  创建新表； INSERT INTO  … SELECT …； 删除老表并重全名新表为老表名字。  所以将核心转化成了步骤 2 中如何去重。这里有两种：SELECT DISTINCT 和 GROUP BY。 DISTINCT12INSERT I">
 <meta property="og:type" content="article">
-<meta property="og:title" content="折磨人的 OPCache">
-<meta property="og:url" content="https://blog.isnap.cn/2022/04/13/%E6%8A%98%E7%A3%A8%E4%BA%BA%E7%9A%84-OPCache/index.html">
+<meta property="og:title" content="一句话笔记-20221024">
+<meta property="og:url" content="https://blog.isnap.cn/2022/10/24/weekly/20221024/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="背景一切源于同一份代码在开发机（云主机）中和测试环境（k8s容器）中运行的结果相关很大。如下图：左边是云主机，右边是优化前的 k8s 容器。  是何原因导致？刚开始找我查这个问题时也是一脸的懞。先说下我的怀疑路径：  代码有问题（新开发的框架）； 环境配置有问题； 引用的包有问题； OPCache 配置有问题； ……  怀疑的过程就是一一验证的过程，本文将一点一点的介绍我使用哪些工具，如何验证等等">
+<meta property="og:description" content="删除 MySQL 表中重复行两种思路：  重建表 删除重复行  重建表重建表使用 INSERT INTO ... SELECT ...语句。具体流程则是：  创建新表； INSERT INTO  … SELECT …； 删除老表并重全名新表为老表名字。  所以将核心转化成了步骤 2 中如何去重。这里有两种：SELECT DISTINCT 和 GROUP BY。 DISTINCT12INSERT I">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220413162904064.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220413180420381.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220413180942219.png">
-<meta property="article:published_time" content="2022-04-13T08:21:22.000Z">
-<meta property="article:modified_time" content="2022-10-06T04:23:21.669Z">
+<meta property="article:published_time" content="2022-10-24T02:24:32.000Z">
+<meta property="article:modified_time" content="2022-10-25T00:38:23.774Z">
 <meta property="article:author" content="三岁于辛">
-<meta property="article:tag" content="PHP">
-<meta property="article:tag" content="OPCache">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20220413162904064.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>折磨人的 OPCache - 三岁于辛博客</title>
+  <title>一句话笔记-20221024 - 三岁于辛博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +221,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="折磨人的 OPCache"></span>
+            <span id="subtitle" data-typed-text="一句话笔记-20221024"></span>
           
         </div>
 
@@ -238,8 +232,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-04-13 16:21" pubdate>
-          2022年4月13日 下午
+        <time datetime="2022-10-24 10:24" pubdate>
+          2022年10月24日 上午
         </time>
       </span>
     
@@ -250,7 +244,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          589 字
         
       </span>
     
@@ -261,7 +255,7 @@
         
         
         
-          23 分钟
+          5 分钟
         
       </span>
     
@@ -307,55 +301,37 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">折磨人的 OPCache</h1>
+            <h1 style="display: none">一句话笔记-20221024</h1>
             
             <div class="markdown-body">
               
-              <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>一切源于同一份代码在开发机（云主机）中和测试环境（k8s容器）中运行的结果相关很大。如下图：左边是云主机，右边是优化前的 k8s 容器。</p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20220413162904064.png" srcset="/img/loading.gif" lazyload alt="image-20220413162904064"></p>
-<p><strong>是何原因导致？</strong>刚开始找我查这个问题时也是一脸的懞。先说下我的怀疑路径：</p>
+              <h2 id="删除-MySQL-表中重复行"><a href="#删除-MySQL-表中重复行" class="headerlink" title="删除 MySQL 表中重复行"></a>删除 MySQL 表中重复行</h2><p>两种思路：</p>
 <ul>
-<li>代码有问题（新开发的框架）；</li>
-<li>环境配置有问题；</li>
-<li>引用的包有问题；</li>
-<li>OPCache 配置有问题；</li>
-<li>……</li>
+<li>重建表</li>
+<li>删除重复行</li>
 </ul>
-<p>怀疑的过程就是一一验证的过程，本文将一点一点的介绍我使用哪些工具，如何验证等等！</p>
-<span id="more"></span>
-
-<h2 id="小心求证"><a href="#小心求证" class="headerlink" title="小心求证"></a>小心求证</h2><h3 id="框架已较优秀"><a href="#框架已较优秀" class="headerlink" title="框架已较优秀"></a>框架已较优秀</h3><p>本司的框架是基于 Lumen8 进行迭代的，优化的点是：</p>
+<h3 id="重建表"><a href="#重建表" class="headerlink" title="重建表"></a>重建表</h3><p>重建表使用 <code>INSERT INTO ... SELECT ...</code>语句。具体流程则是：</p>
 <ol>
-<li>废弃了 .env 文件，因为每次请求会读取 .env 内容然后解析，这操作过程是有 I&#x2F;O 过程的，此优化是本人在之前推进完成（后续会推出相关内容）；</li>
-<li>路由的优化。</li>
+<li>创建新表；</li>
+<li>INSERT INTO  … SELECT …；</li>
+<li>删除老表并重全名新表为老表名字。</li>
 </ol>
-<p>刚开始听说框架是新开发的，自然也就怀疑相关调整是否有误？于是本人就在开发环境搭建了性能分析的平台 <code>tideway_xhprof + xhgui</code> 来一探究竟。起初的结果也是一个乌龙。因为分析后出现了大量的 <code>Composer\Autoload\includeFile@1</code> 及相关错误，怀疑了下是不是因为框架的规范不完善导致的 OPCache 失效。耽误了一点时间才想起，本人开发环境是为了适配新的框架对 php 版本的要求，重新装的新版本，OPCache 就没打开，开启后结果就达到上图左侧效果了。（不够严谨的作者，该批！）</p>
-<h3 id="环境已成模板"><a href="#环境已成模板" class="headerlink" title="环境已成模板"></a>环境已成模板</h3><p>框架不是问题，接下来的怀疑点就是环境上了。通过 <code>php -i</code> and <code>php -m</code> 等命令对环境配置做了很多确认，毫无收获。甚至把新、老版本的代码放一起进行压测比较。老版本的代码是没有任何问题的。说明不是环境问题了。</p>
-<p>接下的时间又进行了很多其它的验证，均无收获！</p>
-<h3 id="锁定-OPCache"><a href="#锁定-OPCache" class="headerlink" title="锁定 OPCache"></a>锁定 OPCache</h3><p>因为在测试环境的结果就与上图右侧结果一致（不好在测试环境搭建性能分析平台），所以大胆的猜测了下是 OPCache 未生效。所以开始时用了入侵式的方案，在入口处增加了 <code>var_dump(opcache_get_status());die;</code> 代码进行对比，发现测试环境的结果中 scripts 一项未出现任何开源的包，只出现了业务代码与内部包。多次调整代码，发现入侵式的 OPCache 信息查阅很不友好。幸亏马上就查到 <code>CacheTool</code> 这一非入侵式的工具，为后续的排查带来质的飞越。</p>
-<img src="//blog.isnap.cn/cdnimg/image-20220413180420381.png" srcset="/img/loading.gif" lazyload alt="image-20220413180420381" style="zoom:50%;" />
+<p>所以将核心转化成了步骤 2 中如何<strong>去重</strong>。这里有两种：<code>SELECT DISTINCT</code> 和 <code>GROUP BY</code>。</p>
+<h4 id="DISTINCT"><a href="#DISTINCT" class="headerlink" title="DISTINCT"></a>DISTINCT</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> xxx_copy (name, email)<br>    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> name, email <span class="hljs-keyword">FROM</span> xxx;<br></code></pre></td></tr></table></figure>
 
-<p>通过在两个环境运行如下命令非常确定的是非私有包都未被加载到 cache 中。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">cvm</span> <br>php cachetool.phar opcache:status:scripts --fcgi=127.0.0.1:9000 | grep illuminate<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">pod container</span><br>php cachetool.phar opcache:status:scripts --fcgi=127.0.0.1:9000<br></code></pre></td></tr></table></figure>
+<h4 id="GROUP-BY"><a href="#GROUP-BY" class="headerlink" title="GROUP BY"></a>GROUP BY</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> xxx_copy (name, email)<br>    <span class="hljs-keyword">SELECT</span> name, email <span class="hljs-keyword">FROM</span> xxx <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> name, email;<br></code></pre></td></tr></table></figure>
 
-<img src="//blog.isnap.cn/cdnimg/image-20220413180942219.png" srcset="/img/loading.gif" lazyload alt="image-20220413180942219" style="zoom:50%;" />
-
-<p>那么，到此为止，一切的问题就变成了<strong>为什么 OPCache 在容器中对开源包不生效的问题了</strong>？</p>
-<h3 id="拨开云雾见真经"><a href="#拨开云雾见真经" class="headerlink" title="拨开云雾见真经"></a>拨开云雾见真经</h3><p>在确定了 OPCache 不生效只针对开源项目的包，还折腾了很久……</p>
-<p>后来一个无意间的小操作发现了问题所在，在怀疑是否文件有问题时 <code>ls -al </code> 了下文件，发现居然是 <em>2022 年 9 月 22</em> 一个未来时间。虽然没有第一时间去查阅为啥都以 OPCache 对未来时间不生效，但是为了快速确定是否有影响，本人修改文件的时间再次验证：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">touch ./vendor/illuminate/database/DatabaseServiceProvider.php<br></code></pre></td></tr></table></figure>
-
-<p>修改完时间后再次执行代码，发现已经能通过 cachetool 看到相应的缓存脚本了。那接下来就是验证结论的时刻。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">find ./* -type f -exec touch &#123;&#125; \; # 修改完所有文件的时间<br></code></pre></td></tr></table></figure>
-
-<p>再次运行压测，然后就一切正常了。那接下来问题就变成了两个：<strong>运维确定因啥时间会变成未来时间？</strong> &amp; <strong>OPCache 使用哪个时间及怎么判断时间了？</strong></p>
-<p>针对时间问题，本人翻阅了下 php 源码中 OPCache 相关代码，可以确定是使用了 st_mtime。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 调用</span><br><span class="hljs-type">accel_time_t</span> <span class="hljs-title function_">zend_get_file_handle_timestamp</span><span class="hljs-params">(zend_file_handle *file_handle, <span class="hljs-type">size_t</span> *size)</span><br>&#123;<br>  <span class="hljs-comment">// ...</span><br>  zend_fstat(fileno(file_handle-&gt;handle.fp), &amp;statbuf)<br>  <span class="hljs-comment">// ...</span><br>  <span class="hljs-keyword">return</span> statbuf.st_mtime;<br>&#125;<br><span class="hljs-comment">// 依赖</span><br><span class="hljs-meta"># <span class="hljs-keyword">define</span> zend_fstat fstat <span class="hljs-comment">// 非 win 系统 </span></span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">stat</span> &#123;</span><br>	<span class="hljs-comment">// ...</span><br>  <span class="hljs-type">time_t</span>    st_mtime;   <span class="hljs-comment">/* time of last modification */</span><br>&#125;;<br><span class="hljs-comment">// 验证</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">validate_timestamp_and_record</span><span class="hljs-params">(zend_persistent_script *persistent_script, zend_file_handle *file_handle)</span><br>&#123;<br>	<span class="hljs-keyword">if</span> (persistent_script-&gt;timestamp == <span class="hljs-number">0</span>) &#123;<br>		<span class="hljs-keyword">return</span> SUCCESS; <span class="hljs-comment">/* Don&#x27;t check timestamps of preloaded scripts */</span><br>	&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ZCG(accel_directives).revalidate_freq &amp;&amp;<br>      <span class="hljs-comment">// 验证时间与请求时间对比，理解上此处一直是成功状态，所以不会进行缓存</span><br>	    persistent_script-&gt;dynamic_members.revalidate &gt;= ZCG(request_time)) &#123;<br>		<span class="hljs-keyword">return</span> SUCCESS;<br>	&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (do_validate_timestamps(persistent_script, file_handle) == FAILURE) &#123;<br>		<span class="hljs-keyword">return</span> FAILURE;<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 验证时间是上一次验证时间 + 间隔时间</span><br>		persistent_script-&gt;dynamic_members.revalidate = ZCG(request_time) + ZCG(accel_directives).revalidate_freq;<br>		<span class="hljs-keyword">return</span> SUCCESS;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://learnku.com/articles/29967">Tideways、xhprof 和 xhgui 打造 PHP 非侵入式监控平台</a></li>
-<li><a target="_blank" rel="noopener" href="https://phpmianshi.com/?id=261">php中opcache注意事项以及调优</a></li>
+<h3 id="删除重复行"><a href="#删除重复行" class="headerlink" title="删除重复行"></a>删除重复行</h3><p>删除重复行核心就是要找出重复的行：</p>
+<ul>
+<li>使用 <code>INNER JOIN</code>;</li>
+<li>MySQL 8 以后还可使用 <code>row_number() over (partition by ...) </code></li>
 </ul>
+<h4 id="INNER-JOIN"><a href="#INNER-JOIN" class="headerlink" title="INNER JOIN"></a>INNER JOIN</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">delete</span> <span class="hljs-keyword">from</span> xxx <span class="hljs-keyword">where</span> id <span class="hljs-keyword">in</span> (<span class="hljs-keyword">select</span> t1.id <span class="hljs-keyword">from</span> xxx t1 <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> xxx t2<br>    <span class="hljs-keyword">WHERE</span> t1.id <span class="hljs-operator">&lt;</span> t2.id <span class="hljs-keyword">AND</span> t1.name <span class="hljs-operator">=</span> t2.name);<br></code></pre></td></tr></table></figure>
+
+<h4 id="ROW-NUMBER"><a href="#ROW-NUMBER" class="headerlink" title="ROW_NUMBER"></a>ROW_NUMBER</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">delete</span> <span class="hljs-keyword">from</span> xxx <span class="hljs-keyword">where</span> id <span class="hljs-keyword">in</span> (<span class="hljs-keyword">select</span> id, name, <span class="hljs-built_in">row_number</span>() <span class="hljs-keyword">over</span> (<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> name <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> id)<br>	<span class="hljs-keyword">from</span> xxx);<br></code></pre></td></tr></table></figure>
+
+
+
 
               
             </div>
@@ -373,12 +349,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  <a href="/categories/%E6%97%A5%E8%AE%B0/" class="category-chain-item">日记</a>
   
   
     <span>></span>
     
-  <a href="/categories/%E5%90%8E%E7%AB%AF/PHP/" class="category-chain-item">PHP</a>
+  <a href="/categories/%E6%97%A5%E8%AE%B0/%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/" class="category-chain-item">工作记录</a>
   
   
 
@@ -392,43 +368,11 @@
     </div>
   
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/PHP/">#PHP</a>
-      
-        <a href="/tags/OPCache/">#OPCache</a>
-      
-    </div>
-  
 </div>
 
 
               
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/04/15/Moosefs-%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E7%9B%98/" title="Moosefs 删除数据盘">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Moosefs 删除数据盘</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/03/07/ELK%E7%94%A9%E9%94%85%E8%AE%B0/" title="ELK甩锅记">
-                        <span class="hidden-mobile">ELK甩锅记</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
               
             </div>
 
@@ -443,7 +387,7 @@
         var options = Object.assign(
           {"clientID":"0dba134382ca5771d6e6","clientSecret":"cd66d55578bdbe8189866681ce49e75794159b9f","repo":"chaffz.github.io","owner":"chaffz","admin":["chaffz"],"language":"zh-CN","labels":["gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":true,"createIssueManually":false,"proxy":"https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token"},
           {
-            id: '01a65128ca60ded725c368af402a4764'
+            id: '0f1054e16d02efdf11dc8860712fe768'
           }
         )
         var gitalk = new Gitalk(options);
