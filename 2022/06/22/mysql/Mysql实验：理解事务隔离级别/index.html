@@ -21,7 +21,7 @@
     <meta name="description" content="以下为文稿：具体可见 B站视频 实验理解 Mysql 事务隔离级别欢迎关注：三岁于辛 今天的实验课开始前，我开启了三个终端连接我的数据库实例：第一个使用的库是 information_schema，它提供了访问数据库元数据的方式。另外两个使用的库是 awesome，也就是我们接下来要操作的数据库实例。 我们先看下 information_schema 中的表，它有很多，这里先埋个坑，后面有空都一一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql实验：理解事务隔离级别">
-<meta property="og:url" content="https://blog.isnap.cn/2022/06/22/mysql/Mysql%E5%AE%9E%E9%AA%8C%20%EF%BC%9A%E7%90%86%E8%A7%A3%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/index.html">
+<meta property="og:url" content="https://blog.isnap.cn/2022/06/22/mysql/Mysql%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%90%86%E8%A7%A3%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
 <meta property="og:description" content="以下为文稿：具体可见 B站视频 实验理解 Mysql 事务隔离级别欢迎关注：三岁于辛 今天的实验课开始前，我开启了三个终端连接我的数据库实例：第一个使用的库是 information_schema，它提供了访问数据库元数据的方式。另外两个使用的库是 awesome，也就是我们接下来要操作的数据库实例。 我们先看下 information_schema 中的表，它有很多，这里先埋个坑，后面有空都一一">
 <meta property="og:locale" content="zh_CN">
@@ -128,6 +128,42 @@
           
           
             <li class="nav-item">
+              <a class="nav-link" href="/leetcode/">
+                <i class="iconfont icon-leetcode"></i>
+                LeetCode
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/series/">
+                <i class="iconfont icon-stack-overflow-fill"></i>
+                专题
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/weekly/">
+                <i class="iconfont icon-kakao-talk-fill"></i>
+                笔记
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 归档
@@ -155,30 +191,6 @@
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/series/">
-                <i class="iconfont icon-stack-overflow-fill"></i>
-                专题
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/weekly/">
-                <i class="iconfont icon-kakao-talk-fill"></i>
-                笔记
               </a>
             </li>
           
@@ -410,7 +422,7 @@
         var options = Object.assign(
           {"clientID":"0dba134382ca5771d6e6","clientSecret":"cd66d55578bdbe8189866681ce49e75794159b9f","repo":"chaffz.github.io","owner":"chaffz","admin":["chaffz"],"language":"zh-CN","labels":["gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":true,"createIssueManually":false,"proxy":"https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token"},
           {
-            id: '88f78690111b77703fc209bcbd975076'
+            id: '703255c7ba508e4b4d679b3eae921c4d'
           }
         )
         var gitalk = new Gitalk(options);

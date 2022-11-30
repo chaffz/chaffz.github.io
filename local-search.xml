@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Prefix Sum</title>
+    <link href="/2022/11/30/algorithm/leetcode/Prefix%20Sum/"/>
+    <url>/2022/11/30/algorithm/leetcode/Prefix%20Sum/</url>
+    
+    <content type="html"><![CDATA[<p><strong>本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此 Level 1和 Level 2 将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而 Level 3 用来帮助以顶级公司为目标的学习小伙伴。</strong></p><blockquote><p><em>本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交 。</em></p></blockquote><hr><p><a href="https://so.csdn.net/so/search?q=%E5%89%8D%E7%BC%80%E5%92%8C&spm=1001.2101.3001.7020">前缀和</a>（Prefix sum）是算法题中比较实用的一种技巧，当算法题的背景是整型数组且出现 <strong>“子数组和”</strong> 或者 <strong>“连续的子数组”</strong> 既可以考虑使用前缀和来求解会得到不错的效果。</p><h2 id="第一题：一维数组的动态和"><a href="#第一题：一维数组的动态和" class="headerlink" title="第一题：一维数组的动态和"></a>第一题：<a href="https://leetcode.cn/problems/running-sum-of-1d-array/">一维数组的动态和</a></h2><p><img src="//blog.isnap.cn/cdnimg/image-20221003195616924.png" alt="image-20221003195616924"></p><p>从题目的解释中也表达的是一个连接累加前 n 个数的过程。细心的读者可以发现它也可以被归类到动态规划题目中，因为它可以得到状态转移方程：</p><p><img src="//blog.isnap.cn/cdnimg/image-20221003202208029.png" alt="image-20221003202208029"></p><p>这其实也同样满足 Prefix Sum 的技巧。如下动图显示的是如何利用结果与数组来动态计算最终结果数组。</p><p><img src="//blog.isnap.cn/cdnimg/running-sum.gif" alt="running-sum"></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RunningSumOf1dArray</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span>[] runningSum(<span class="hljs-type">int</span>[] nums) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt; nums.length; i++) &#123;<br>            nums[i] = nums[i] + nums[i-<span class="hljs-number">1</span>];<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> nums;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="第二题：寻找数组的中心下标"><a href="#第二题：寻找数组的中心下标" class="headerlink" title="第二题：寻找数组的中心下标"></a>第二题：<a href="https://leetcode.cn/problems/find-pivot-index/">寻找数组的中心下标</a></h2><p><img src="//blog.isnap.cn/cdnimg/image-20221003202809473.png" alt="image-20221003202809473"></p><p>从题目中可知要找的是一个 idx，使得在 idx 的左边和与右边各相等。那假设左（右）边的各为 sum 的话，那么就是整个数组的和为：</p><p><img src="//blog.isnap.cn/cdnimg/image-20221003203626254.png" alt="image-20221003203626254"></p><p>然后就可以进行如下推导：</p><p><img src="//blog.isnap.cn/cdnimg/image-20221004092908211.png" alt="image-20221004092908211"></p><p>于是，如果我们先计算出总和，然后第二次循环累加时算为左值，那么右值就是上述式子了，于是就可以判断是否能找到这样的一个 idx 了。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FindPivotIndex</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">pivotIndex</span><span class="hljs-params">(<span class="hljs-type">int</span>[] nums)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">leftSum</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>, rightSum = <span class="hljs-number">0</span>;<br>        <span class="hljs-comment">// 计算总和</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> num : nums) &#123;<br>            rightSum += num;<br>        &#125;<br><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; nums.length; i++) &#123;<br>            <span class="hljs-comment">// 右值：rightSum - leftSum - nums[i]</span><br>            <span class="hljs-keyword">if</span> (leftSum == rightSum - leftSum - nums[i]) &#123;<br>                <span class="hljs-keyword">return</span> i;<br>            &#125;<br>            <span class="hljs-comment">// 左值：nums[0] ... nums[i-1]</span><br>            leftSum += nums[i];<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><hr><p><strong>代码仓库：<a href="https://github.com/chaffz/leetcode-java">https://github.com/chaffz/leetcode-java</a></strong></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>算法</category>
+      
+      <category>Prefix Sum</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>LeetCode</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>博弈论与智力题合体的动态规划算法——尼姆游戏（Nim Game）</title>
     <link href="/2022/10/06/algorithm/dynamic/%E5%8D%9A%E5%BC%88%E8%AE%BA%E4%B8%8E%E6%99%BA%E5%8A%9B%E9%A2%98%E5%90%88%E4%BD%93%E7%9A%84%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94%E5%B0%BC%E5%A7%86%E6%B8%B8%E6%88%8F%EF%BC%88Nim%20Game%EF%BC%89/"/>
     <url>/2022/10/06/algorithm/dynamic/%E5%8D%9A%E5%BC%88%E8%AE%BA%E4%B8%8E%E6%99%BA%E5%8A%9B%E9%A2%98%E5%90%88%E4%BD%93%E7%9A%84%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94%E5%B0%BC%E5%A7%86%E6%B8%B8%E6%88%8F%EF%BC%88Nim%20Game%EF%BC%89/</url>
@@ -51,7 +78,7 @@
     
     <tags>
       
-      <tag>Golang - 私有项 - unexported</tag>
+      <tag>Golang</tag>
       
     </tags>
     
@@ -88,8 +115,8 @@
   
   <entry>
     <title>Mysql实验：理解事务隔离级别</title>
-    <link href="/2022/06/22/mysql/Mysql%E5%AE%9E%E9%AA%8C%20%EF%BC%9A%E7%90%86%E8%A7%A3%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/"/>
-    <url>/2022/06/22/mysql/Mysql%E5%AE%9E%E9%AA%8C%20%EF%BC%9A%E7%90%86%E8%A7%A3%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</url>
+    <link href="/2022/06/22/mysql/Mysql%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%90%86%E8%A7%A3%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/"/>
+    <url>/2022/06/22/mysql/Mysql%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%90%86%E8%A7%A3%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</url>
     
     <content type="html"><![CDATA[<p>以下为文稿：具体可见 B站视频 <a href="https://www.bilibili.com/video/BV1ct4y1a7Ag?share_source=copy_web">实验理解 Mysql 事务隔离级别</a><br>欢迎关注：<a href="https://b23.tv/BQOEjrT">三岁于辛</a></p><p>今天的实验课开始前，我开启了三个终端连接我的数据库实例：第一个使用的库是 information_schema，它提供了访问数据库元数据的方式。另外两个使用的库是 awesome，也就是我们接下来要操作的数据库实例。</p><p>我们先看下 information_schema 中的表，它有很多，这里先埋个坑，后面有空都一一填上，今天只用到一张表作为辅助就可以了。那就是 INNODB_TRX，它提供了当前innodb引擎内每个事务的信息。我们看下它的表结构，字段很多，这里不展开，我们只用 trx_id,trx_state,trx_isolation_level 三个字段来辅助理解。先 select 下，当前它是空的。</p><p>我们回到刚才创建的另外两个 session 中，通过 begin 开启事务，然后在一个 session 中查询数据。这时我们再查看事务表中的信息，发现它已经有一条数据了，但是我们明明是开启了两个事务，为什么事务表中只有一条数据，这里可以理解为你只是告知数据库要开启事务了，但是接下来你是不是真的要操作呢？或者说你要如何操作呢？数据库是不知道的，所以只有基于你后续的行为之后数据库才知道你要做什么。这里有一个细节展开说的就是，操作对于数据事务来说，又可分为快照读和当前读的，快照读可理解为事务开始那一刻生成的内存快照，后续查询都基于那一时刻的数据，一般来说就是简单 select 时产生，就是我本例中的样子，看 trx_id 是一个很大的值，再展开的话就是视图的概念了，涉及到的内容就是 undo log + mvcc 了。这个坑后面填。而当前读就是读操作那一时刻，库里是什么样就是什么样，涉及的是磁盘+buffer 了。</p><p>接下来，我们在另一个终端也是查询数据，这时再看事务信息，已经是两条数据了，而且事务的隔离级别都是 RR 的。</p><p>好的，这时我在其中一个终端开始做更新操作后再看事务信息，发现刚才的 trx_id 已经变成了一个不大的值，这个值才可以被真正的理解为事务ID，仅仅是简单 select 操作是不会分配事务 ID 的。我们看到的超大值也是一个简单的计算值而已。我们两个 session 中各自查看数据，发现发生当前读的年龄已经是 18 了，但是快照读的数据依然是 20。确认下当前事务隔离级别都是 RR 的，所以我们可以知道 RR 级别是不会有脏读也不会有不可重复读的。</p><p>下面我们把事务提交，并把当前的事务隔离级别调整成读已经提交，也就 RC 级别。开启事务后我们查看事务表中的数据，发现已经多了一条 RC 级别的数据了。我们在非 RC 级别的 session 中把数据更新，再来看看数据是否已经被读到，这时 select 是没有变化的，但是当我们把非 RC 的 session 事务 commit 后。再看数据已经发生变化了，此次读到了 30 。这就是说在 RC 级别下是存在不可重复读的。</p><p>这时，我们把刚才提交事务的 session 隔离级别改成 read uncommitted。然后在 RC 级别的 session 中更改数据且不提交事务，我再看看另一个 session 中的数据，发现已经读到了 40 了。这就是 read uncommitted 级别下是会出现脏读的。</p><p>最后我们再来实验下幻读的情况，我们将刚才的脏读 session 改成默认的 RR 级别。然后确认我们的数据中最大的一个 ID 是 10，所以我们要查 ID 为 11 的数据肯定是不存在的。这里我在 RC 级别的 session 中插入一条 ID 为 9 的数据。在 RR 的 session 中直接查找 ID 为 11的数据是不存在的，但是当我们也想插入一条 ID 为 11 的数据时就出现了重复 key 的报错了。这就是说在 RR 级别下是存在幻读的。</p><p>今天的实验到此结束，最后总结下。</p><table><thead><tr><th>事务隔离级别</th><th>脏读</th><th>不可重复读</th><th>幻读</th></tr></thead><tbody><tr><td>Read Uncommitted</td><td>✅</td><td>✅</td><td>✅</td></tr><tr><td>Read Committed (RC)</td><td>❌</td><td>✅</td><td>✅</td></tr><tr><td>Repeatable Read (RR)</td><td>❌</td><td>❌</td><td>✅</td></tr><tr><td>Serializable</td><td>❌</td><td>❌</td><td>❌</td></tr></tbody></table>]]></content>
     
