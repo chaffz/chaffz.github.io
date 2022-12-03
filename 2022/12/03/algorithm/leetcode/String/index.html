@@ -18,31 +18,30 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此 Level 1和 Level 2 将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而 Level 3 用来帮助以顶级公司为目标的学习小伙伴。  本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交 。   前缀和（Prefix sum）是算法题中比">
+    <meta name="description" content="本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此 Level 1和 Level 2 将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而 Level 3 用来帮助以顶级公司为目标的学习小伙伴。  本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交。   第一题：同构字符串  从题目条件中可以分析出">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Prefix Sum">
-<meta property="og:url" content="https://blog.isnap.cn/2022/11/30/algorithm/leetcode/Prefix%20Sum/index.html">
+<meta property="og:title" content="String">
+<meta property="og:url" content="https://blog.isnap.cn/2022/12/03/algorithm/leetcode/String/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此 Level 1和 Level 2 将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而 Level 3 用来帮助以顶级公司为目标的学习小伙伴。  本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交 。   前缀和（Prefix sum）是算法题中比">
+<meta property="og:description" content="本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此 Level 1和 Level 2 将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而 Level 3 用来帮助以顶级公司为目标的学习小伙伴。  本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交。   第一题：同构字符串  从题目条件中可以分析出">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20221003195616924.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20221003202208029.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/running-sum.gif">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20221003202809473.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20221003203626254.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20221004092908211.png">
-<meta property="article:published_time" content="2022-11-30T11:46:17.000Z">
-<meta property="article:modified_time" content="2022-11-30T12:09:38.791Z">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20221005120313084.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20221005124808131.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20221005124847817.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20221005130259042.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/sub-str.gif">
+<meta property="article:published_time" content="2022-12-03T05:47:57.000Z">
+<meta property="article:modified_time" content="2022-12-03T05:48:49.001Z">
 <meta property="article:author" content="三岁于辛">
 <meta property="article:tag" content="LeetCode">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20221003195616924.png">
+<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20221005120313084.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Prefix Sum - 三岁于辛博客</title>
+  <title>String - 三岁于辛博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -241,7 +240,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Prefix Sum"></span>
+            <span id="subtitle" data-typed-text="String"></span>
           
         </div>
 
@@ -252,8 +251,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-30 19:46" pubdate>
-          2022年11月30日 晚上
+        <time datetime="2022-12-03 13:47" pubdate>
+          2022年12月3日 下午
         </time>
       </span>
     
@@ -264,7 +263,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          1.6k 字
         
       </span>
     
@@ -275,7 +274,7 @@
         
         
         
-          10 分钟
+          14 分钟
         
       </span>
     
@@ -321,30 +320,49 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Prefix Sum</h1>
+            <h1 style="display: none">String</h1>
             
             <div class="markdown-body">
               
               <p><strong>本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此 Level 1和 Level 2 将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而 Level 3 用来帮助以顶级公司为目标的学习小伙伴。</strong></p>
 <blockquote>
-<p><em>本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交 。</em></p>
+<p><em>本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交。</em></p>
 </blockquote>
 <hr>
-<p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%89%8D%E7%BC%80%E5%92%8C&spm=1001.2101.3001.7020">前缀和</a>（Prefix sum）是算法题中比较实用的一种技巧，当算法题的背景是整型数组且出现 <strong>“子数组和”</strong> 或者 <strong>“连续的子数组”</strong> 既可以考虑使用前缀和来求解会得到不错的效果。</p>
-<h2 id="第一题：一维数组的动态和"><a href="#第一题：一维数组的动态和" class="headerlink" title="第一题：一维数组的动态和"></a>第一题：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/running-sum-of-1d-array/">一维数组的动态和</a></h2><p><img src="//blog.isnap.cn/cdnimg/image-20221003195616924.png" srcset="/img/loading.gif" lazyload alt="image-20221003195616924"></p>
-<p>从题目的解释中也表达的是一个连接累加前 n 个数的过程。细心的读者可以发现它也可以被归类到动态规划题目中，因为它可以得到状态转移方程：</p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20221003202208029.png" srcset="/img/loading.gif" lazyload alt="image-20221003202208029"></p>
-<p>这其实也同样满足 Prefix Sum 的技巧。如下动图显示的是如何利用结果与数组来动态计算最终结果数组。</p>
-<p><img src="//blog.isnap.cn/cdnimg/running-sum.gif" srcset="/img/loading.gif" lazyload alt="running-sum"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RunningSumOf1dArray</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span>[] runningSum(<span class="hljs-type">int</span>[] nums) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt; nums.length; i++) &#123;<br>            nums[i] = nums[i] + nums[i-<span class="hljs-number">1</span>];<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> nums;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="第一题：同构字符串"><a href="#第一题：同构字符串" class="headerlink" title="第一题：同构字符串"></a>第一题：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/isomorphic-strings/">同构字符串</a></h2><img src="//blog.isnap.cn/cdnimg/image-20221005120313084.png" srcset="/img/loading.gif" lazyload alt="image-20221005120313084" style="zoom: 50%;" />
 
-<h2 id="第二题：寻找数组的中心下标"><a href="#第二题：寻找数组的中心下标" class="headerlink" title="第二题：寻找数组的中心下标"></a>第二题：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-pivot-index/">寻找数组的中心下标</a></h2><p><img src="//blog.isnap.cn/cdnimg/image-20221003202809473.png" srcset="/img/loading.gif" lazyload alt="image-20221003202809473"></p>
-<p>从题目中可知要找的是一个 idx，使得在 idx 的左边和与右边各相等。那假设左（右）边的各为 sum 的话，那么就是整个数组的和为：</p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20221003203626254.png" srcset="/img/loading.gif" lazyload alt="image-20221003203626254"></p>
-<p>然后就可以进行如下推导：</p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20221004092908211.png" srcset="/img/loading.gif" lazyload alt="image-20221004092908211"></p>
-<p>于是，如果我们先计算出总和，然后第二次循环累加时算为左值，那么右值就是上述式子了，于是就可以判断是否能找到这样的一个 idx 了。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FindPivotIndex</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">pivotIndex</span><span class="hljs-params">(<span class="hljs-type">int</span>[] nums)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">leftSum</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>, rightSum = <span class="hljs-number">0</span>;<br>        <span class="hljs-comment">// 计算总和</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> num : nums) &#123;<br>            rightSum += num;<br>        &#125;<br><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; nums.length; i++) &#123;<br>            <span class="hljs-comment">// 右值：rightSum - leftSum - nums[i]</span><br>            <span class="hljs-keyword">if</span> (leftSum == rightSum - leftSum - nums[i]) &#123;<br>                <span class="hljs-keyword">return</span> i;<br>            &#125;<br>            <span class="hljs-comment">// 左值：nums[0] ... nums[i-1]</span><br>            leftSum += nums[i];<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>从题目条件中可以分析出，该题可归为数学中的<strong>映射</strong>：</p>
+<ul>
+<li>“每个出现的字符都应当映射到另一个字符，同时不改变字符的顺序”，代表字符集合 <code>s</code> , <code>t</code> 之间是<strong>满射</strong>；</li>
+<li>“相同字符只能映射到同一个字符上，不同字符不能映射到同一个字符上”，代表字符集合 <code>s</code> , <code>t</code> 之间是<strong>单射</strong>。</li>
+</ul>
+<img src="//blog.isnap.cn/cdnimg/image-20221005124808131.png" srcset="/img/loading.gif" lazyload alt="image-20221005124808131" style="zoom:50%;" />
+
+<blockquote>
+<p>百度百科：</p>
+<p><strong>映射的不同分类是根据映射的结果进行的，从下面的三个角度进行：</strong></p>
+<p>1．根据结果的几何性质分类：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%BB%A1%E5%B0%84?fromModule=lemma_inlink">满射</a>（到上）与<strong>非满射</strong>（内的）</p>
+<p>2．根据结果的分析性质分类：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%8D%95%E5%B0%84?fromModule=lemma_inlink">单射</a>（一一的）与<strong>非单射</strong></p>
+<p>3．同时考虑几何与分析性质：<strong>满的单射</strong>（<strong>一一对应</strong>）。</p>
+</blockquote>
+<p>说到这，读者朋友肯定会说这其实就可以用 HashMap 来解答，但是小编认为，此题中还给了一个隐含条件，那就是字符范围是 ASCII 码，也就意味着使用一个 128 长度的数组（空间复杂度 O(1)）是可以替换复杂度较高的 HashMap 来解答的。</p>
+<p>那么，用一维数组如何解决一一映射且不会映射到不同字符上呢？</p>
+<img src="//blog.isnap.cn/cdnimg/image-20221005124847817.png" srcset="/img/loading.gif" lazyload alt="image-20221005124847817" style="zoom: 50%;" />
+
+<p>小编使用的方法是，<strong>根据字符的 ASCII 值找到数组中所在的下标位置，在该位置记录此字符当前在源串中出现的是第几个字符</strong>。如 <code>egg</code> 中 e 是第 1 个字符，g 是第 2 个字符，如图所示。同样的 <code>add</code> 也是一样的操作。</p>
+<ol>
+<li>此时遍历第 3 个字符 g &amp; d 时，因为 g &amp; d 此前对应的是值是 2 ，所以可继续更新出现在了第 3 个位置，更新 <code>103 =&gt; 3</code> 和 <code>100 =&gt; 3</code>；</li>
+<li>假设 <code>egg =&gt; eggg</code> ，而 <code>add =&gt; adde</code> ，此时 <code>adde </code> 中的 e 对应是初始值，而 <code>eggg</code> 中 g 对应的是 3，出现不同值，所以可判断为不同构了。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IsomorphicStrings</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isIsomorphic</span><span class="hljs-params">(String s, String t)</span> &#123;<br>        <span class="hljs-type">int</span>[] sToT = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[<span class="hljs-number">128</span>];<br>        <span class="hljs-type">int</span>[] tToS = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[<span class="hljs-number">128</span>];<br><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; s.length(); i++)&#123;<br>            <span class="hljs-type">char</span> <span class="hljs-variable">sChar</span> <span class="hljs-operator">=</span> s.charAt(i);<br>            <span class="hljs-type">char</span> <span class="hljs-variable">tChar</span> <span class="hljs-operator">=</span> t.charAt(i);<br><br>            <span class="hljs-keyword">if</span> (sToT[sChar] != tToS[tChar]) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br><br>            sToT[sChar] = i+<span class="hljs-number">1</span>;<br>            tToS[tChar] = i+<span class="hljs-number">1</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="第二题：判断子序列"><a href="#第二题：判断子序列" class="headerlink" title="第二题：判断子序列"></a>第二题：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/is-subsequence/">判断子序列</a></h2><img src="//blog.isnap.cn/cdnimg/image-20221005130259042.png" srcset="/img/loading.gif" lazyload alt="image-20221005130259042" style="zoom:50%;" />
+
+<p>分析此题，思路应该是非常明确的，<strong>长字符串中过滤多余的字符串后能得到短串</strong>即是正确。所以可利用循环比较的方法来过滤。</p>
+<img src="//blog.isnap.cn/cdnimg/sub-str.gif" srcset="/img/loading.gif" lazyload alt="sub-str" style="zoom:80%;" />
+
+<p>Gif 展示的是刚好符合的结果，如果当长字符串遍历结束，短串还未到达终点时，说明是不符合子序列条件的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IsSubsequence</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isSubsequence</span><span class="hljs-params">(String s, String t)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">sLen</span> <span class="hljs-operator">=</span> s.length();<br>        <span class="hljs-type">int</span> <span class="hljs-variable">tLen</span> <span class="hljs-operator">=</span> t.length();<br><br>        <span class="hljs-keyword">for</span> (; i &lt; tLen &amp;&amp; j &lt; sLen; i++) &#123;<br>            <span class="hljs-type">char</span> <span class="hljs-variable">cT</span> <span class="hljs-operator">=</span> t.charAt(i);<br>            <span class="hljs-type">char</span> <span class="hljs-variable">cS</span> <span class="hljs-operator">=</span> s.charAt(j);<br><br>            <span class="hljs-keyword">if</span> (cT == cS) &#123;<br>                j++;<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-type">return</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span>= sLen;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <hr>
 <p><strong>代码仓库：<a target="_blank" rel="noopener" href="https://github.com/chaffz/leetcode-java">https://github.com/chaffz/leetcode-java</a></strong></p>
@@ -370,7 +388,7 @@
   
     <span>></span>
     
-  <a href="/categories/%E7%AE%97%E6%B3%95/Prefix-Sum/" class="category-chain-item">Prefix Sum</a>
+  <a href="/categories/%E7%AE%97%E6%B3%95/String/" class="category-chain-item">String</a>
   
   
 
@@ -401,18 +419,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/12/03/algorithm/leetcode/String/" title="String">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">String</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/06/algorithm/dynamic/%E5%8D%9A%E5%BC%88%E8%AE%BA%E4%B8%8E%E6%99%BA%E5%8A%9B%E9%A2%98%E5%90%88%E4%BD%93%E7%9A%84%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94%E5%B0%BC%E5%A7%86%E6%B8%B8%E6%88%8F%EF%BC%88Nim%20Game%EF%BC%89/" title="博弈论与智力题合体的动态规划算法——尼姆游戏（Nim Game）">
-                        <span class="hidden-mobile">博弈论与智力题合体的动态规划算法——尼姆游戏（Nim Game）</span>
+                      <a href="/2022/11/30/algorithm/leetcode/Prefix%20Sum/" title="Prefix Sum">
+                        <span class="hidden-mobile">Prefix Sum</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -433,7 +445,7 @@
         var options = Object.assign(
           {"clientID":"0dba134382ca5771d6e6","clientSecret":"cd66d55578bdbe8189866681ce49e75794159b9f","repo":"chaffz.github.io","owner":"chaffz","admin":["chaffz"],"language":"zh-CN","labels":["gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":true,"createIssueManually":false,"proxy":"https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token"},
           {
-            id: 'fadfed416046df58e5e239aebd3d18a9'
+            id: '8ff8bc426131cfff0ff34555806ee70b'
           }
         )
         var gitalk = new Gitalk(options);
