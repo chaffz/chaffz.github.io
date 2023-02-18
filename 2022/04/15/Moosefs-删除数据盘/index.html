@@ -16,12 +16,12 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="MFS 缩容操作指南整体步骤指南需要记住，当文件系统中某台 chunk server 拥有某个 chunk 的唯一副本(CGI监控会把它们标记为黄色)，断开这台chunk server是不明智的。你也可以断开(或者更改)单个硬盘。此操作的步骤如下：  可在管理后台操作变更为“维护状态”。 标记这块硬盘为移除（查看”如何标记一块磁盘为移除”） 重新加载(reload)chunk server进程 等">
+    <meta name="description" content="MFS 缩容操作指南 整体步骤指南 需要记住，当文件系统中某台 chunk server 拥有某个 chunk 的唯一副本(CGI监控会把它们标记为黄色)，断开这台chunk server是不明智的。你也可以断开(或者更改)单个硬盘。此操作的步骤如下：  可在管理后台操作变更为“维护状态”。 标记这块硬盘为移除（查看”如何标记一块磁盘为移除”） 重新加载(reload)chunk server进程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Moosefs 删除数据盘">
 <meta property="og:url" content="https://blog.isnap.cn/2022/04/15/Moosefs-%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E7%9B%98/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="MFS 缩容操作指南整体步骤指南需要记住，当文件系统中某台 chunk server 拥有某个 chunk 的唯一副本(CGI监控会把它们标记为黄色)，断开这台chunk server是不明智的。你也可以断开(或者更改)单个硬盘。此操作的步骤如下：  可在管理后台操作变更为“维护状态”。 标记这块硬盘为移除（查看”如何标记一块磁盘为移除”） 重新加载(reload)chunk server进程 等">
+<meta property="og:description" content="MFS 缩容操作指南 整体步骤指南 需要记住，当文件系统中某台 chunk server 拥有某个 chunk 的唯一副本(CGI监控会把它们标记为黄色)，断开这台chunk server是不明智的。你也可以断开(或者更改)单个硬盘。此操作的步骤如下：  可在管理后台操作变更为“维护状态”。 标记这块硬盘为移除（查看”如何标记一块磁盘为移除”） 重新加载(reload)chunk server进程">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220402103846851.png">
 <meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220402104208319.png">
@@ -123,7 +123,11 @@
 
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
 
 
 <body>
@@ -329,7 +333,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          752 字
+          867 字
         
       </span>
     
@@ -340,7 +344,7 @@
         
         
         
-          7 分钟
+          8 分钟
         
       </span>
     
@@ -391,8 +395,12 @@
             
               <div class="markdown-body">
                 
-                <h1 id="MFS-缩容操作指南"><a href="#MFS-缩容操作指南" class="headerlink" title="MFS 缩容操作指南"></a>MFS 缩容操作指南</h1><h2 id="整体步骤指南"><a href="#整体步骤指南" class="headerlink" title="整体步骤指南"></a>整体步骤指南</h2><p>需要记住，当文件系统中某台 chunk server 拥有某个 chunk 的唯一副本(CGI监控会把它们标记为黄色)，断开这台chunk server是不明智的。你也可以断开(或者更改)单个硬盘。此操作的步骤如下：</p>
-<ol>
+                <h1 id="mfs-缩容操作指南">MFS 缩容操作指南</h1>
+<h2 id="整体步骤指南">整体步骤指南</h2>
+<p>需要记住，当文件系统中某台 chunk server 拥有某个 chunk
+的唯一副本(CGI监控会把它们标记为黄色)，断开这台chunk
+server是不明智的。你也可以断开(或者更改)单个硬盘。此操作的步骤如下：</p>
+<ol type="1">
 <li>可在管理后台操作变更为“维护状态”。</li>
 <li>标记这块硬盘为移除（查看”如何标记一块磁盘为移除”）</li>
 <li>重新加载(reload)chunk server进程</li>
@@ -404,25 +412,52 @@
 <li>关停服务</li>
 </ol>
 <span id="more"></span>
-<h2 id="如何标记一块磁盘为移除"><a href="#如何标记一块磁盘为移除" class="headerlink" title="如何标记一块磁盘为移除"></a>如何标记一块磁盘为移除</h2><p>当要标记chunk server上的磁盘为移除时，只需要编辑chunk server的配置文件mfshdd.cfg，在要移除的磁盘前添加”*”号，如需要移除”/mnt/hdd”时：</p>
+<h2 id="如何标记一块磁盘为移除">如何标记一块磁盘为移除</h2>
+<p>当要标记chunk server上的磁盘为移除时，只需要编辑chunk
+server的配置文件mfshdd.cfg，在要移除的磁盘前添加”*”号，如需要移除”/mnt/hdd”时：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/ mnt /</span> hda<br><span class="hljs-regexp">/ mnt /</span> hdb<br><span class="hljs-regexp">/ mnt /</span> hdc<br>*<span class="hljs-regexp">/ mnt /</span> hdd<br><span class="hljs-regexp">/ mnt /</span> hde<br></code></pre></td></tr></table></figure>
-<h2 id="测试操作记录"><a href="#测试操作记录" class="headerlink" title="测试操作记录"></a>测试操作记录</h2><p>原始 info 信息：</p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20220402103846851.png" srcset="/img/loading.gif" lazyload alt="image-20220402103846851"></p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20220402104208319.png" srcset="/img/loading.gif" lazyload alt="image-20220402104208319"></p>
+<h2 id="测试操作记录">测试操作记录</h2>
+<p>原始 info 信息：</p>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/image-20220402103846851.png" srcset="/img/loading.gif" lazyload
+alt="image-20220402103846851" />
+<figcaption aria-hidden="true">image-20220402103846851</figcaption>
+</figure>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/image-20220402104208319.png" srcset="/img/loading.gif" lazyload
+alt="image-20220402104208319" />
+<figcaption aria-hidden="true">image-20220402104208319</figcaption>
+</figure>
 <p>接下来我优先把 chunk server1 的 hdd 标记为移除状态:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/mfs/mfshdd.cfg<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">内容变成为</span><br>*/mnt/hdd0<br></code></pre></td></tr></table></figure>
 <p>然后通过命令重载服务：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">mfschunkserver reload<br><span class="hljs-meta prompt_"># </span><span class="language-bash">会出现 reload signal has been sent</span><br></code></pre></td></tr></table></figure>
 <p>查看管理后台，可以看到</p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20220402104740860.png" srcset="/img/loading.gif" lazyload alt="image-20220402104740860"></p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20220402104924608.png" srcset="/img/loading.gif" lazyload alt="image-20220402104924608"></p>
-<p>最终状态应该是，disks 的chunk 值和 info 上的 overgoal 一致，说明同步完成。</p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20220402105452827.png" srcset="/img/loading.gif" lazyload alt="image-20220402105452827"></p>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/image-20220402104740860.png" srcset="/img/loading.gif" lazyload
+alt="image-20220402104740860" />
+<figcaption aria-hidden="true">image-20220402104740860</figcaption>
+</figure>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/image-20220402104924608.png" srcset="/img/loading.gif" lazyload
+alt="image-20220402104924608" />
+<figcaption aria-hidden="true">image-20220402104924608</figcaption>
+</figure>
+<p>最终状态应该是，disks 的chunk 值和 info 上的 overgoal
+一致，说明同步完成。</p>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/image-20220402105452827.png" srcset="/img/loading.gif" lazyload
+alt="image-20220402105452827" />
+<figcaption aria-hidden="true">image-20220402105452827</figcaption>
+</figure>
 <p>回到服务器上执行：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mfschunkserver stop<br></code></pre></td></tr></table></figure>
-<p>可在管理后台上看到 disks 已经不存在此服务了。info 信息中也应该是 100 stable</p>
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://xiaoz.co/2019/12/20/MooseFS%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-Part2/">MooseFS使用指南</a></li>
+<p>可在管理后台上看到 disks 已经不存在此服务了。info 信息中也应该是 100
+stable</p>
+<h2 id="引用">引用</h2>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://xiaoz.co/2019/12/20/MooseFS%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-Part2/">MooseFS使用指南</a></li>
 </ul>
 
                 

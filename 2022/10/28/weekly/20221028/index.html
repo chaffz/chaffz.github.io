@@ -16,12 +16,12 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="各数据库判断索引是否存在MySQL1SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE TABLE_NAME &#x3D; &amp;#x27;xxx&amp;#x27;; 当然，如果想要精确的确定某个列是否有某个类型的索引则需要用到另一个表： 1234567SELECT *FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS A">
+    <meta name="description" content="各数据库判断索引是否存在 MySQL 1SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE TABLE_NAME &#x3D; &amp;#x27;xxx&amp;#x27;; 当然，如果想要精确的确定某个列是否有某个类型的索引则需要用到另一个表： 1234567SELECT *FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一句话笔记-20221028">
 <meta property="og:url" content="https://blog.isnap.cn/2022/10/28/weekly/20221028/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="各数据库判断索引是否存在MySQL1SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE TABLE_NAME &#x3D; &amp;#x27;xxx&amp;#x27;; 当然，如果想要精确的确定某个列是否有某个类型的索引则需要用到另一个表： 1234567SELECT *FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS A">
+<meta property="og:description" content="各数据库判断索引是否存在 MySQL 1SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE TABLE_NAME &#x3D; &amp;#x27;xxx&amp;#x27;; 当然，如果想要精确的确定某个列是否有某个类型的索引则需要用到另一个表： 1234567SELECT *FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-28T10:11:12.000Z">
 <meta property="article:modified_time" content="2022-10-28T10:38:39.540Z">
@@ -115,7 +115,11 @@
 
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
 
 
 <body>
@@ -383,14 +387,19 @@
             
               <div class="markdown-body">
                 
-                <h2 id="各数据库判断索引是否存在"><a href="#各数据库判断索引是否存在" class="headerlink" title="各数据库判断索引是否存在"></a>各数据库判断索引是否存在</h2><h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> INFORMATION_SCHEMA.TABLE_CONSTRAINTS <span class="hljs-keyword">WHERE</span> TABLE_NAME <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;xxx&#x27;</span>;<br></code></pre></td></tr></table></figure>
+                <h2 id="各数据库判断索引是否存在">各数据库判断索引是否存在</h2>
+<h3 id="mysql">MySQL</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> INFORMATION_SCHEMA.TABLE_CONSTRAINTS <span class="hljs-keyword">WHERE</span> TABLE_NAME <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;xxx&#x27;</span>;<br></code></pre></td></tr></table></figure>
 <p>当然，如果想要精确的确定某个列是否有某个类型的索引则需要用到另一个表：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> INFORMATION_SCHEMA.TABLE_CONSTRAINTS A<br>         <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> INFORMATION_SCHEMA.KEY_COLUMN_USAGE C<br>                   <span class="hljs-keyword">ON</span> C.CONSTRAINT_NAME <span class="hljs-operator">=</span> A.CONSTRAINT_NAME<br><span class="hljs-keyword">WHERE</span> A.TABLE_NAME <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;xxx&#x27;</span><br>  <span class="hljs-keyword">AND</span> C.COLUMN_NAME <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;id&#x27;</span><br>  <span class="hljs-keyword">AND</span> A.CONSTRAINT_TYPE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;UNIQUE&#x27;</span>;<br></code></pre></td></tr></table></figure>
-<hr>
-<h3 id="Oracle"><a href="#Oracle" class="headerlink" title="Oracle"></a>Oracle</h3><p>同 MySQL 一样，也是使用到了元表：</p>
+<hr />
+<h3 id="oracle">Oracle</h3>
+<p>同 MySQL 一样，也是使用到了元表：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> SYS.USER_CONSTRAINTS A<br>         <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> SYS.USER_CONS_COLUMNS B <span class="hljs-keyword">ON</span> A.TABLE_NAME <span class="hljs-operator">=</span> B.TABLE_NAME <span class="hljs-keyword">AND</span> A.CONSTRAINT_NAME <span class="hljs-operator">=</span> B.CONSTRAINT_NAME<br><span class="hljs-keyword">WHERE</span> A.TABLE_NAME <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;XXX&#x27;</span><br>  <span class="hljs-keyword">AND</span> A.CONSTRAINT_TYPE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;U&#x27;</span><br>  <span class="hljs-keyword">AND</span> B.COLUMN_NAME <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;ID&#x27;</span><br>  <span class="hljs-keyword">AND</span> A.OWNER <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;XXX_OWNER&#x27;</span>;<br></code></pre></td></tr></table></figure>
-<p><strong>注意：SQL 为什么使用 SYS schema，是因为加了 SYS 以后刚好是 OceanBase Oracle 的 SQL。</strong></p>
-<h3 id="OceanBase-MySQL-Oracle"><a href="#OceanBase-MySQL-Oracle" class="headerlink" title="OceanBase MySQL/Oracle"></a>OceanBase MySQL/Oracle</h3><p>见前两者~</p>
+<p><strong>注意：SQL 为什么使用 SYS schema，是因为加了 SYS 以后刚好是
+OceanBase Oracle 的 SQL。</strong></p>
+<h3 id="oceanbase-mysqloracle">OceanBase MySQL/Oracle</h3>
+<p>见前两者~</p>
 
                 
               </div>

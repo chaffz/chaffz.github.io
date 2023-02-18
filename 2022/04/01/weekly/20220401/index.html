@@ -16,12 +16,12 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Centos 上编译安装 gcc 新版本下载需要的版本： 1234wget http:&#x2F;&#x2F;ftp.gnu.org&#x2F;gnu&#x2F;gcc&#x2F;gcc-11.2.0&#x2F;gcc-11.2.0.tar.gztar zxvf gcc-11.2.0.tar.gzmkdir gcc-11.2.0&#x2F;build &amp;&amp; cd gcc-11.2.0&#x2F;build..&#x2F;configure --prefix&#x3D;&#x2F;opt&#x2F;g">
+    <meta name="description" content="Centos 上编译安装 gcc 新版本 下载需要的版本： 1234wget http:&#x2F;&#x2F;ftp.gnu.org&#x2F;gnu&#x2F;gcc&#x2F;gcc-11.2.0&#x2F;gcc-11.2.0.tar.gztar zxvf gcc-11.2.0.tar.gzmkdir gcc-11.2.0&#x2F;build &amp;&amp; cd gcc-11.2.0&#x2F;build..&#x2F;configure --prefix&#x3D;&#x2F;opt&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一句话笔记-20220401">
 <meta property="og:url" content="https://blog.isnap.cn/2022/04/01/weekly/20220401/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="Centos 上编译安装 gcc 新版本下载需要的版本： 1234wget http:&#x2F;&#x2F;ftp.gnu.org&#x2F;gnu&#x2F;gcc&#x2F;gcc-11.2.0&#x2F;gcc-11.2.0.tar.gztar zxvf gcc-11.2.0.tar.gzmkdir gcc-11.2.0&#x2F;build &amp;&amp; cd gcc-11.2.0&#x2F;build..&#x2F;configure --prefix&#x3D;&#x2F;opt&#x2F;g">
+<meta property="og:description" content="Centos 上编译安装 gcc 新版本 下载需要的版本： 1234wget http:&#x2F;&#x2F;ftp.gnu.org&#x2F;gnu&#x2F;gcc&#x2F;gcc-11.2.0&#x2F;gcc-11.2.0.tar.gztar zxvf gcc-11.2.0.tar.gzmkdir gcc-11.2.0&#x2F;build &amp;&amp; cd gcc-11.2.0&#x2F;build..&#x2F;configure --prefix&#x3D;&#x2F;opt&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-04-01T02:36:59.000Z">
 <meta property="article:modified_time" content="2022-10-06T04:21:48.439Z">
@@ -115,7 +115,11 @@
 
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
 
 
 <body>
@@ -383,11 +387,13 @@
             
               <div class="markdown-body">
                 
-                <h2 id="Centos-上编译安装-gcc-新版本"><a href="#Centos-上编译安装-gcc-新版本" class="headerlink" title="Centos 上编译安装 gcc 新版本"></a>Centos 上编译安装 gcc 新版本</h2><p>下载需要的版本：</p>
+                <h2 id="centos-上编译安装-gcc-新版本">Centos 上编译安装 gcc 新版本</h2>
+<p>下载需要的版本：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">wget http://ftp.gnu.org/gnu/gcc/gcc-11.2.0/gcc-11.2.0.tar.gz<br>tar zxvf gcc-11.2.0.tar.gz<br>mkdir gcc-11.2.0/build &amp;&amp; cd gcc-11.2.0/build<br>../configure --prefix=/opt/gcc_build/ --enable-checking=release --enable-languages=c,c++ --disable-multilib<br></code></pre></td></tr></table></figure>
 <p>如果遇到错误：</p>
 <blockquote>
-<p>configure: error: Building GCC requires GMP 4.2+, MPFR 3.1.0+ and MPC 0.8.0+.</p>
+<p>configure: error: Building GCC requires GMP 4.2+, MPFR 3.1.0+ and MPC
+0.8.0+.</p>
 </blockquote>
 <span id="more"></span>
 <p>可回到 gcc 源码根目录，然后执行依赖下载</p>

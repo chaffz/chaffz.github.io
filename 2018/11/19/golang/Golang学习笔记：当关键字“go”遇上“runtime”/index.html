@@ -16,12 +16,12 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="写在前面昨天，有人拿着下面这段代码，问题我结果为什么不是10个10？  当然，这道题的结果，我相信很大一部分人都会弄错。所以，我希望做错的人都能静下心来看完本人的分析！运行看结果  12345678func main() &amp;#123;    runtime.GOMAXPROCS(1)    for i :&#x3D; 0; i &lt; 10; i++ &amp;#123;        go println(i)">
+    <meta name="description" content="写在前面 昨天，有人拿着下面这段代码，问题我结果为什么不是10个10？  当然，这道题的结果，我相信很大一部分人都会弄错。 所以，我希望做错的人都能静下心来看完本人的分析！运行看结果  12345678func main() &amp;#123;    runtime.GOMAXPROCS(1)    for i :&#x3D; 0; i &lt; 10; i++ &amp;#123;        go println(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Golang学习笔记：当关键字“go”遇上“runtime”">
 <meta property="og:url" content="https://blog.isnap.cn/2018/11/19/golang/Golang%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%BD%93%E5%85%B3%E9%94%AE%E5%AD%97%E2%80%9Cgo%E2%80%9D%E9%81%87%E4%B8%8A%E2%80%9Cruntime%E2%80%9D/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="写在前面昨天，有人拿着下面这段代码，问题我结果为什么不是10个10？  当然，这道题的结果，我相信很大一部分人都会弄错。所以，我希望做错的人都能静下心来看完本人的分析！运行看结果  12345678func main() &amp;#123;    runtime.GOMAXPROCS(1)    for i :&#x3D; 0; i &lt; 10; i++ &amp;#123;        go println(i)">
+<meta property="og:description" content="写在前面 昨天，有人拿着下面这段代码，问题我结果为什么不是10个10？  当然，这道题的结果，我相信很大一部分人都会弄错。 所以，我希望做错的人都能静下心来看完本人的分析！运行看结果  12345678func main() &amp;#123;    runtime.GOMAXPROCS(1)    for i :&#x3D; 0; i &lt; 10; i++ &amp;#123;        go println(">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-11-19T12:49:25.000Z">
 <meta property="article:modified_time" content="2023-02-18T08:55:33.479Z">
@@ -119,7 +119,11 @@
 
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
 
 
 <body>
@@ -387,26 +391,66 @@
             
               <div class="markdown-body">
                 
-                <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>昨天，有人拿着下面这段代码，问题我结果为什么不是10个10？</p>
+                <h4 id="写在前面">写在前面</h4>
+<p>昨天，有人拿着下面这段代码，问题我结果为什么不是10个10？</p>
 <blockquote>
-<p>当然，这道题的结果，我相信很大一部分人都会弄错。<br>所以，我希望做错的人都能静下心来看完本人的分析！<a target="_blank" rel="noopener" href="https://play.golang.org/p/Llr9LnQ4YlT">运行看结果</a></p>
+<p>当然，这道题的结果，我相信很大一部分人都会弄错。
+所以，我希望做错的人都能静下心来看完本人的分析！<a
+target="_blank" rel="noopener" href="https://play.golang.org/p/Llr9LnQ4YlT">运行看结果</a></p>
 </blockquote>
 <figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    runtime.GOMAXPROCS(<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;<br>        <span class="hljs-keyword">go</span> <span class="hljs-built_in">println</span>(i)<br>    &#125;<br>    runtime.Gosched()<br>    time.Sleep(time.Second)<br>&#125;<br></code></pre></td></tr></table></figure>
 <span id="more"></span>
-<h4 id="从源码入手"><a href="#从源码入手" class="headerlink" title="从源码入手"></a>从源码入手</h4><p>此例中 <strong>“runtime”</strong> 的问题暂且不详说，后面会再来分析，但是，必需要明白的是 <strong>runtime. GOMAXPROCS(1)</strong> 强行指定了只创建一个 “P” 来处理并发，这使得例子中的 10 个 goroutine 会是串行的。接下来，我们就来一点一点剖析关键字 “go”！</p>
-<h5 id="知其然，知其所以然"><a href="#知其然，知其所以然" class="headerlink" title="知其然，知其所以然"></a>知其然，知其所以然</h5><p>问我问题的人，其实也知道要小心的处理 for 循环中变量，但是他却不了解哪种情况下的变量才是要真正小心行事的。我相信还有很多人会把例子和下面的代码理解混了：<a target="_blank" rel="noopener" href="https://play.golang.org/p/67AY2f0S2xi">运行看结果</a><br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    runtime.GOMAXPROCS(<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;<br>        <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>            <span class="hljs-built_in">println</span>(i)<br>        &#125;()<br>    &#125;<br>    runtime.Gosched()<br>    time.Sleep(time.Second)<br>&#125;<br></code></pre></td></tr></table></figure></p>
-<blockquote>
-<p>结果显示：10个10</p>
-</blockquote>
-<p>仔细对比上述的两段代码，会发现区别仅仅是 “go” 关键字后的函数有区别而已。那么这一点小区别，为什么会带来这么大的区别呢？我们都知道 “go” 是创建了 goroutine ，但是对于计算机而言，goroutine 只是语言封装的语法糖而已，<strong>对于计算机依旧是识别指令及内存里的值而已</strong>。那么 goroutine 在被创建后，留给计算机是什么样的内存布局(数据结构)呢？</p>
-<p>在 <strong>runtime2.go:338</strong> (<a target="_blank" rel="noopener" href="https://golang.org/src/runtime/runtime2.go?h=type%20g%20struct">type g struct</a>) 定义，打开文件后，你会看到有很多的信息，但是，对于我们当前需要理解的是：编译器会把 go 后面的方法和参数打包在 goroutine 里，在上述例子中，关注如下参数：<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-keyword">type</span> g <span class="hljs-keyword">struct</span> &#123;<br>    ...<br>    FuncVal*    fnstart;        <span class="hljs-comment">// goroutine运行的函数</span><br>    void*    param;        <span class="hljs-comment">// 用于传递参数，睡眠时其它goroutine设置param，唤醒时此goroutine可以获取</span><br>    ...<br>&#125;<br></code></pre></td></tr></table></figure><br>也就是说，运行到 go 的时候，编译器就已经把 goroutine 需要运行的参数与方法都保存了，对于 demo 1 来说就是保存了 { println,  current_i }，而 demo 2 保存的是 { main.func_xxx, nil }，这里读者可能会注意到，第二个并没有把 i 传入到匿名函数中，但是引用的时候并没有发生 panic 。为什么？因为这里有内存逃逸，这也是为什么 demo 2 会输出 10 个 10 的原因，本次不展开细说。只需要记住一点：<strong>编译器会把 go 后面跟着的参数与函数都打包成了对象，等待系统调度。</strong></p>
-<h5 id="为什么？？"><a href="#为什么？？" class="headerlink" title="为什么？？"></a>为什么？？</h5><p>本文说到这，其实只说了小部分，并没有说为什么 demo 1 的结果会与大家想象的差很多。虽说 GOMAXPROCS 为 1 导致所有的 goroutine 变成了串行。可是结果也不是大家想象的 0 ~ 9。为什么？？</p>
-<p>其实，go 在把 goroutine 放入队列(go sched 内容会有另外的篇幅来说明)的时候还做了一件很特别的事：<strong>proc:4799 (<a target="_blank" rel="noopener" href="https://golang.org/src/runtime/proc.go?h=func%20runqput">next</a>)</strong>，代码内容如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-keyword">if</span> next &#123;<br>retryNext:<br>    oldnext := _p_<span class="hljs-selector-class">.runnext</span><br>    <span class="hljs-keyword">if</span> !_p_<span class="hljs-selector-class">.runnext</span><span class="hljs-selector-class">.cas</span>(oldnext, <span class="hljs-built_in">guintptr</span>(unsafe<span class="hljs-selector-class">.Pointer</span>(gp))) &#123;<br>        goto retryNext<br>    &#125;<br>    <span class="hljs-keyword">if</span> oldnext == <span class="hljs-number">0</span> &#123;<br>        return<br>    &#125;<br>    <span class="hljs-comment">// Kick the old runnext out to the regular run queue.</span><br>    gp = oldnext<span class="hljs-selector-class">.ptr</span>()<br>&#125;<br></code></pre></td></tr></table></figure><br>这段代码的意思是 go 会把每个 P 所管理的最后一个 goroutine 放入 <strong>next</strong> 位置。为什么？？</p>
-<p><strong>这是 go 设计认为或者是有过测试：如果一个 P 的 goroutine 队列在顺序执行的时候，因为 go sched 会有很多抢占或者调度。那么从被执行的概率上来分析的话，放入一个 next 位置可使得每个 goroutine 的执行概率是相当的。</strong>本文不细述！</p>
-<p>这个 next 位置也就解释了 demo 1 的结果为什么会是 <strong>9 —- 0~8</strong>。本文到这已经说明了前面的问题，但是，demo 中出现了 </p>
-<p><strong>runtime.Gosched()</strong> </p>
-<p>这一行代码。<br>如果注释掉结果会怎样？？<br>如果把这一行换成 <strong>runtime.Goexit()</strong> 或者 <strong>os.Exit(0)</strong> 又会是如何呢？？</p>
-<p>欢迎大家尝试并可和我讨论！！！<br>大家可关注公众号 cn_isnap 并留言！！</p>
+<h4 id="从源码入手">从源码入手</h4>
+<p>此例中 <strong>“runtime”</strong>
+的问题暂且不详说，后面会再来分析，但是，必需要明白的是 <strong>runtime.
+GOMAXPROCS(1)</strong> 强行指定了只创建一个 “P”
+来处理并发，这使得例子中的 10 个 goroutine
+会是串行的。接下来，我们就来一点一点剖析关键字 “go”！</p>
+<h5 id="知其然知其所以然">知其然，知其所以然</h5>
+<p>问我问题的人，其实也知道要小心的处理 for
+循环中变量，但是他却不了解哪种情况下的变量才是要真正小心行事的。我相信还有很多人会把例子和下面的代码理解混了：<a
+target="_blank" rel="noopener" href="https://play.golang.org/p/67AY2f0S2xi">运行看结果</a>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    runtime.GOMAXPROCS(<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;<br>        <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>            <span class="hljs-built_in">println</span>(i)<br>        &#125;()<br>    &#125;<br>    runtime.Gosched()<br>    time.Sleep(time.Second)<br>&#125;<br></code></pre></td></tr></table></figure> &gt; 结果显示：10个10</p>
+<p>仔细对比上述的两段代码，会发现区别仅仅是 “go”
+关键字后的函数有区别而已。那么这一点小区别，为什么会带来这么大的区别呢？我们都知道
+“go” 是创建了 goroutine ，但是对于计算机而言，goroutine
+只是语言封装的语法糖而已，<strong>对于计算机依旧是识别指令及内存里的值而已</strong>。那么
+goroutine 在被创建后，留给计算机是什么样的内存布局(数据结构)呢？</p>
+<p>在 <strong>runtime2.go:338</strong> (<a
+target="_blank" rel="noopener" href="https://golang.org/src/runtime/runtime2.go?h=type%20g%20struct">type
+g struct</a>)
+定义，打开文件后，你会看到有很多的信息，但是，对于我们当前需要理解的是：编译器会把
+go 后面的方法和参数打包在 goroutine 里，在上述例子中，关注如下参数：
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-keyword">type</span> g <span class="hljs-keyword">struct</span> &#123;<br>    ...<br>    FuncVal*    fnstart;        <span class="hljs-comment">// goroutine运行的函数</span><br>    void*    param;        <span class="hljs-comment">// 用于传递参数，睡眠时其它goroutine设置param，唤醒时此goroutine可以获取</span><br>    ...<br>&#125;<br></code></pre></td></tr></table></figure> 也就是说，运行到 go 的时候，编译器就已经把 goroutine
+需要运行的参数与方法都保存了，对于 demo 1 来说就是保存了 { println,
+current_i }，而 demo 2 保存的是 { main.func_xxx, nil
+}，这里读者可能会注意到，第二个并没有把 i
+传入到匿名函数中，但是引用的时候并没有发生 panic
+。为什么？因为这里有内存逃逸，这也是为什么 demo 2 会输出 10 个 10
+的原因，本次不展开细说。只需要记住一点：<strong>编译器会把 go
+后面跟着的参数与函数都打包成了对象，等待系统调度。</strong></p>
+<h5 id="为什么">为什么？？</h5>
+<p>本文说到这，其实只说了小部分，并没有说为什么 demo 1
+的结果会与大家想象的差很多。虽说 GOMAXPROCS 为 1 导致所有的 goroutine
+变成了串行。可是结果也不是大家想象的 0 ~ 9。为什么？？</p>
+<p>其实，go 在把 goroutine 放入队列(go sched
+内容会有另外的篇幅来说明)的时候还做了一件很特别的事：<strong>proc:4799
+(<a
+target="_blank" rel="noopener" href="https://golang.org/src/runtime/proc.go?h=func%20runqput">next</a>)</strong>，代码内容如下：
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-keyword">if</span> next &#123;<br>retryNext:<br>    oldnext := _p_<span class="hljs-selector-class">.runnext</span><br>    <span class="hljs-keyword">if</span> !_p_<span class="hljs-selector-class">.runnext</span><span class="hljs-selector-class">.cas</span>(oldnext, <span class="hljs-built_in">guintptr</span>(unsafe<span class="hljs-selector-class">.Pointer</span>(gp))) &#123;<br>        goto retryNext<br>    &#125;<br>    <span class="hljs-keyword">if</span> oldnext == <span class="hljs-number">0</span> &#123;<br>        return<br>    &#125;<br>    <span class="hljs-comment">// Kick the old runnext out to the regular run queue.</span><br>    gp = oldnext<span class="hljs-selector-class">.ptr</span>()<br>&#125;<br></code></pre></td></tr></table></figure> 这段代码的意思是 go 会把每个 P 所管理的最后一个 goroutine
+放入 <strong>next</strong> 位置。为什么？？</p>
+<p><strong>这是 go 设计认为或者是有过测试：如果一个 P 的 goroutine
+队列在顺序执行的时候，因为 go sched
+会有很多抢占或者调度。那么从被执行的概率上来分析的话，放入一个 next
+位置可使得每个 goroutine 的执行概率是相当的。</strong>本文不细述！</p>
+<p>这个 next 位置也就解释了 demo 1 的结果为什么会是 <strong>9 ---
+0~8</strong>。本文到这已经说明了前面的问题，但是，demo 中出现了</p>
+<p><strong>runtime.Gosched()</strong></p>
+<p>这一行代码。 如果注释掉结果会怎样？？ 如果把这一行换成
+<strong>runtime.Goexit()</strong> 或者 <strong>os.Exit(0)</strong>
+又会是如何呢？？</p>
+<p>欢迎大家尝试并可和我讨论！！！ 大家可关注公众号 cn_isnap
+并留言！！</p>
 
                 
               </div>

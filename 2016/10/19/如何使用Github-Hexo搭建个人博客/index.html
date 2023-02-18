@@ -16,12 +16,12 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="&amp;emsp;混迹于江湖这么久了，用尽了各种方式来搭建一个属于自己的 blog ！最后都无疾而终，很大部分是自己懒，也有因为没有好的平台能够持久免费，所以 … 祭天吧 ~~~">
+    <meta name="description" content="混迹于江湖这么久了，用尽了各种方式来搭建一个属于自己的 blog ！最后都无疾而终，很大部分是自己懒，也有因为没有好的平台能够持久免费，所以 ... 祭天吧 ~~~">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何使用 GitHub + Hexo 搭建个人博客">
 <meta property="og:url" content="https://blog.isnap.cn/2016/10/19/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Github-Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="&amp;emsp;混迹于江湖这么久了，用尽了各种方式来搭建一个属于自己的 blog ！最后都无疾而终，很大部分是自己懒，也有因为没有好的平台能够持久免费，所以 … 祭天吧 ~~~">
+<meta property="og:description" content="混迹于江湖这么久了，用尽了各种方式来搭建一个属于自己的 blog ！最后都无疾而终，很大部分是自己懒，也有因为没有好的平台能够持久免费，所以 ... 祭天吧 ~~~">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2016-10-19T09:49:38.000Z">
 <meta property="article:modified_time" content="2022-10-06T04:21:48.445Z">
@@ -118,7 +118,11 @@
 
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
 
 
 <body>
@@ -324,7 +328,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          900 字
+          870 字
         
       </span>
     
@@ -387,53 +391,64 @@
               <div class="markdown-body">
                 
                 <blockquote>
-<p>&emsp;混迹于江湖这么久了，用尽了各种方式来搭建一个属于自己的 blog ！最后都无疾而终，很大部分是自己懒，也有因为没有好的平台能够持久免费，所以 … 祭天吧 ~~~</p>
+<p> 混迹于江湖这么久了，用尽了各种方式来搭建一个属于自己的 blog
+！最后都无疾而终，很大部分是自己懒，也有因为没有好的平台能够持久免费，所以
+... 祭天吧 ~~~</p>
 </blockquote>
 <span id="more"></span>
-<h4 id="1-不得不知道-GitHub-Pages"><a href="#1-不得不知道-GitHub-Pages" class="headerlink" title="1. 不得不知道 GitHub Pages"></a>1. 不得不知道 <a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages</a></h4><p>&emsp;&emsp;正如 GitHub Pages 首页的 Banner 所描述，“ Websites for you and your projects. ”，简单明了。但是，今天我要说的并不是直接使用它，而是利用 GitHub Pages 所提供的功能，配合 Nodejs 来完成个人博客的搭建。</p>
-<h4 id="2-环境需求"><a href="#2-环境需求" class="headerlink" title="2. 环境需求"></a>2. 环境需求</h4><p>&emsp;&emsp;文章标题已经提到了需要使用 GitHub 和 Hexo ，面文章的前面也简单提到了 Nodejs ，所以环境需要：</p>
+<h4 id="不得不知道-github-pages">1. 不得不知道 <a
+target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages</a></h4>
+<p>  正如 GitHub Pages 首页的 Banner 所描述，“ Websites for you and your
+projects. ”，简单明了。但是，今天我要说的并不是直接使用它，而是利用
+GitHub Pages 所提供的功能，配合 Nodejs 来完成个人博客的搭建。</p>
+<h4 id="环境需求">2. 环境需求</h4>
+<p>  文章标题已经提到了需要使用 GitHub 和 Hexo
+，面文章的前面也简单提到了 Nodejs ，所以环境需要：</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="http://git-scm.com/">Git</a></li>
 <li><a target="_blank" rel="noopener" href="https://nodejs.org/en/">Nodejs</a></li>
 </ul>
 <p>如果还没有，那就开始安装吧！这里不再细述~</p>
-<h4 id="3-环境搭建"><a href="#3-环境搭建" class="headerlink" title="3. 环境搭建"></a>3. 环境搭建</h4><ul>
+<h4 id="环境搭建">3. 环境搭建</h4>
+<ul>
 <li>3.1 Hexo 安装</li>
 </ul>
-<p>可直接使用 Node 来进行安装：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 创建需要配置的 blog 目录并进入<br>cd d:\work<br><br><span class="hljs-regexp">//</span> 安装 Hexo <br>npm install hexo-cli g<br></code></pre></td></tr></table></figure><br>经过漫长的等待~恭喜你~在你的目录下已经存在 hexo 命令了。在开始配置前，需要了解 hexo 的几个常用命令：</p>
-<div class="table-container">
+<p>可直接使用 Node 来进行安装： <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 创建需要配置的 blog 目录并进入<br>cd d:\work<br><br><span class="hljs-regexp">//</span> 安装 Hexo <br>npm install hexo-cli g<br></code></pre></td></tr></table></figure>
+经过漫长的等待<sub>恭喜你</sub>在你的目录下已经存在 hexo
+命令了。在开始配置前，需要了解 hexo 的几个常用命令：</p>
 <table>
+
 <thead>
-<tr>
+<tr class="header">
 <th>命令</th>
 <th>描述</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>hexo init</td>
 <td>初始化博客目录</td>
 </tr>
-<tr>
+<tr class="even">
 <td>hexo n(new)</td>
 <td>创建新文章</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>hexo g(generate)</td>
 <td>生成静态文件，会在当前目录下生成一个新的叫做 public 的文件夹</td>
 </tr>
-<tr>
+<tr class="even">
 <td>hexo s(server)</td>
 <td>启用本地服务，用于浏览博客</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>hexo d(deploy)</td>
 <td>自动部署到远程服务器，本文中为 GitHub</td>
 </tr>
 </tbody>
 </table>
-</div>
-<p>通过简单的了解命令，我们可以开始配置属于自己的博客了:<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 初始化目录<br>hexo init blogs<br><br><span class="hljs-regexp">//</span> 创建新文章<br><span class="hljs-regexp">//</span> 当然你也可以先忽略这一步，直接进入下一步先看看效果<br>hexo n <span class="hljs-string">&quot;我的第一篇 Hexo blog&quot;</span><br><br><span class="hljs-regexp">//</span> 启用本地服务，查看效果<br>hexo g<br>hexo s<br><span class="hljs-regexp">//</span> 或者直接<br>hexo s -g<br><br><span class="hljs-regexp">//</span> 出现如下提示<br>INFO  Start processing<br>INFO  Hexo is running at http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">4000</span>/. Press Ctrl+C to stop.<br><span class="hljs-regexp">//</span> 提示很明显，直接拷贝链接到浏览器就可展示效果了<br></code></pre></td></tr></table></figure></p>
+<p>通过简单的了解命令，我们可以开始配置属于自己的博客了:
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 初始化目录<br>hexo init blogs<br><br><span class="hljs-regexp">//</span> 创建新文章<br><span class="hljs-regexp">//</span> 当然你也可以先忽略这一步，直接进入下一步先看看效果<br>hexo n <span class="hljs-string">&quot;我的第一篇 Hexo blog&quot;</span><br><br><span class="hljs-regexp">//</span> 启用本地服务，查看效果<br>hexo g<br>hexo s<br><span class="hljs-regexp">//</span> 或者直接<br>hexo s -g<br><br><span class="hljs-regexp">//</span> 出现如下提示<br>INFO  Start processing<br>INFO  Hexo is running at http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">4000</span>/. Press Ctrl+C to stop.<br><span class="hljs-regexp">//</span> 提示很明显，直接拷贝链接到浏览器就可展示效果了<br></code></pre></td></tr></table></figure></p>
 
                 
               </div>

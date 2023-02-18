@@ -118,7 +118,11 @@
 
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
 
 
 <body>
@@ -324,7 +328,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          1.2k 字
         
       </span>
     
@@ -335,7 +339,7 @@
         
         
         
-          10 分钟
+          11 分钟
         
       </span>
     
@@ -386,27 +390,67 @@
             
               <div class="markdown-body">
                 
-                <p><strong>本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此 Level 1和 Level 2 将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而 Level 3 用来帮助以顶级公司为目标的学习小伙伴。</strong></p>
+                <p><strong>本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此
+Level 1和 Level 2
+将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而
+Level 3 用来帮助以顶级公司为目标的学习小伙伴。</strong></p>
 <blockquote>
-<p><em>本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交 。</em></p>
+<p><em>本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交
+。</em></p>
 </blockquote>
-<hr>
-<p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=前缀和&amp;spm=1001.2101.3001.7020">前缀和</a>（Prefix sum）是算法题中比较实用的一种技巧，当算法题的背景是整型数组且出现 <strong>“子数组和”</strong> 或者 <strong>“连续的子数组”</strong> 既可以考虑使用前缀和来求解会得到不错的效果。</p>
-<h2 id="第一题：一维数组的动态和"><a href="#第一题：一维数组的动态和" class="headerlink" title="第一题：一维数组的动态和"></a>第一题：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/running-sum-of-1d-array/">一维数组的动态和</a></h2><p><img src="//blog.isnap.cn/cdnimg/image-20221003195616924.png" srcset="/img/loading.gif" lazyload alt="image-20221003195616924"></p>
-<p>从题目的解释中也表达的是一个连接累加前 n 个数的过程。细心的读者可以发现它也可以被归类到动态规划题目中，因为它可以得到状态转移方程：</p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20221003202208029.png" srcset="/img/loading.gif" lazyload alt="image-20221003202208029"></p>
-<p>这其实也同样满足 Prefix Sum 的技巧。如下动图显示的是如何利用结果与数组来动态计算最终结果数组。</p>
-<p><img src="//blog.isnap.cn/cdnimg/running-sum.gif" srcset="/img/loading.gif" lazyload alt="running-sum"></p>
+<hr />
+<p><a
+target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=前缀和&amp;spm=1001.2101.3001.7020">前缀和</a>（Prefix
+sum）是算法题中比较实用的一种技巧，当算法题的背景是整型数组且出现
+<strong>“子数组和”</strong> 或者 <strong>“连续的子数组”</strong>
+既可以考虑使用前缀和来求解会得到不错的效果。</p>
+<h2 id="第一题一维数组的动态和">第一题：<a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/running-sum-of-1d-array/">一维数组的动态和</a></h2>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/image-20221003195616924.png" srcset="/img/loading.gif" lazyload
+alt="image-20221003195616924" />
+<figcaption aria-hidden="true">image-20221003195616924</figcaption>
+</figure>
+<p>从题目的解释中也表达的是一个连接累加前 n
+个数的过程。细心的读者可以发现它也可以被归类到动态规划题目中，因为它可以得到状态转移方程：</p>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/image-20221003202208029.png" srcset="/img/loading.gif" lazyload
+alt="image-20221003202208029" />
+<figcaption aria-hidden="true">image-20221003202208029</figcaption>
+</figure>
+<p>这其实也同样满足 Prefix Sum
+的技巧。如下动图显示的是如何利用结果与数组来动态计算最终结果数组。</p>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/running-sum.gif" srcset="/img/loading.gif" lazyload alt="running-sum" />
+<figcaption aria-hidden="true">running-sum</figcaption>
+</figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RunningSumOf1dArray</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span>[] runningSum(<span class="hljs-type">int</span>[] nums) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt; nums.length; i++) &#123;<br>            nums[i] = nums[i] + nums[i-<span class="hljs-number">1</span>];<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> nums;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="第二题：寻找数组的中心下标"><a href="#第二题：寻找数组的中心下标" class="headerlink" title="第二题：寻找数组的中心下标"></a>第二题：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-pivot-index/">寻找数组的中心下标</a></h2><p><img src="//blog.isnap.cn/cdnimg/image-20221003202809473.png" srcset="/img/loading.gif" lazyload alt="image-20221003202809473"></p>
-<p>从题目中可知要找的是一个 idx，使得在 idx 的左边和与右边各相等。那假设左（右）边的各为 sum 的话，那么就是整个数组的和为：</p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20221003203626254.png" srcset="/img/loading.gif" lazyload alt="image-20221003203626254"></p>
+<h2 id="第二题寻找数组的中心下标">第二题：<a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-pivot-index/">寻找数组的中心下标</a></h2>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/image-20221003202809473.png" srcset="/img/loading.gif" lazyload
+alt="image-20221003202809473" />
+<figcaption aria-hidden="true">image-20221003202809473</figcaption>
+</figure>
+<p>从题目中可知要找的是一个 idx，使得在 idx
+的左边和与右边各相等。那假设左（右）边的各为 sum
+的话，那么就是整个数组的和为：</p>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/image-20221003203626254.png" srcset="/img/loading.gif" lazyload
+alt="image-20221003203626254" />
+<figcaption aria-hidden="true">image-20221003203626254</figcaption>
+</figure>
 <p>然后就可以进行如下推导：</p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20221004092908211.png" srcset="/img/loading.gif" lazyload alt="image-20221004092908211"></p>
-<p>于是，如果我们先计算出总和，然后第二次循环累加时算为左值，那么右值就是上述式子了，于是就可以判断是否能找到这样的一个 idx 了。</p>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/image-20221004092908211.png" srcset="/img/loading.gif" lazyload
+alt="image-20221004092908211" />
+<figcaption aria-hidden="true">image-20221004092908211</figcaption>
+</figure>
+<p>于是，如果我们先计算出总和，然后第二次循环累加时算为左值，那么右值就是上述式子了，于是就可以判断是否能找到这样的一个
+idx 了。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FindPivotIndex</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">pivotIndex</span><span class="hljs-params">(<span class="hljs-type">int</span>[] nums)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">leftSum</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>, rightSum = <span class="hljs-number">0</span>;<br>        <span class="hljs-comment">// 计算总和</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> num : nums) &#123;<br>            rightSum += num;<br>        &#125;<br><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; nums.length; i++) &#123;<br>            <span class="hljs-comment">// 右值：rightSum - leftSum - nums[i]</span><br>            <span class="hljs-keyword">if</span> (leftSum == rightSum - leftSum - nums[i]) &#123;<br>                <span class="hljs-keyword">return</span> i;<br>            &#125;<br>            <span class="hljs-comment">// 左值：nums[0] ... nums[i-1]</span><br>            leftSum += nums[i];<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<hr>
-<p><strong>代码仓库：<a target="_blank" rel="noopener" href="https://github.com/chaffz/leetcode-java">https://github.com/chaffz/leetcode-java</a></strong></p>
+<hr />
+<p><strong>代码仓库：https://github.com/chaffz/leetcode-java</strong></p>
 
                 
               </div>

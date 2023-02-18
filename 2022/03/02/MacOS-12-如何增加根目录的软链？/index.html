@@ -116,7 +116,11 @@
 
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
 
 
 <body>
@@ -388,7 +392,9 @@
 <blockquote>
 <p>mkdir: /data: Read-only file system</p>
 </blockquote>
-<p>要解决上述问题，开始最多的是如何如何开启 root 用户，然后用 root 用户创建文件夹或者开启软链等。但是 MacOS 从 11 版本后增加了开启软链的特殊方式。</p>
+<p>要解决上述问题，开始最多的是如何如何开启 root 用户，然后用 root
+用户创建文件夹或者开启软链等。但是 MacOS 从 11
+版本后增加了开启软链的特殊方式。</p>
 <p>第一步：运行下面命令，修改 synthetic.conf 文件</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo vi <span class="hljs-regexp">/etc/</span>synthetic.conf<br></code></pre></td></tr></table></figure>
 <span id="more"></span>

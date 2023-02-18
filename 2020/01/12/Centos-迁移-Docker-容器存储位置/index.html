@@ -16,12 +16,12 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="遇到问题近来，团队协作中，越来越多的使用 Docker，无论是环境统一还是工具共享~但是，随着使用的频率越来越高，遇到的问题也越来越多，今天要说的是如果在云服务器中，安装 Docker 时没有主动对 Dcoker 配置做过修改时，那么，总有一天会遇到系统盘点用过高的情况。如： 12345678910[root@test ~]# df -hFilesystem      Size  Used Ava">
+    <meta name="description" content="遇到问题 近来，团队协作中，越来越多的使用 Docker，无论是环境统一还是工具共享~ 但是，随着使用的频率越来越高，遇到的问题也越来越多，今天要说的是如果在云服务器中，安装 Docker 时没有主动对 Dcoker 配置做过修改时，那么，总有一天会遇到系统盘点用过高的情况。如： 12345678910[root@test ~]# df -hFilesystem      Size  Used A">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Centos: 迁移 Docker 容器存储位置">
 <meta property="og:url" content="https://blog.isnap.cn/2020/01/12/Centos-%E8%BF%81%E7%A7%BB-Docker-%E5%AE%B9%E5%99%A8%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="遇到问题近来，团队协作中，越来越多的使用 Docker，无论是环境统一还是工具共享~但是，随着使用的频率越来越高，遇到的问题也越来越多，今天要说的是如果在云服务器中，安装 Docker 时没有主动对 Dcoker 配置做过修改时，那么，总有一天会遇到系统盘点用过高的情况。如： 12345678910[root@test ~]# df -hFilesystem      Size  Used Ava">
+<meta property="og:description" content="遇到问题 近来，团队协作中，越来越多的使用 Docker，无论是环境统一还是工具共享~ 但是，随着使用的频率越来越高，遇到的问题也越来越多，今天要说的是如果在云服务器中，安装 Docker 时没有主动对 Dcoker 配置做过修改时，那么，总有一天会遇到系统盘点用过高的情况。如： 12345678910[root@test ~]# df -hFilesystem      Size  Used A">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-01-12T08:41:35.000Z">
 <meta property="article:modified_time" content="2022-10-06T04:21:48.425Z">
@@ -118,7 +118,11 @@
 
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
 
 
 <body>
@@ -386,17 +390,39 @@
             
               <div class="markdown-body">
                 
-                <h4 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h4><p>近来，团队协作中，越来越多的使用 Docker，无论是环境统一还是工具共享~<br>但是，随着使用的频率越来越高，遇到的问题也越来越多，今天要说的是如果在云服务器中，安装 Docker 时没有主动对 Dcoker 配置做过修改时，那么，总有一天会遇到系统盘点用过高的情况。如：</p>
+                <h4 id="遇到问题">遇到问题</h4>
+<p>近来，团队协作中，越来越多的使用 Docker，无论是环境统一还是工具共享~
+但是，随着使用的频率越来越高，遇到的问题也越来越多，今天要说的是如果在云服务器中，安装
+Docker 时没有主动对 Dcoker
+配置做过修改时，那么，总有一天会遇到系统盘点用过高的情况。如：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@test ~]# df -h<br>Filesystem      Size  Used Avail Use% Mounted on<br>/dev/vda1        50G  9.3G   38G  20% /<br>devtmpfs        3.9G     0  3.9G   0% /dev<br>tmpfs           3.9G   24K  3.9G   1% /dev/shm<br>tmpfs           3.9G  2.4M  3.9G   1% /run<br>tmpfs           3.9G     0  3.9G   0% /sys/fs/cgroup<br>/dev/vdb1       200G  117G   84G  59% /data<br>tmpfs           783M     0  783M   0% /run/user/0<br>tmpfs           783M     0  783M   0% /run/user/2004<br></code></pre></td></tr></table></figure>
 <span id="more"></span>
-<h4 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h4><h5 id="坑-1"><a href="#坑-1" class="headerlink" title="坑 1"></a>坑 1</h5><p>当我们使用 <em>docker info</em> 时会看到如下信息：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@test ~]# docker info<br> ...<br> Docker Root Dir: /data/docker/docker-root-dir<br> ...<br></code></pre></td></tr></table></figure></p>
-<p>这是我我认为处理完就可以的位置，按照官方文档处理如下：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">vim /etc/docker/daemon.json</span><br>&#123;<br>  ...<br>  &quot;graph&quot;: &quot;/data/docker/root&quot;<br>  ...<br>&#125;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">systemctl daemon-reload</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">systemctl restart docker</span><br></code></pre></td></tr></table></figure></p>
-<p>再次使用 <em>docker info</em> 查看时，很好你会发现 <strong>Docker Root Dir</strong> 已经被修改了，但是当我回去准备拷贝文件时，发现 docker root 下并没有大文件。</p>
-<h5 id="坑-2"><a href="#坑-2" class="headerlink" title="坑 2"></a>坑 2</h5><p>重新查看硬盘占用情况：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">du</span> -hs /*</span><br></code></pre></td></tr></table></figure><br>会发现 <strong>/var/lib/docker</strong> 位置占用巨大，会发现 dockerd 命令有参数可用，并且官网也会告诉你 <em>/etc/docker/daemon.json</em> 可修改<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">&#123;<br>    &quot;data-root&quot;: &quot;/data/docker/lib&quot;<br>&#125;<br></code></pre></td></tr></table></figure><br>但是重启 docker 后，发现并不会生效。</p>
-<h5 id="坑-3"><a href="#坑-3" class="headerlink" title="坑 3"></a>坑 3</h5><p>修改上述 daemon.json 未生效后，于是就想还有哪里可能影响呢，我的理解是我们是通过 systemctl 启动的 docker 服务，于是就找到了 <strong>/usr/lib/systemd/system/docker.service</strong> 文件，里面确实包含了 dockerd 启动命令：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">[Service]<br>Type=notify<br><span class="hljs-meta prompt_"># </span><span class="language-bash">the default is not to use systemd <span class="hljs-keyword">for</span> cgroups because the delegate issues still</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">exists and systemd currently does not support the cgroup feature <span class="hljs-built_in">set</span> required</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-keyword">for</span> containers run by docker</span><br>ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock<br>ExecReload=/bin/kill -s HUP $MAINPID<br>TimeoutSec=0<br>RestartSec=2<br>Restart=always<br></code></pre></td></tr></table></figure><br>然而增加 data-root 参数后依旧无效。</p>
-<h5 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h5><p>因为 dockerd 确实有命令修改，所以我们查看进程启动，也确实是 dockerd 参数指定了 data root.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@test ~]# ps aux | grep dockerd<br>root      1026  0.8  0.9 909240 77008 ?        Ssl   2019 399:56 /usr/bin/dockerd --data-root=/var/lib/docker --log-opt max-size=50m --log-opt max-file=5 --iptables=false --dns 10.233.0.3 --dns 127.0.0.1 --dns 10.3.9.132 --dns-search default.svc.cluster.local --dns-search svc.cluster.local --dns-opt ndots:2 --dns-opt timeout:2 --dns-opt attempts:2<br></code></pre></td></tr></table></figure></p>
-<p>其实 docker.service 目录下还存在一个 options 目录：<br><strong>/etc/systemd/system/docker.service.d/docker-options.conf</strong></p>
-<p>修改如下：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[Service]</span><br><span class="hljs-attr">Environment</span>=<span class="hljs-string">&quot;DOCKER_OPTS=    --data-root=/data/docker/lib --log-opt max-size=50m --log-opt max-file=5 --iptables=false \</span><br><span class="hljs-string">--log-opt max-size=50m --log-opt max-file=5 \</span><br><span class="hljs-string">&quot;</span><br></code></pre></td></tr></table></figure></p>
+<h4 id="解决问题">解决问题</h4>
+<h5 id="坑-1">坑 1</h5>
+<p>当我们使用 <em>docker info</em> 时会看到如下信息： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@test ~]# docker info<br> ...<br> Docker Root Dir: /data/docker/docker-root-dir<br> ...<br></code></pre></td></tr></table></figure></p>
+<p>这是我我认为处理完就可以的位置，按照官方文档处理如下：
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">vim /etc/docker/daemon.json</span><br>&#123;<br>  ...<br>  &quot;graph&quot;: &quot;/data/docker/root&quot;<br>  ...<br>&#125;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">systemctl daemon-reload</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">systemctl restart docker</span><br></code></pre></td></tr></table></figure></p>
+<p>再次使用 <em>docker info</em> 查看时，很好你会发现 <strong>Docker
+Root Dir</strong> 已经被修改了，但是当我回去准备拷贝文件时，发现 docker
+root 下并没有大文件。</p>
+<h5 id="坑-2">坑 2</h5>
+<p>重新查看硬盘占用情况： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">du</span> -hs /*</span><br></code></pre></td></tr></table></figure> 会发现
+<strong>/var/lib/docker</strong> 位置占用巨大，会发现 dockerd
+命令有参数可用，并且官网也会告诉你 <em>/etc/docker/daemon.json</em>
+可修改 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">&#123;<br>    &quot;data-root&quot;: &quot;/data/docker/lib&quot;<br>&#125;<br></code></pre></td></tr></table></figure> 但是重启 docker 后，发现并不会生效。</p>
+<h5 id="坑-3">坑 3</h5>
+<p>修改上述 daemon.json
+未生效后，于是就想还有哪里可能影响呢，我的理解是我们是通过 systemctl
+启动的 docker 服务，于是就找到了
+<strong>/usr/lib/systemd/system/docker.service</strong>
+文件，里面确实包含了 dockerd 启动命令： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">[Service]<br>Type=notify<br><span class="hljs-meta prompt_"># </span><span class="language-bash">the default is not to use systemd <span class="hljs-keyword">for</span> cgroups because the delegate issues still</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">exists and systemd currently does not support the cgroup feature <span class="hljs-built_in">set</span> required</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-keyword">for</span> containers run by docker</span><br>ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock<br>ExecReload=/bin/kill -s HUP $MAINPID<br>TimeoutSec=0<br>RestartSec=2<br>Restart=always<br></code></pre></td></tr></table></figure> 然而增加 data-root
+参数后依旧无效。</p>
+<h5 id="解决">解决</h5>
+<p>因为 dockerd 确实有命令修改，所以我们查看进程启动，也确实是 dockerd
+参数指定了 data root. <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@test ~]# ps aux | grep dockerd<br>root      1026  0.8  0.9 909240 77008 ?        Ssl   2019 399:56 /usr/bin/dockerd --data-root=/var/lib/docker --log-opt max-size=50m --log-opt max-file=5 --iptables=false --dns 10.233.0.3 --dns 127.0.0.1 --dns 10.3.9.132 --dns-search default.svc.cluster.local --dns-search svc.cluster.local --dns-opt ndots:2 --dns-opt timeout:2 --dns-opt attempts:2<br></code></pre></td></tr></table></figure></p>
+<p>其实 docker.service 目录下还存在一个 options 目录：
+<strong>/etc/systemd/system/docker.service.d/docker-options.conf</strong></p>
+<p>修改如下： <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[Service]</span><br><span class="hljs-attr">Environment</span>=<span class="hljs-string">&quot;DOCKER_OPTS=    --data-root=/data/docker/lib --log-opt max-size=50m --log-opt max-file=5 --iptables=false \</span><br><span class="hljs-string">--log-opt max-size=50m --log-opt max-file=5 \</span><br><span class="hljs-string">&quot;</span><br></code></pre></td></tr></table></figure></p>
 <p>到此，修改完成，如果需求老数据，则 copy 一下，应该是可行的。</p>
 
                 
