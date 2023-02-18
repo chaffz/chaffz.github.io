@@ -24,7 +24,7 @@
 <meta property="og:description" content="博主 三岁于辛，目前在杭州一家规模中等的创业公司搬砖。 曾先后在人人网、360、蘑菇街等公司工作，前6年从事 Windows 客户端开发工作，后通过自学转服务端开发。 本人学艺不精，大多都是“知其然不知所以然”，不过可以和大家一起讨论技术。在当前企业，做过较多的服务性能优化工作，如有需求也可以加微讨论。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-11-22T12:26:08.000Z">
-<meta property="article:modified_time" content="2022-10-06T04:21:48.458Z">
+<meta property="article:modified_time" content="2023-02-18T13:24:21.515Z">
 <meta property="article:author" content="三岁于辛">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -37,6 +37,12 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -318,22 +324,93 @@
         <div id="board"
           >
           
+            <div class="about-avatar">
+              <img src="/img/avatar.jpeg" srcset="/img/loading.gif" lazyload class="img-fluid" alt="avatar">
+            </div>
+          
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<article class="page-content">
-  <h2 id="博主">博主</h2>
+<div class="text-center">
+  <div class="about-info">
+    <div class="about-name">三岁于辛</div>
+    <div class="about-intro">生于 C 死于 GO</div>
+    <div class="about-icons">
+      
+        
+        
+        
+        <a href=https://github.com/chaffz class="
+           hint--bottom hint--rounded"
+           aria-label=GitHub
+           target="_blank"
+        >
+          <i class="iconfont icon-github-fill" aria-hidden="true"></i>
+          
+        </a>
+      
+        
+        
+        
+        <a  class="qr-trigger
+           "
+           
+           target="_self"
+        >
+          <i class="iconfont icon-wechat-fill" aria-hidden="true"></i>
+          
+            <img class="qr-img" src="/img/qrcode_for_%E5%AE%81%E5%AE%81%E5%A7%90.jpg" srcset="/img/loading.gif" lazyload alt="qrcode" />
+          
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+<article class="about-content page-content mt-5">
+  <div class="markdown-body">
+    <h2 id="博主">博主</h2>
 <p>三岁于辛，目前在杭州一家规模中等的创业公司搬砖。</p>
 <p>曾先后在人人网、360、蘑菇街等公司工作，前6年从事 Windows
 客户端开发工作，后通过自学转服务端开发。</p>
 <p>本人学艺不精，大多都是“知其然不知所以然”，不过可以和大家一起讨论技术。在当前企业，做过较多的服务性能优化工作，如有需求也可以加微讨论。</p>
 
+  </div>
+
+  
+</article>
+
+
+
+
 
   
 
-</article>
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
 
 
 
@@ -470,6 +547,102 @@
 
 
 
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
