@@ -176,7 +176,7 @@
                   
                   <a class="dropdown-item" href="/leetcode/">
                     <i class="iconfont icon-leetcode"></i>
-                    <span>力扣</span>
+                    <span>力扣(LeetCode)</span>
                   </a>
                 
               </div>
@@ -399,7 +399,6 @@
 <p>注意：上文中突出了 Mysql8 以前，是因为 Mysql8 已经将 .frm .opt 之类的文件放入到了事务表中进行维护，目的是很明显的。</p>
 </blockquote>
 <span id="more"></span>
-
 <p>上文说到了，MyISAM 存储引擎把索引和数据分开存放，但是在实际使用过程它俩是无法分开的，因为通过索引要能找到数据，这里是本文整理的第二个区别。</p>
 <h4 id="索引实现区别"><a href="#索引实现区别" class="headerlink" title="索引实现区别"></a>索引实现区别</h4><ul>
 <li>首先，二者都是使用 B+ tree 实现的，但是在叶子结点中存储的数据是不一样的，MyISAM 存储的是数据行的地址，而 InnoDB 不一定，为什么说不一定，看下一条；</li>

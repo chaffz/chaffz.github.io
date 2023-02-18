@@ -179,7 +179,7 @@
                   
                   <a class="dropdown-item" href="/leetcode/">
                     <i class="iconfont icon-leetcode"></i>
-                    <span>力扣</span>
+                    <span>力扣(LeetCode)</span>
                   </a>
                 
               </div>
@@ -398,18 +398,13 @@
 <p>申请地址：<a target="_blank" rel="noopener" href="https://github.com/settings/applications/new">https://github.com/settings/applications/new</a></p>
 <p>对应路径：用户头像 &gt; setting &gt; Developer settings &gt; Oauth Apps &gt; New OAuth App</p>
 <span id="more"></span>
-
-<img src="//blog.isnap.cn/cdnimg/image-20220225201610623.png" srcset="/img/loading.gif" lazyload alt="image-20220225201610623" style="zoom:50%;" />
-
+<p><img src="//blog.isnap.cn/cdnimg/image-20220225201610623.png" srcset="/img/loading.gif" lazyload alt="image-20220225201610623" style="zoom:50%;" /></p>
 <p>注册成功后，会生成 Client id。然后通过操作生成 Client 对应的 token。并将值记录下来。此为<strong>【 github 第一项功能】</strong></p>
-<img src="//blog.isnap.cn/cdnimg/image-20220225201257059.png" srcset="/img/loading.gif" lazyload alt="image-20220225201257059" style="zoom: 50%;" />
-
+<p><img src="//blog.isnap.cn/cdnimg/image-20220225201257059.png" srcset="/img/loading.gif" lazyload alt="image-20220225201257059" style="zoom: 50%;" /></p>
 <h2 id="配置应用"><a href="#配置应用" class="headerlink" title="配置应用"></a>配置应用</h2><p>首先是将上述得到的 Client 信息配置到相应的插件配置中，配置中 repo 为<strong>【github 中第二项功能】</strong>：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">gitalk:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># 要开启功能</span><br>  <span class="hljs-attr">github_id:</span> <span class="hljs-string">chaffz</span> <span class="hljs-comment"># GitHub repo owner</span><br>  <span class="hljs-attr">repo:</span> <span class="hljs-string">chaffz.github.io</span> <span class="hljs-comment"># 对应用于记录 issue 的项目名字</span><br>  <span class="hljs-attr">client_id:</span> <span class="hljs-comment"># 上述 Client</span><br>  <span class="hljs-attr">client_secret:</span> <span class="hljs-comment"># 上述 Client 对应的 Token</span><br>  <span class="hljs-attr">admin_user:</span> <span class="hljs-comment"># 上面配置的 repo 管理员的账号</span><br>  <span class="hljs-attr">distraction_free_mode:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># Facebook-like distraction free mode</span><br>  <span class="hljs-comment"># Gitalk&#x27;s display language depends on user&#x27;s browser or system environment</span><br>  <span class="hljs-comment"># If you want everyone visiting your site to see a uniform language, you can set a force language value</span><br>  <span class="hljs-comment"># Available values: en | es-ES | fr | ru | zh-CN | zh-TW</span><br>  <span class="hljs-attr">language:</span><br></code></pre></td></tr></table></figure>
-
 <p>同时，我也在另一处激活了 gitalk</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">comments:</span><br>  <span class="hljs-comment"># Choose a comment system to be displayed by default.</span><br>  <span class="hljs-comment"># Available values: changyan | disqus | disqusjs | gitalk | livere | valine</span><br>  <span class="hljs-attr">active:</span> <span class="hljs-string">gitalk</span><br></code></pre></td></tr></table></figure>
-
 <p>此时就可以在使用的 github.io 上使用了。当然如果你已经有自己的域名，则只需要更改 github 的 oauth app 的配置中 callback 项即可。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li>《<a target="_blank" rel="noopener" href="https://hexo-next.readthedocs.io/zh_CN/latest/next/advanced/gitalk-%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/">[Gitalk]评论系统</a>》</li>

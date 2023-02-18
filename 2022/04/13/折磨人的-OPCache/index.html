@@ -176,7 +176,7 @@
                   
                   <a class="dropdown-item" href="/leetcode/">
                     <i class="iconfont icon-leetcode"></i>
-                    <span>力扣</span>
+                    <span>力扣(LeetCode)</span>
                   </a>
                 
               </div>
@@ -401,35 +401,28 @@
 </ul>
 <p>怀疑的过程就是一一验证的过程，本文将一点一点的介绍我使用哪些工具，如何验证等等！</p>
 <span id="more"></span>
-
 <h2 id="小心求证"><a href="#小心求证" class="headerlink" title="小心求证"></a>小心求证</h2><h3 id="框架已较优秀"><a href="#框架已较优秀" class="headerlink" title="框架已较优秀"></a>框架已较优秀</h3><p>本司的框架是基于 Lumen8 进行迭代的，优化的点是：</p>
 <ol>
-<li>废弃了 .env 文件，因为每次请求会读取 .env 内容然后解析，这操作过程是有 I&#x2F;O 过程的，此优化是本人在之前推进完成（后续会推出相关内容）；</li>
+<li>废弃了 .env 文件，因为每次请求会读取 .env 内容然后解析，这操作过程是有 I/O 过程的，此优化是本人在之前推进完成（后续会推出相关内容）；</li>
 <li>路由的优化。</li>
 </ol>
 <p>刚开始听说框架是新开发的，自然也就怀疑相关调整是否有误？于是本人就在开发环境搭建了性能分析的平台 <code>tideway_xhprof + xhgui</code> 来一探究竟。起初的结果也是一个乌龙。因为分析后出现了大量的 <code>Composer\Autoload\includeFile@1</code> 及相关错误，怀疑了下是不是因为框架的规范不完善导致的 OPCache 失效。耽误了一点时间才想起，本人开发环境是为了适配新的框架对 php 版本的要求，重新装的新版本，OPCache 就没打开，开启后结果就达到上图左侧效果了。（不够严谨的作者，该批！）</p>
 <h3 id="环境已成模板"><a href="#环境已成模板" class="headerlink" title="环境已成模板"></a>环境已成模板</h3><p>框架不是问题，接下来的怀疑点就是环境上了。通过 <code>php -i</code> and <code>php -m</code> 等命令对环境配置做了很多确认，毫无收获。甚至把新、老版本的代码放一起进行压测比较。老版本的代码是没有任何问题的。说明不是环境问题了。</p>
 <p>接下的时间又进行了很多其它的验证，均无收获！</p>
 <h3 id="锁定-OPCache"><a href="#锁定-OPCache" class="headerlink" title="锁定 OPCache"></a>锁定 OPCache</h3><p>因为在测试环境的结果就与上图右侧结果一致（不好在测试环境搭建性能分析平台），所以大胆的猜测了下是 OPCache 未生效。所以开始时用了入侵式的方案，在入口处增加了 <code>var_dump(opcache_get_status());die;</code> 代码进行对比，发现测试环境的结果中 scripts 一项未出现任何开源的包，只出现了业务代码与内部包。多次调整代码，发现入侵式的 OPCache 信息查阅很不友好。幸亏马上就查到 <code>CacheTool</code> 这一非入侵式的工具，为后续的排查带来质的飞越。</p>
-<img src="//blog.isnap.cn/cdnimg/image-20220413180420381.png" srcset="/img/loading.gif" lazyload alt="image-20220413180420381" style="zoom:50%;" />
-
+<p><img src="//blog.isnap.cn/cdnimg/image-20220413180420381.png" srcset="/img/loading.gif" lazyload alt="image-20220413180420381" style="zoom:50%;" /></p>
 <p>通过在两个环境运行如下命令非常确定的是非私有包都未被加载到 cache 中。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">cvm</span> <br>php cachetool.phar opcache:status:scripts --fcgi=127.0.0.1:9000 | grep illuminate<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">pod container</span><br>php cachetool.phar opcache:status:scripts --fcgi=127.0.0.1:9000<br></code></pre></td></tr></table></figure>
-
-<img src="//blog.isnap.cn/cdnimg/image-20220413180942219.png" srcset="/img/loading.gif" lazyload alt="image-20220413180942219" style="zoom:50%;" />
-
+<p><img src="//blog.isnap.cn/cdnimg/image-20220413180942219.png" srcset="/img/loading.gif" lazyload alt="image-20220413180942219" style="zoom:50%;" /></p>
 <p>那么，到此为止，一切的问题就变成了<strong>为什么 OPCache 在容器中对开源包不生效的问题了</strong>？</p>
 <h3 id="拨开云雾见真经"><a href="#拨开云雾见真经" class="headerlink" title="拨开云雾见真经"></a>拨开云雾见真经</h3><p>在确定了 OPCache 不生效只针对开源项目的包，还折腾了很久……</p>
-<p>后来一个无意间的小操作发现了问题所在，在怀疑是否文件有问题时 <code>ls -al </code> 了下文件，发现居然是 <em>2022 年 9 月 22</em> 一个未来时间。虽然没有第一时间去查阅为啥都以 OPCache 对未来时间不生效，但是为了快速确定是否有影响，本人修改文件的时间再次验证：</p>
+<p>后来一个无意间的小操作发现了问题所在，在怀疑是否文件有问题时 <code>ls -al</code> 了下文件，发现居然是 <em>2022 年 9 月 22</em> 一个未来时间。虽然没有第一时间去查阅为啥都以 OPCache 对未来时间不生效，但是为了快速确定是否有影响，本人修改文件的时间再次验证：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">touch ./vendor/illuminate/database/DatabaseServiceProvider.php<br></code></pre></td></tr></table></figure>
-
 <p>修改完时间后再次执行代码，发现已经能通过 cachetool 看到相应的缓存脚本了。那接下来就是验证结论的时刻。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">find ./* -type f -exec touch &#123;&#125; \; # 修改完所有文件的时间<br></code></pre></td></tr></table></figure>
-
 <p>再次运行压测，然后就一切正常了。那接下来问题就变成了两个：<strong>运维确定因啥时间会变成未来时间？</strong> &amp; <strong>OPCache 使用哪个时间及怎么判断时间了？</strong></p>
 <p>针对时间问题，本人翻阅了下 php 源码中 OPCache 相关代码，可以确定是使用了 st_mtime。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 调用</span><br><span class="hljs-type">accel_time_t</span> <span class="hljs-title function_">zend_get_file_handle_timestamp</span><span class="hljs-params">(zend_file_handle *file_handle, <span class="hljs-type">size_t</span> *size)</span><br>&#123;<br>  <span class="hljs-comment">// ...</span><br>  zend_fstat(fileno(file_handle-&gt;handle.fp), &amp;statbuf)<br>  <span class="hljs-comment">// ...</span><br>  <span class="hljs-keyword">return</span> statbuf.st_mtime;<br>&#125;<br><span class="hljs-comment">// 依赖</span><br><span class="hljs-meta"># <span class="hljs-keyword">define</span> zend_fstat fstat <span class="hljs-comment">// 非 win 系统 </span></span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">stat</span> &#123;</span><br>	<span class="hljs-comment">// ...</span><br>  <span class="hljs-type">time_t</span>    st_mtime;   <span class="hljs-comment">/* time of last modification */</span><br>&#125;;<br><span class="hljs-comment">// 验证</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">validate_timestamp_and_record</span><span class="hljs-params">(zend_persistent_script *persistent_script, zend_file_handle *file_handle)</span><br>&#123;<br>	<span class="hljs-keyword">if</span> (persistent_script-&gt;timestamp == <span class="hljs-number">0</span>) &#123;<br>		<span class="hljs-keyword">return</span> SUCCESS; <span class="hljs-comment">/* Don&#x27;t check timestamps of preloaded scripts */</span><br>	&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ZCG(accel_directives).revalidate_freq &amp;&amp;<br>      <span class="hljs-comment">// 验证时间与请求时间对比，理解上此处一直是成功状态，所以不会进行缓存</span><br>	    persistent_script-&gt;dynamic_members.revalidate &gt;= ZCG(request_time)) &#123;<br>		<span class="hljs-keyword">return</span> SUCCESS;<br>	&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (do_validate_timestamps(persistent_script, file_handle) == FAILURE) &#123;<br>		<span class="hljs-keyword">return</span> FAILURE;<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 验证时间是上一次验证时间 + 间隔时间</span><br>		persistent_script-&gt;dynamic_members.revalidate = ZCG(request_time) + ZCG(accel_directives).revalidate_freq;<br>		<span class="hljs-keyword">return</span> SUCCESS;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://learnku.com/articles/29967">Tideways、xhprof 和 xhgui 打造 PHP 非侵入式监控平台</a></li>
 <li><a target="_blank" rel="noopener" href="https://phpmianshi.com/?id=261">php中opcache注意事项以及调优</a></li>

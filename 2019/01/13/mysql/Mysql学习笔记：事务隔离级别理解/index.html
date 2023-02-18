@@ -16,12 +16,12 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="这个问题其实有很多人都已经教科书式的总结了很多遍，如：    隔离级别 中文描述 此级别问题(面试官喜欢用这个)    READ UNCOMMITED 未提交读 脏读   READ COMMITED 提交读 不可重复读   REPEATABLE READ 可重复读 幻读   SERIALIZABLE 串行化 锁   但是在这个表格中最后一列的问题因何产生，很多人会不明白其中的缘由。我先说下我的理解">
+    <meta name="description" content="这个问题其实有很多人都已经教科书式的总结了很多遍，如：     隔离级别 中文描述 此级别问题(面试官喜欢用这个)     READ UNCOMMITED 未提交读 脏读   READ COMMITED 提交读 不可重复读   REPEATABLE READ 可重复读 幻读   SERIALIZABLE 串行化 锁     但是在这个表格中最后一列的问题因何产生，很多人会不明白其中的缘由。我先说下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql学习笔记：事务隔离级别理解">
 <meta property="og:url" content="https://blog.isnap.cn/2019/01/13/mysql/Mysql%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E7%90%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="这个问题其实有很多人都已经教科书式的总结了很多遍，如：    隔离级别 中文描述 此级别问题(面试官喜欢用这个)    READ UNCOMMITED 未提交读 脏读   READ COMMITED 提交读 不可重复读   REPEATABLE READ 可重复读 幻读   SERIALIZABLE 串行化 锁   但是在这个表格中最后一列的问题因何产生，很多人会不明白其中的缘由。我先说下我的理解">
+<meta property="og:description" content="这个问题其实有很多人都已经教科书式的总结了很多遍，如：     隔离级别 中文描述 此级别问题(面试官喜欢用这个)     READ UNCOMMITED 未提交读 脏读   READ COMMITED 提交读 不可重复读   REPEATABLE READ 可重复读 幻读   SERIALIZABLE 串行化 锁     但是在这个表格中最后一列的问题因何产生，很多人会不明白其中的缘由。我先说下">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-01-13T07:47:17.000Z">
 <meta property="article:modified_time" content="2022-10-06T04:21:48.421Z">
@@ -174,7 +174,7 @@
                   
                   <a class="dropdown-item" href="/leetcode/">
                     <i class="iconfont icon-leetcode"></i>
-                    <span>力扣</span>
+                    <span>力扣(LeetCode)</span>
                   </a>
                 
               </div>
@@ -325,7 +325,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.3k 字
         
       </span>
     
@@ -388,6 +388,7 @@
               <div class="markdown-body">
                 
                 <p>这个问题其实有很多人都已经教科书式的总结了很多遍，如：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -396,7 +397,8 @@
 <th>此级别问题(面试官喜欢用这个)</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>READ UNCOMMITED</td>
 <td>未提交读</td>
 <td>脏读</td>
@@ -416,23 +418,25 @@
 <td>串行化</td>
 <td>锁</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>但是在这个表格中最后一列的问题因何产生，很多人会不明白其中的缘由。我先说下我的理解，然后再来一点点解释：</p>
 <blockquote>
 <p><strong>事务隔离的四个级别可以先用“事务是否可并发”来划分成两个对立面来理解：</strong></p>
 <ol>
 <li>事务不可并发在 Mysql 中只有 SERIALIZABLE 这一级别满足；其它的当然是事务可并发了；</li>
 <li>事务不可并发，Mysql 选择了串行化这一实现方式，因此引入了锁，也带来了性能问题；</li>
-<li>事务可并发，因此在多个并发的事务期间，我们并不知道哪个事务的哪段逻辑（begin&#x2F;rollback&#x2F;commit）会在下一个时间片内被执行；</li>
+<li>事务可并发，因此在多个并发的事务期间，我们并不知道哪个事务的哪段逻辑（begin/rollback/commit）会在下一个时间片内被执行；</li>
 </ol>
 </blockquote>
 <span id="more"></span>
-
 <h1 id="并发事务带来的问题"><a href="#并发事务带来的问题" class="headerlink" title="并发事务带来的问题"></a>并发事务带来的问题</h1><p>在上面的描述中，2、3是对1的一个扩展，2不难理解，但是 3 可能有些生硬，我们可以简单的换种理解方式，</p>
 <ol>
 <li>假设同一时间有两个事务: <strong>A &amp; B</strong>，并且事务 A 执行 update，事务 B 执行 select。</li>
 <li>假设事务的开启、提交、回滚及事务中执行的 Action 都能在一个 cpu 时间片内完成，那么可把 A&amp;B 的事务拆成如下逻辑调用段：</li>
 </ol>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -441,7 +445,8 @@
 <th>事务B</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1</td>
 <td>begin</td>
 <td>begin</td>
@@ -461,26 +466,18 @@
 <td>rollback</td>
 <td>rollback</td>
 </tr>
-<tr>
-<td>基于上面的假设，我们再来理解事务并发情况下各种问题的产生：</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
+<p>基于上面的假设，我们再来理解事务并发情况下各种问题的产生：</p>
 <h2 id="脏读"><a href="#脏读" class="headerlink" title="脏读"></a>脏读</h2><ol>
-<li>A begin &#x3D;&gt; update 后让 cpu</li>
-<li>同时B begin &#x3D;&gt; select，但是事务 B 很心大，并没有去验证 A 的有效性，读到了 A update 后的数据；</li>
-<li>A 在下一个 cpu 时间又得到了调度，A 发现自己刚才的操作无效了，A rollback 得到了执行，但是它无法告知 B 了，所以 B 读到的数据是无效的；</li>
-</ol>
-<h2 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h2><p>知道了脏读的原因后，为了解决这个问题，Mysql 规定 B 读的数据只能读取已经 commit 状态的数据：</p>
-<ol>
-<li>A begin &#x3D;&gt; update 后让 cpu</li>
-<li>同时 B begin &#x3D;&gt; select，这次 B 很小心地验证 A 的数据是否 commit 了，B 这次读到了 A begin 以前的数据；</li>
+<li>A begin =&gt; update 后让 cpu</li>
+<li>同时B begin =&gt; select，但是事务 B 很心大，并没有去验证 A 的有效性，读到了 A update 后的数据；</li>
+<li>A 在下一个 cpu 时间又得到了调度，A 发现自己刚才的操作无效了，A rollback 得到了执行，但是它无法告知 B 了，所以 B 读到的数据是无效的；<h2 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h2>知道了脏读的原因后，为了解决这个问题，Mysql 规定 B 读的数据只能读取已经 commit 状态的数据：</li>
+<li>A begin =&gt; update 后让 cpu</li>
+<li>同时 B begin =&gt; select，这次 B 很小心地验证 A 的数据是否 commit 了，B 这次读到了 A begin 以前的数据；</li>
 <li>事务 A 在下一个 cpu 时间又得到了调度，A commit 了；</li>
-<li>B 再次 select，但是已经 select 到了 A commit 后的数据了，B 在 A commit 前后读到了两次不一样的数据，即不可重复读了；</li>
-</ol>
-<h2 id="幻读"><a href="#幻读" class="headerlink" title="幻读"></a>幻读</h2><p>知道了不可重复读的原因后，Mysql 又规定，既然 B 第一次读到的是 A commit 前的数据，那么在事务 B 中后面无论多少次 select 都只能读到 A commit 之前的数据。但是问题又来了：</p>
-<ol>
+<li>B 再次 select，但是已经 select 到了 A commit 后的数据了，B 在 A commit 前后读到了两次不一样的数据，即不可重复读了；<h2 id="幻读"><a href="#幻读" class="headerlink" title="幻读"></a>幻读</h2>知道了不可重复读的原因后，Mysql 又规定，既然 B 第一次读到的是 A commit 前的数据，那么在事务 B 中后面无论多少次 select 都只能读到 A commit 之前的数据。但是问题又来了：</li>
 <li>这次 A 不是 update 了，而是 insert，B select 也不是单条了，而是 select range；</li>
 <li>B 在 A commit 前后两次 select range 会发现结果的数量不一至；这就是幻读；<blockquote>
 <p>InnoDB 针对幻读也做了处理：MVCC，在每一行后都有隐藏的两列版本号来实现；大致与处理不可重复读相同；</p>

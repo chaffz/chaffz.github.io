@@ -170,7 +170,7 @@
                   
                   <a class="dropdown-item" href="/leetcode/">
                     <i class="iconfont icon-leetcode"></i>
-                    <span>力扣</span>
+                    <span>力扣(LeetCode)</span>
                   </a>
                 
               </div>
@@ -396,20 +396,14 @@
 </ol>
 <p>所以将核心转化成了步骤 2 中如何<strong>去重</strong>。这里有两种：<code>SELECT DISTINCT</code> 和 <code>GROUP BY</code>。</p>
 <h4 id="DISTINCT"><a href="#DISTINCT" class="headerlink" title="DISTINCT"></a>DISTINCT</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> xxx_copy (name, email)<br>    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> name, email <span class="hljs-keyword">FROM</span> xxx;<br></code></pre></td></tr></table></figure>
-
 <h4 id="GROUP-BY"><a href="#GROUP-BY" class="headerlink" title="GROUP BY"></a>GROUP BY</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> xxx_copy (name, email)<br>    <span class="hljs-keyword">SELECT</span> name, email <span class="hljs-keyword">FROM</span> xxx <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> name, email;<br></code></pre></td></tr></table></figure>
-
 <h3 id="删除重复行"><a href="#删除重复行" class="headerlink" title="删除重复行"></a>删除重复行</h3><p>删除重复行核心就是要找出重复的行：</p>
 <ul>
 <li>使用 <code>INNER JOIN</code>;</li>
-<li>MySQL 8 以后还可使用 <code>row_number() over (partition by ...) </code></li>
+<li>MySQL 8 以后还可使用 <code>row_number() over (partition by ...)</code></li>
 </ul>
 <h4 id="INNER-JOIN"><a href="#INNER-JOIN" class="headerlink" title="INNER JOIN"></a>INNER JOIN</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">delete</span> <span class="hljs-keyword">from</span> xxx <span class="hljs-keyword">where</span> id <span class="hljs-keyword">in</span> (<span class="hljs-keyword">select</span> t1.id <span class="hljs-keyword">from</span> xxx t1 <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> xxx t2<br>    <span class="hljs-keyword">WHERE</span> t1.id <span class="hljs-operator">&lt;</span> t2.id <span class="hljs-keyword">AND</span> t1.name <span class="hljs-operator">=</span> t2.name);<br></code></pre></td></tr></table></figure>
-
 <h4 id="ROW-NUMBER"><a href="#ROW-NUMBER" class="headerlink" title="ROW_NUMBER"></a>ROW_NUMBER</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">delete</span> <span class="hljs-keyword">from</span> xxx <span class="hljs-keyword">where</span> id <span class="hljs-keyword">in</span> (<span class="hljs-keyword">select</span> id, name, <span class="hljs-built_in">row_number</span>() <span class="hljs-keyword">over</span> (<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> name <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> id)<br>	<span class="hljs-keyword">from</span> xxx);<br></code></pre></td></tr></table></figure>
-
-
-
 
                 
               </div>

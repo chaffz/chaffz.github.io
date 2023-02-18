@@ -170,7 +170,7 @@
                   
                   <a class="dropdown-item" href="/leetcode/">
                     <i class="iconfont icon-leetcode"></i>
-                    <span>力扣</span>
+                    <span>力扣(LeetCode)</span>
                   </a>
                 
               </div>
@@ -384,7 +384,6 @@
               <div class="markdown-body">
                 
                 <h2 id="for-range-channel-引发的思考"><a href="#for-range-channel-引发的思考" class="headerlink" title="for range channel 引发的思考"></a>for range channel 引发的思考</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">ch := make(chan struct&#123;&#125;, 2)<br><br>for i := 0; i &lt; 10; i++ &#123;<br>	// &lt;- ch                  // 1<br>	go func() &#123;<br>		// &lt;- ch                // 2<br>		// do something here<br>		// ...<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>一哥们找我说上面的代码（写法 1 &amp; 2）有什么意图时，开始我还没 get 到点，而且还陷入了调度顺序的逻辑里。</p>
 <p>首先要说明的是：两种写法都能控制并发的数量。</p>
 <p>其实，这哥们想讨论的其实是资源本身的问题，用<strong>写法 1</strong> 是在拿到准入条件后才开始去创建 goroutine 的，但是<strong>写法 2</strong> 是一开始就创建了所有的 goroutine 然后才开始去竞争准入条件的。很明显 1 比 2 消耗更少的资源。</p>

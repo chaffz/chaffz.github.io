@@ -179,7 +179,7 @@
                   
                   <a class="dropdown-item" href="/leetcode/">
                     <i class="iconfont icon-leetcode"></i>
-                    <span>力扣</span>
+                    <span>力扣(LeetCode)</span>
                   </a>
                 
               </div>
@@ -396,15 +396,12 @@
 <p><img src="//blog.isnap.cn/cdnimg/image-20220309101254791.png" srcset="/img/loading.gif" lazyload alt="image-20220309101254791"></p>
 <p>现在问题转变成了：是 filebeat 采集问题；还是 logstash 消费问题；或者是 es 的服务问题？</p>
 <span id="more"></span>
-
 <p>对于 filebeat 原来我们是粗略的读过源码并且有尝试修改的，且针对这块流程运行测试过，应该是问题不大，但是对于消息还是 es 写入问题没有大的把握。不过既然确定了方向那就一一验证好了。</p>
 <p>用 kibana 的开发工具，读取集群的状态：</p>
 <p>用 <code>_cat</code> 或者 <code>_nodes</code> 可读取获取服务信息，输入 GET _cat | _nodes 会主动提示相关内容 </p>
-<img src="//blog.isnap.cn/cdnimg/image-20220309102554960.png" srcset="/img/loading.gif" lazyload alt="image-20220309102554960" style="zoom:67%;" />
-
+<p><img src="//blog.isnap.cn/cdnimg/image-20220309102554960.png" srcset="/img/loading.gif" lazyload alt="image-20220309102554960" style="zoom:67%;" /></p>
 <p>如果遇到的用法不知道时也不用担心。直接打开文档阅读即可。</p>
-<img src="//blog.isnap.cn/cdnimg/image-20220309102702135.png" srcset="/img/loading.gif" lazyload alt="image-20220309102702135" style="zoom:67%;" />
-
+<p><img src="//blog.isnap.cn/cdnimg/image-20220309102702135.png" srcset="/img/loading.gif" lazyload alt="image-20220309102702135" style="zoom:67%;" /></p>
 <p>针对本次问题中我因为关心的是写问题，所以直接查看了 thread_pool 相关信息</p>
 <p><img src="//blog.isnap.cn/cdnimg/image-20220309102908908.png" srcset="/img/loading.gif" lazyload alt="image-20220309102908908"></p>
 <p>这样能知道相关的 thread_pool中各各种类型的数据，有点不直观。通过阅读文档，是可以直接查看某种行为的：</p>

@@ -16,12 +16,12 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Q:  123fatal: [test-k8s2-node-3]: FAILED! &#x3D;&gt; &amp;#123;    &quot;reason&quot;: &quot;&amp;#x27;delegate_to&amp;#x27; is not a valid attribute for a TaskInclude\n\nThe error appears to be in &amp;#x27;&#x2F;data&#x2F;src&#x2F;sof">
+    <meta name="description" content="Q:123fatal: [test-k8s2-node-3]: FAILED! &#x3D;&gt; &amp;#123;    &quot;reason&quot;: &quot;&amp;#x27;delegate_to&amp;#x27; is not a valid attribute for a TaskInclude\n\nThe error appears to be in &amp;#x27;&#x2F;data&#x2F;src&#x2F;softw">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一句话笔记-20220307">
 <meta property="og:url" content="https://blog.isnap.cn/2022/03/07/weekly/20220307/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="Q:  123fatal: [test-k8s2-node-3]: FAILED! &#x3D;&gt; &amp;#123;    &quot;reason&quot;: &quot;&amp;#x27;delegate_to&amp;#x27; is not a valid attribute for a TaskInclude\n\nThe error appears to be in &amp;#x27;&#x2F;data&#x2F;src&#x2F;sof">
+<meta property="og:description" content="Q:123fatal: [test-k8s2-node-3]: FAILED! &#x3D;&gt; &amp;#123;    &quot;reason&quot;: &quot;&amp;#x27;delegate_to&amp;#x27; is not a valid attribute for a TaskInclude\n\nThe error appears to be in &amp;#x27;&#x2F;data&#x2F;src&#x2F;softw">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-07T08:23:42.000Z">
 <meta property="article:modified_time" content="2022-10-06T04:21:48.443Z">
@@ -170,7 +170,7 @@
                   
                   <a class="dropdown-item" href="/leetcode/">
                     <i class="iconfont icon-leetcode"></i>
-                    <span>力扣</span>
+                    <span>力扣(LeetCode)</span>
                   </a>
                 
               </div>
@@ -321,7 +321,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          515 字
+          510 字
         
       </span>
     
@@ -383,12 +383,10 @@
             
               <div class="markdown-body">
                 
-                <p>Q: </p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">fatal: [test-k8s2-node-3]: FAILED! =&gt; &#123;<br>    <span class="hljs-string">&quot;reason&quot;</span>: <span class="hljs-string">&quot;&#x27;delegate_to&#x27; is not a valid attribute for a TaskInclude\n\nThe error appears to be in &#x27;/data/src/software/kubespray-2.10.3/roles/download/tasks/download_container.yml&#x27;: line 2, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n---\n- name: container_download | Make download decision if pull is required by tag or sha256\n  ^ here\n&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
+                <p>Q:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">fatal: [test-k8s2-node-3]: FAILED! =&gt; &#123;<br>    <span class="hljs-string">&quot;reason&quot;</span>: <span class="hljs-string">&quot;&#x27;delegate_to&#x27; is not a valid attribute for a TaskInclude\n\nThe error appears to be in &#x27;/data/src/software/kubespray-2.10.3/roles/download/tasks/download_container.yml&#x27;: line 2, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n---\n- name: container_download | Make download decision if pull is required by tag or sha256\n  ^ here\n&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure></p>
 <p>A:</p>
 <blockquote>
-<p>export ANSIBLE_INVALID_TASK_ATTRIBUTE_FAILED&#x3D;False</p>
+<p>export ANSIBLE_INVALID_TASK_ATTRIBUTE_FAILED=False</p>
 </blockquote>
 
                 

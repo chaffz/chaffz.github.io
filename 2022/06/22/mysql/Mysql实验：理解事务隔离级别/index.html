@@ -172,7 +172,7 @@
                   
                   <a class="dropdown-item" href="/leetcode/">
                     <i class="iconfont icon-leetcode"></i>
-                    <span>力扣</span>
+                    <span>力扣(LeetCode)</span>
                   </a>
                 
               </div>
@@ -395,6 +395,7 @@
 <p>这时，我们把刚才提交事务的 session 隔离级别改成 read uncommitted。然后在 RC 级别的 session 中更改数据且不提交事务，我再看看另一个 session 中的数据，发现已经读到了 40 了。这就是 read uncommitted 级别下是会出现脏读的。</p>
 <p>最后我们再来实验下幻读的情况，我们将刚才的脏读 session 改成默认的 RR 级别。然后确认我们的数据中最大的一个 ID 是 10，所以我们要查 ID 为 11 的数据肯定是不存在的。这里我在 RC 级别的 session 中插入一条 ID 为 9 的数据。在 RR 的 session 中直接查找 ID 为 11的数据是不存在的，但是当我们也想插入一条 ID 为 11 的数据时就出现了重复 key 的报错了。这就是说在 RR 级别下是存在幻读的。</p>
 <p>今天的实验到此结束，最后总结下。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -404,7 +405,8 @@
 <th>幻读</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>Read Uncommitted</td>
 <td>✅</td>
 <td>✅</td>
@@ -428,7 +430,9 @@
 <td>❌</td>
 <td>❌</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 
                 
               </div>

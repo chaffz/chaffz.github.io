@@ -170,7 +170,7 @@
                   
                   <a class="dropdown-item" href="/leetcode/">
                     <i class="iconfont icon-leetcode"></i>
-                    <span>力扣</span>
+                    <span>力扣(LeetCode)</span>
                   </a>
                 
               </div>
@@ -385,16 +385,13 @@
                 
                 <h2 id="Centos-上编译安装-gcc-新版本"><a href="#Centos-上编译安装-gcc-新版本" class="headerlink" title="Centos 上编译安装 gcc 新版本"></a>Centos 上编译安装 gcc 新版本</h2><p>下载需要的版本：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">wget http://ftp.gnu.org/gnu/gcc/gcc-11.2.0/gcc-11.2.0.tar.gz<br>tar zxvf gcc-11.2.0.tar.gz<br>mkdir gcc-11.2.0/build &amp;&amp; cd gcc-11.2.0/build<br>../configure --prefix=/opt/gcc_build/ --enable-checking=release --enable-languages=c,c++ --disable-multilib<br></code></pre></td></tr></table></figure>
-
 <p>如果遇到错误：</p>
 <blockquote>
 <p>configure: error: Building GCC requires GMP 4.2+, MPFR 3.1.0+ and MPC 0.8.0+.</p>
 </blockquote>
 <span id="more"></span>
-
 <p>可回到 gcc 源码根目录，然后执行依赖下载</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ..<br>./contrib/download_prerequisites<br></code></pre></td></tr></table></figure>
-
 <p>下载完成后重新回到 build 目录并编译安装：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd build<br>make &amp;&amp; make install<br></code></pre></td></tr></table></figure>
 
