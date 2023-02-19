@@ -16,15 +16,15 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Prefix Sum String">
+    <meta name="description" content="gRPC 连接池的一种实现 本文将详细说明在生产环境已经在使用的一种 gRPC 连接池实现方案，它有一个前提是对 gRPC 的使用已经引入了管理者角色（如 go-micro 框架），而不是完全使用 gRPC 框架管理连接。当然，小编也基于 gRPC 的 picker 等实现了原生 gRPC 的连接池管理。  历史文章  Prefix Sum String">
 <meta property="og:type" content="website">
 <meta property="og:title" content="LeetCode 算法学习笔记">
 <meta property="og:url" content="https://blog.isnap.cn/leetcode/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="Prefix Sum String">
+<meta property="og:description" content="gRPC 连接池的一种实现 本文将详细说明在生产环境已经在使用的一种 gRPC 连接池实现方案，它有一个前提是对 gRPC 的使用已经引入了管理者角色（如 go-micro 框架），而不是完全使用 gRPC 框架管理连接。当然，小编也基于 gRPC 的 picker 等实现了原生 gRPC 的连接池管理。  历史文章  Prefix Sum String">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-11-30T11:42:07.000Z">
-<meta property="article:modified_time" content="2023-02-18T16:32:13.299Z">
+<meta property="article:modified_time" content="2023-02-19T08:19:53.769Z">
 <meta property="article:author" content="三岁于辛">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -336,7 +336,15 @@
                 
 
 <article class="page-content">
-  <ul>
+  <h4 id="section"><a href="/2023/02/19/algorithm/gRPC%20%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E4%B8%80%E7%A7%8D%E5%AE%9E%E7%8E%B0/" title="gRPC 连接池的一种实现">gRPC 连接池的一种实现</a></h4>
+<p>本文将详细说明在生产环境已经在使用的一种 gRPC
+连接池实现方案，它有一个<strong>前提是对 gRPC
+的使用已经引入了管理者角色（如 go-micro 框架），而不是完全使用 gRPC
+框架管理连接</strong>。<em>当然，小编也基于 gRPC 的 picker 等实现了原生
+gRPC 的连接池管理。</em></p>
+<hr />
+<h4 id="历史文章">历史文章</h4>
+<ul>
 <li><a href="/2022/11/30/algorithm/leetcode/Prefix%20Sum/" title="Prefix Sum">Prefix Sum</a></li>
 <li><a href="/2022/12/03/algorithm/leetcode/String/" title="String">String</a></li>
 </ul>
