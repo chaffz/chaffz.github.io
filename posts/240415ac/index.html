@@ -587,19 +587,23 @@ GitHub Pages 所提供的功能，配合 Nodejs 来完成个人博客的搭建�
   
     <article id="comments" lazyload>
       
-  <div id="gitalk-container"></div>
+  <div id="valine"></div>
   <script type="text/javascript">
-    Fluid.utils.loadComments('#gitalk-container', function() {
-      Fluid.utils.createCssLink('/css/gitalk.css')
-      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.8.0/gitalk.min.js', function() {
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
         var options = Object.assign(
-          {"clientID":"0dba134382ca5771d6e6","clientSecret":"cd66d55578bdbe8189866681ce49e75794159b9f","repo":"chaffz.github.io","owner":"chaffz","admin":["chaffz"],"language":"zh-CN","labels":["gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token"},
+          {"appId":"lJyHL6tUPWvWOkj51hrdT5Sj-gzGzoHsz","appKey":"r7Yhgjlm4KKUSmLtwmYJ4d5H","path":"window.location.pathname","placeholder":"请正确填写邮箱以便接收回复通知,如需添加图片,请通过第三方图床引用图片,评论支持Markdown语法","avatar":"retro","meta":["nick","mail"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
           {
-            id: 'a8ad0fc3b83bab1d3a24fe586a1e9636'
+            el: "#valine",
+            path: window.location.pathname
           }
         )
-        var gitalk = new Gitalk(options);
-        gitalk.render('gitalk-container');
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
       });
     });
   </script>
