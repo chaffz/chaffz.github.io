@@ -1,0 +1,980 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.jpeg">
+  <link rel="icon" href="/img/avatar.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="三岁于辛">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="写在前面 这里说的插件，其实是基于 node-addon-api 编写的插件。有人会说，其实 github 上已经有人开源的打印机相关的组件。 但是，它不是本人要的。 本人需要的是：第一时间知道打印机的及打印任务的所有状态！ ## 最初实现 开始写第一个版本时，因为进度需要，本人快速实现了一个 dll 版本，然后在 electron 中通过 ffi 组件调用本人的 dll 。它工作得很好，但是它调">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node&#x2F;electron插件: 由监听 Windows 打印机状态功能深入理解原生node插件编写过程">
+<meta property="og:url" content="https://blog.isnap.cn/posts/7ed85540/index.html">
+<meta property="og:site_name" content="三岁于辛博客">
+<meta property="og:description" content="写在前面 这里说的插件，其实是基于 node-addon-api 编写的插件。有人会说，其实 github 上已经有人开源的打印机相关的组件。 但是，它不是本人要的。 本人需要的是：第一时间知道打印机的及打印任务的所有状态！ ## 最初实现 开始写第一个版本时，因为进度需要，本人快速实现了一个 dll 版本，然后在 electron 中通过 ffi 组件调用本人的 dll 。它工作得很好，但是它调">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-03-24T04:05:06.000Z">
+<meta property="article:modified_time" content="2023-02-25T03:25:59.738Z">
+<meta property="article:author" content="三岁于辛">
+<meta property="article:tag" content="node">
+<meta property="article:tag" content="electron">
+<meta property="article:tag" content="node-addon">
+<meta property="article:tag" content="node-addon-api">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>node/electron插件: 由监听 Windows 打印机状态功能深入理解原生node插件编写过程 - 三岁于辛博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont-menu/iconfont.css">
+<link rel="stylesheet" href="/css/mac.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.isnap.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"4d6b2454c24110cf12701644d6c772b0","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?4d6b2454c24110cf12701644d6c772b0";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>三岁于辛博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>算法</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/leetcode/">
+                    <i class="iconfont icon-leetcode"></i>
+                    <span>力扣(LeetCode)</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-stack-overflow-fill"></i>
+                <span>专题</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/mysql/">
+                    <i class="iconfont icon-MySQL"></i>
+                    <span>MySQL</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/golang/">
+                    <i class="iconfont icon-PITAO-tuboshu"></i>
+                    <span>Golang</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/weekly/">
+                <i class="iconfont icon-kakao-talk-fill"></i>
+                <span>笔记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-note"></i>
+                <span>传送门</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    <span>归档</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    <span>分类</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    <span>标签</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="node/electron插件: 由监听 Windows 打印机状态功能深入理解原生node插件编写过程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-03-24 12:05" pubdate>
+          2019年3月24日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          62 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">node/electron插件: 由监听 Windows 打印机状态功能深入理解原生node插件编写过程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="写在前面">写在前面</h1>
+<p>这里说的插件，其实是基于 node-addon-api 编写的插件。有人会说，其实
+github 上已经有人开源的打印机相关的组件。 但是，它不是本人要的。
+本人需要的是：第一时间知道打印机的及打印任务的所有状态！ ## 最初实现
+开始写第一个版本时，因为进度需要，本人快速实现了一个 dll 版本，然后在
+electron 中通过 <a
+target="_blank" rel="noopener" href="https://github.com/node-ffi-napi/node-ffi-napi"><strong>ffi</strong></a>
+组件调用本人的 dll 。它工作得很好，但是它调用链中增加了一层 ffi
+，让本人很是介意~有点强迫症！！！ ## 重写版本
+第一个版本功能稳定后，本人深入挖了一下 ffi
+的功能实现(本人不是写前端的，node也是初次接触)，Get 到它本身也是 C/C++
+实现的组件，然后看了下 node 官方对组件开发的相关介绍，决定绕过 ffi
+把本人的 dll 直接变成 node 的插件。</p>
+<h1 id="开始填坑">开始填坑</h1>
+<p>为什么说是开始填坑？ 因为本人的功能是 C/C++ &amp; C#
+混编的！这中间的坑只填过了，才知深浅。</p>
+<span id="more"></span>
+<h2 id="坑1项目配置-托管-clr">坑1：项目配置 —— 托管 /clr</h2>
+<p>node 原生插件开发使用了 gyp
+配置，为了方便大家使用，官方提供了开源配置项目 <a
+target="_blank" rel="noopener" href="https://github.com/nodejs/node-gyp">node-gyp</a>，依葫芦画瓢，很快完成了
+<em>Hello World.</em>，但是，咱怎么能忘记了混编呢？微软对于 C/C++ &amp;
+C# 混编的配置选项叫 <strong>/clr</strong> 。找到 MSVSSettings.py 中 /clr
+注释对应的配置选项为 CompileAsManaged ，当然也有人在 issue 里提了在
+AdditionalOptions 里面增加 /clr
+，本人不反对，本人也没有验证，而是选择使用开源代码提供的
+CompileAsManaged 选项。有过混编经验的都知道，光改完 /clr
+是远远不够，还要改程序集等等一堆选项。这里有一个小技巧，就是可以依赖 npm
+install 来处理，最终修改到的选项如下： <figure class="highlight gyp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gyp"><span class="hljs-string">&quot;RuntimeLibrary&quot;</span>: <span class="hljs-number">2</span>, <span class="hljs-comment">#MultiThreadedDLL /MD</span><br><span class="hljs-string">&quot;Optimization&quot;</span>: <span class="hljs-number">2</span>,<br><span class="hljs-string">&quot;RuntimeTypeInfo&quot;</span>: <span class="hljs-string">&quot;true&quot;</span>,<br><span class="hljs-string">&quot;CompileAsManaged&quot;</span>: <span class="hljs-string">&quot;true&quot;</span>, <span class="hljs-comment"># /clr</span><br><span class="hljs-string">&quot;DebugInformationFormat&quot;</span>: <span class="hljs-number">3</span>, <span class="hljs-comment">#ProgramDatabase /Zi</span><br><span class="hljs-string">&quot;ExceptionHandling&quot;</span>: <span class="hljs-number">0</span>, <span class="hljs-comment">#Async /EHa</span><br><span class="hljs-string">&quot;BasicRuntimeChecks&quot;</span>: <span class="hljs-number">0</span>, <span class="hljs-comment">#Default</span><br></code></pre></td></tr></table></figure></p>
+<h2 id="坑2项目配置-win_delay_load_hook">坑2：项目配置 ——
+win_delay_load_hook</h2>
+<p>踩过坑1后，开始写逻辑了，并且也顺利的实现了功能，开始调度时却被告之：
+&gt;<em>正尝试在 OS 加载程序锁内执行托管代码。不要尝试在 DllMain
+或映像初始化函数内运行托管代码，这样做会导致应用程序挂起。</em></p>
+<p>按第一版的实现，本人知道要在 dll 注册位置加上： <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> unmanaged</span><br></code></pre></td></tr></table></figure>
+但是，这个位置具体在哪呢？第一反应应该就是 node
+插件初始化的宏位置，但...... 于是又重新翻看了 node addon 的文档，找到了
+win_delay_load_hook 这个配置，要设置成 true ，但其实它默认就是
+true。既然是默认选项，为何还是不行呢？仔细看此配置的功能，它其实是在项目中默认增加了
+win_delay_load_hook.cc 的文件，源文件位于 node-gyp/src
+中，将其找出来看后才知道 dll 的入口在这，并且与 depend++ 查看 dll
+的导出是一致的，在此文件中加上 <strong>#pragma unmanaged</strong>
+后，程序能顺利运行了。 &gt; 这里有个小技巧：win_delay_load_hook.cc
+默认在 node_modules
+中，而且项目一般不会直接带上这个文件夹，也就是说如果每个开发人员重新 npm
+install 时此文件会被覆盖，我们其实可以在 gyp 配置中把
+win_delay_load_hook 设置成 false ，同时把 win_delay_load_hook.cc
+拷贝到项目的源文件中，编译文件中加上这个文件即可。 &gt;
+<strong>最新修正：electron 的时候，win_delay_load_hook.cc
+以上述操作会运行不了，所以需要修改 win_delay_load_hook 设置为 true
+，然后在 copies 中增加 源文件目录中修改后的到 &lt;(node_gyp_src)/src
+中。</strong></p>
+<h2 id="坑3异步多次回调">坑3：异步多次回调</h2>
+<p>node-addon-api 对异步工作有封装，详见 Napi::AsyncWorker
+的使用，但是对于多次回调，这个类并没有支持得很好（也有可能是我使用不当），为了解决这个问题，本人翻了很多
+github 上的项目，都没有很好的解决，后来在 github 上找到了 <strong><a
+target="_blank" rel="noopener" href="https://github.com/nodejs/node-addon-examples">node-addon-examples</a></strong>
+找到了 node-addon 的 C 实现 async_work_thread_safe_function 的 example
+中有较好的实现，对比了它和 Napi::AsyncWorker 的逻辑过程，发现
+Napi::AsyncWorker
+应该是不能很好的完成本人需要的功能，所以决定自己实现，具体就是把
+async_work_thread_safe_function 参照 Napi::AsyncWorker
+改成了模板虚基类。感兴趣的可以联系。</p>
+<h2 id="坑4打印机监控线程与回调-js-线程同步">坑4：打印机监控线程与回调
+JS 线程同步</h2>
+<p>其实，多线程同步方式有很多，但是为了让 js
+线程和工作线程不是一直处于工作状态中，而是有事件时才开始工作和回调，本人选择了
+event &amp; critical_section 一起来完成本工作，event
+用于打印机事件到达后通知 js 线程取数据，而 critical_section
+保证的是对于数据操作的唯一性。我相信大神们肯定有很多别的实现方式，比如说管道等。希望大家提供各种意见吧。</p>
+<h1 id="关键实现">关键实现</h1>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">// safe_async_worker.h</span><br>template &lt;typename T&gt;<br><span class="hljs-keyword">class</span> SafeAsyncWorker : public Napi::ObjectWrap&lt;T&gt;<br>&#123;<br>public:<br>  <span class="hljs-constructor">SafeAsyncWorker(<span class="hljs-params">const</span> Napi::CallbackInfo &amp;<span class="hljs-params">info</span>)</span>;<br><br>protected:<br>  <span class="hljs-keyword">virtual</span> void <span class="hljs-constructor">Execute()</span> = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">virtual</span> Napi::Value <span class="hljs-constructor">Parse(<span class="hljs-params">napi_env</span> <span class="hljs-params">env</span>, <span class="hljs-params">void</span> <span class="hljs-operator">*</span><span class="hljs-params">data</span>)</span> = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">virtual</span> void <span class="hljs-constructor">Free(<span class="hljs-params">void</span> <span class="hljs-operator">*</span><span class="hljs-params">data</span>)</span> = <span class="hljs-number">0</span>;<br><br>  <span class="hljs-comment">// Create a thread-safe function and an async queue work item. We pass the</span><br>  <span class="hljs-comment">// thread-safe function to the async queue work item so the latter might have a</span><br>  <span class="hljs-comment">// chance to call into JavaScript from the worker thread on which the</span><br>  <span class="hljs-comment">// ExecuteWork callback runs.</span><br>  Napi::Value <span class="hljs-constructor">CreateAsyncWork(<span class="hljs-params">const</span> Napi::CallbackInfo &amp;<span class="hljs-params">cb</span>)</span>;<br><br>  <span class="hljs-comment">// This function runs on a worker thread. It has no access to the JavaScript</span><br>  <span class="hljs-comment">// environment except through the thread-safe function.</span><br>  static void <span class="hljs-constructor">OnExecuteWork(<span class="hljs-params">napi_env</span> <span class="hljs-params">env</span>, <span class="hljs-params">void</span> <span class="hljs-operator">*</span><span class="hljs-params">data</span>)</span>;<br><br>  <span class="hljs-comment">// This function runs on the main thread after `ExecuteWork` exits.</span><br>  static void <span class="hljs-constructor">OnWorkComplete(<span class="hljs-params">napi_env</span> <span class="hljs-params">env</span>, <span class="hljs-params">napi_status</span> <span class="hljs-params">status</span>, <span class="hljs-params">void</span> <span class="hljs-operator">*</span><span class="hljs-params">data</span>)</span>;<br><br>  <span class="hljs-comment">// This function is responsible for converting data coming in from the worker</span><br>  <span class="hljs-comment">// thread to napi_value items that can be passed into JavaScript, and for</span><br>  <span class="hljs-comment">// calling the JavaScript function.</span><br>  static void <span class="hljs-constructor">OnCallJavaScript(<span class="hljs-params">napi_env</span> <span class="hljs-params">env</span>, <span class="hljs-params">napi_value</span> <span class="hljs-params">js_cb</span>, <span class="hljs-params">void</span> <span class="hljs-operator">*</span><span class="hljs-params">context</span>, <span class="hljs-params">void</span> <span class="hljs-operator">*</span><span class="hljs-params">data</span>)</span>;<br><br>  void <span class="hljs-constructor">SubmitWork(<span class="hljs-params">void</span> <span class="hljs-operator">*</span><span class="hljs-params">data</span>)</span>;<br><br>  static Napi::FunctionReference constructor;<br><br><span class="hljs-keyword">private</span>:<br>  napi_async_work work;<br>  napi_threadsafe_function tsfn;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// safe_async_worker.inl</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br>Napi::FunctionReference SafeAsyncWorker&lt;T&gt;::constructor;<br><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-keyword">inline</span> SafeAsyncWorker&lt;T&gt;::<span class="hljs-built_in">SafeAsyncWorker</span>(<span class="hljs-type">const</span> Napi::CallbackInfo &amp;info)<br>    : Napi::<span class="hljs-built_in">ObjectWrap</span>&lt;T&gt;(info)<br>&#123;<br>&#125;<br><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-type">void</span> printer::SafeAsyncWorker&lt;T&gt;::<span class="hljs-built_in">SubmitWork</span>(<span class="hljs-type">void</span> *data)<br>&#123;<br>  <span class="hljs-comment">// Initiate the call into JavaScript. The call into JavaScript will not</span><br>  <span class="hljs-comment">// have happened when this function returns, but it will be queued.</span><br>  <span class="hljs-built_in">assert</span>(<span class="hljs-built_in">napi_call_threadsafe_function</span>(tsfn, data, napi_tsfn_blocking) == napi_ok);<br>&#125;<br><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br>Napi::Value SafeAsyncWorker&lt;T&gt;::<span class="hljs-built_in">CreateAsyncWork</span>(<span class="hljs-type">const</span> Napi::CallbackInfo &amp;cb)<br>&#123;<br>  Napi::Env env = cb.<span class="hljs-built_in">Env</span>();<br>  napi_value work_name;<br><br>  <span class="hljs-comment">// Create a string to describe this asynchronous operation.</span><br>  <span class="hljs-built_in">assert</span>(<span class="hljs-built_in">napi_create_string_utf8</span>(env,<br>                                 <span class="hljs-built_in">typeid</span>(T).<span class="hljs-built_in">name</span>(),<br>                                 NAPI_AUTO_LENGTH,<br>                                 &amp;work_name) == napi_ok);<br><br>  <span class="hljs-comment">// Convert the callback retrieved from JavaScript into a thread-safe function</span><br>  <span class="hljs-comment">// which we can call from a worker thread.</span><br>  <span class="hljs-built_in">assert</span>(<span class="hljs-built_in">napi_create_threadsafe_function</span>(env,<br>                                         cb[<span class="hljs-number">0</span>],<br>                                         <span class="hljs-literal">NULL</span>,<br>                                         work_name,<br>                                         <span class="hljs-number">0</span>,<br>                                         <span class="hljs-number">1</span>,<br>                                         <span class="hljs-literal">NULL</span>,<br>                                         <span class="hljs-literal">NULL</span>,<br>                                         <span class="hljs-keyword">this</span>,<br>                                         OnCallJavaScript,<br>                                         &amp;(tsfn)) == napi_ok);<br><br>  <span class="hljs-comment">// Create an async work item, passing in the addon data, which will give the</span><br>  <span class="hljs-comment">// worker thread access to the above-created thread-safe function.</span><br>  <span class="hljs-built_in">assert</span>(<span class="hljs-built_in">napi_create_async_work</span>(env,<br>                                <span class="hljs-literal">NULL</span>,<br>                                work_name,<br>                                OnExecuteWork,<br>                                OnWorkComplete,<br>                                <span class="hljs-keyword">this</span>,<br>                                &amp;(work)) == napi_ok);<br><br>  <span class="hljs-comment">// Queue the work item for execution.</span><br>  <span class="hljs-built_in">assert</span>(<span class="hljs-built_in">napi_queue_async_work</span>(env, work) == napi_ok);<br><br>  <span class="hljs-comment">// This causes `undefined` to be returned to JavaScript.</span><br>  <span class="hljs-keyword">return</span> env.<span class="hljs-built_in">Undefined</span>();<br>&#125;<br><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-type">void</span> SafeAsyncWorker&lt;T&gt;::<span class="hljs-built_in">OnExecuteWork</span>(napi_env <span class="hljs-comment">/*env*/</span>, <span class="hljs-type">void</span> *this_pointer)<br>&#123;<br>  T *self = <span class="hljs-built_in">static_cast</span>&lt;T *&gt;(this_pointer);<br><br>  <span class="hljs-comment">// We bracket the use of the thread-safe function by this thread by a call to</span><br>  <span class="hljs-comment">// napi_acquire_threadsafe_function() here, and by a call to</span><br>  <span class="hljs-comment">// napi_release_threadsafe_function() immediately prior to thread exit.</span><br>  <span class="hljs-built_in">assert</span>(<span class="hljs-built_in">napi_acquire_threadsafe_function</span>(self-&gt;tsfn) == napi_ok);<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> NAPI_CPP_EXCEPTIONS</span><br>  <span class="hljs-keyword">try</span><br>  &#123;<br>    self-&gt;<span class="hljs-built_in">Execute</span>();<br>  &#125;<br>  <span class="hljs-built_in">catch</span> (<span class="hljs-type">const</span> std::exception &amp;e)<br>  &#123;<br>    <span class="hljs-comment">// TODO</span><br>  &#125;<br><span class="hljs-meta">#<span class="hljs-keyword">else</span>  <span class="hljs-comment">// NAPI_CPP_EXCEPTIONS</span></span><br>  self-&gt;<span class="hljs-built_in">Execute</span>();<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// NAPI_CPP_EXCEPTIONS</span></span><br><br>  <span class="hljs-comment">// Indicate that this thread will make no further use of the thread-safe function.</span><br>  <span class="hljs-built_in">assert</span>(<span class="hljs-built_in">napi_release_threadsafe_function</span>(self-&gt;tsfn,<br>                                          napi_tsfn_release) == napi_ok);<br>&#125;<br><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-type">void</span> SafeAsyncWorker&lt;T&gt;::<span class="hljs-built_in">OnWorkComplete</span>(napi_env env, napi_status status, <span class="hljs-type">void</span> *this_pointer)<br>&#123;<br>  T *self = (T *)this_pointer;<br><br>  <span class="hljs-comment">// Clean up the thread-safe function and the work item associated with this</span><br>  <span class="hljs-comment">// run.</span><br>  <span class="hljs-built_in">assert</span>(<span class="hljs-built_in">napi_release_threadsafe_function</span>(self-&gt;tsfn,<br>                                          napi_tsfn_release) == napi_ok);<br>  <span class="hljs-built_in">assert</span>(<span class="hljs-built_in">napi_delete_async_work</span>(env, self-&gt;work) == napi_ok);<br><br>  <span class="hljs-comment">// Set both values to NULL so JavaScript can order a new run of the thread.</span><br>  self-&gt;work = <span class="hljs-literal">NULL</span>;<br>  self-&gt;tsfn = <span class="hljs-literal">NULL</span>;<br>&#125;<br><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-type">void</span> SafeAsyncWorker&lt;T&gt;::<span class="hljs-built_in">OnCallJavaScript</span>(napi_env env, napi_value js_cb, <span class="hljs-type">void</span> *this_pointer, <span class="hljs-type">void</span> *data)<br>&#123;<br>  T *self = <span class="hljs-built_in">static_cast</span>&lt;T *&gt;(this_pointer);<br>  <span class="hljs-keyword">if</span> (env != <span class="hljs-literal">NULL</span>)<br>  &#123;<br>    napi_value undefined;<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> NAPI_CPP_EXCEPTIONS</span><br>    <span class="hljs-keyword">try</span><br>    &#123;<br>      napi_value js_value = self-&gt;<span class="hljs-built_in">Parse</span>(env, data);<br>    &#125;<br>    <span class="hljs-built_in">catch</span> (<span class="hljs-type">const</span> std::exception &amp;e)<br>    &#123;<br>      <span class="hljs-comment">// TODO</span><br>    &#125;<br><span class="hljs-meta">#<span class="hljs-keyword">else</span>  <span class="hljs-comment">// NAPI_CPP_EXCEPTIONS</span></span><br>    napi_value js_value = self-&gt;<span class="hljs-built_in">Parse</span>(env, data);<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// NAPI_CPP_EXCEPTIONS</span></span><br><br>    <span class="hljs-comment">// Retrieve the JavaScript `undefined` value so we can use it as the `this`</span><br>    <span class="hljs-comment">// value of the JavaScript function call.</span><br>    <span class="hljs-built_in">assert</span>(<span class="hljs-built_in">napi_get_undefined</span>(env, &amp;undefined) == napi_ok);<br><br>    <span class="hljs-comment">// Call the JavaScript function and pass it the prime that the secondary</span><br>    <span class="hljs-comment">// thread found.</span><br>    <span class="hljs-built_in">assert</span>(<span class="hljs-built_in">napi_call_function</span>(env,<br>                              undefined,<br>                              js_cb,<br>                              <span class="hljs-number">1</span>,<br>                              &amp;js_value,<br>                              <span class="hljs-literal">NULL</span>) == napi_ok);<br>  &#125;<br>  self-&gt;<span class="hljs-built_in">Free</span>(data);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>```</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%89%8D%E7%AB%AF/node/" class="category-chain-item">node</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/node/">#node</a>
+      
+        <a href="/tags/electron/">#electron</a>
+      
+        <a href="/tags/node-addon/">#node-addon</a>
+      
+        <a href="/tags/node-addon-api/">#node-addon-api</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>node/electron插件: 由监听 Windows 打印机状态功能深入理解原生node插件编写过程</div>
+      <div>https://blog.isnap.cn/posts/7ed85540/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>三岁于辛</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年3月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/88fde648/" title="Centos: 迁移 Docker 容器存储位置">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Centos: 迁移 Docker 容器存储位置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/1ef1d0bc/" title="Mysql学习笔记：事务隔离级别理解">
+                        <span class="hidden-mobile">Mysql学习笔记：事务隔离级别理解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.8.0/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"0dba134382ca5771d6e6","clientSecret":"cd66d55578bdbe8189866681ce49e75794159b9f","repo":"chaffz.github.io","owner":"chaffz","admin":["chaffz"],"language":"zh-CN","labels":["gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token"},
+          {
+            id: 'f8177febf620c63248a7d785d36792be'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      浙ICP备2021036888号
+    </a>
+  </span>
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
