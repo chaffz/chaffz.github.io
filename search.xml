@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>算法套路 - 双指针</title>
+      <link href="/posts/13b90652/"/>
+      <url>/posts/13b90652/</url>
+      
+        <content type="html"><![CDATA[<p>以前读过关于<strong>算法的10+种解题套路</strong>。如《【算法】一篇讲完12种方法》、《总结2021 面试中的常见 14种算法套路》等。小编非常同意这些总结，也推荐读者朋友们去一个一个方法突破。不过，小编今天想说的是，<strong>结合不同的数据结构来理解算法套路将会事关功倍（不绝对）。</strong></p><p><strong>双指针</strong>是各种算法套路总结中都会提到的一种。今天小编也来讲讲。</p><p>小编认为双指针其实是一种范围较大的方法，它其实还可以再细分：</p><ul><li>快慢指针</li><li>左右指针，还可以再分（或说衍生）<ul><li>滑动窗口</li><li>左右节点</li></ul></li></ul><h2 id="快慢指针">快慢指针</h2><p><strong>快慢指针可解决链表、数组问题</strong>，如<ahref="https://mp.weixin.qq.com/s?__biz=MzI1NTE3OTY1MA==&amp;mid=2650714603&amp;idx=1&amp;sn=341d824c0f71797a6a6f0a10b4ee0316&amp;chksm=f233ff06c54476106b9f7ef5057c650c161cd2260093b249c9bae225f5e13f413e7afd68ec16#rd">一次拿下链表环问题</a>就用的是快慢指针，也可用于查找链表中间位置【leetcode】。</p><figure><img src="//blog.isnap.cn/cdnimg/2-pointer-mid.gif"alt="2-pointer-mid" /><figcaption aria-hidden="true">2-pointer-mid</figcaption></figure><p>当然快慢指针还可以先行 n步，然后再同速前进的形式（要说它是左右也可）。这种快慢指针可查找链表的倒数第k 个元素【leetcode】，也可用于优化数组/链表去重【leetcode】。</p><figure><img src="//blog.isnap.cn/cdnimg/2-pointer-trim.gif"alt="2-pointer-trim" /><figcaption aria-hidden="true">2-pointer-trim</figcaption></figure><h2 id="左右指针">左右指针</h2><p><strong>左右指针可解决链表、数组及树问题</strong>，最常见的当属二分查找了，当然左右指针也可用于字符串或数组的反转。而对于leetcode中的“<strong>两数和（有序）</strong>”和“<strong>三数和</strong>”也都可用左右指针来解决。</p><figure><img src="//blog.isnap.cn/cdnimg/image-20220720144716528.png"alt="image-20220720144716528" /><figcaption aria-hidden="true">image-20220720144716528</figcaption></figure><figure><img src="//blog.isnap.cn/cdnimg/2-pointer-3sum.gif"alt="2-pointer-3sum" /><figcaption aria-hidden="true">2-pointer-3sum</figcaption></figure><h3 id="二叉树对称问题">二叉树对称问题</h3><p>同样，左右指针也因叉树本身就具有左右指针，所以判断二叉树对称问题【leetcode】也是用的相同思想。</p><h3 id="滑动窗口">滑动窗口</h3><p><strong>滑动窗口应该是双指针技巧的最高境界了</strong>，如果掌握了此算法，可以解决一大类子字符串匹配的问题，先留个思考题吧！</p><p>同样的，双指针在<strong>动态规划</strong>中也经常被用到。</p><blockquote><p>《<ahref="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI1NTE3OTY1MA==&amp;action=getalbum&amp;album_id=2022461718852927492#wechat_redirect">宁宁姐|动态规划</a>》中有例子使用到。欢迎阅读！</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+          <category> 双指针 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>gRPC 连接池的一种实现方案</title>
       <link href="/posts/f227003e/"/>
       <url>/posts/f227003e/</url>
