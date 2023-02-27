@@ -58,6 +58,35 @@
     
     
     <entry>
+      <title>PHP 项目的 env 文件替换方案</title>
+      <link href="/posts/60deaa5a/"/>
+      <url>/posts/60deaa5a/</url>
+      
+        <content type="html"><![CDATA[<p>读完本文，宁宁组希望读者能从中了解到：</p><ul><li>.env 文件内容越多，服务资源消耗越大</li><li>.env 的替换方案有很多，ini 文件其实与 .env没有区别，扩展的形式可尝试，但是对扩展的稳定性有要求</li><li>要适当的选择 require/require_once</li></ul><h2 id="问题描述">问题描述</h2><p>基于 Lumen 框架开发的项目，5 台 8c16g 的 cvm，跑空接⼝，当 qps 达到3600+ 时，cpu 就已经达到了 60%+。</p><h2 id="问题分析">问题分析</h2><p>搭建 tidyways、xhprof、xhgui 性能分析平台，发现 cpu 时间的确发⽣在php-fpm 上。仔细分析个别接口，发现 dotenv 重复执⾏ 560 次，消耗时间占⽐70%+。于是猜可能和 env 有关。</p><h2 id="测试模拟">测试模拟</h2><p>覆盖 env ⽂件，先清空，再使⽤下⾯的语句追加</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">for ((i=0;i&lt;500;i++)); do<br>echo &quot;APP_TEST_$&#123;i&#125;=value$&#123;i&#125;&quot; &gt;&gt; .env;<br>done<br></code></pre></td></tr></table></figure><p>使⽤ wrk 进⾏并发压测</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">wrk -d1m -t8 -c16 -s php.lua --latency --timeout=2s http://10.3.7.20<br></code></pre></td></tr></table></figure><h3 id="测试结果">测试结果</h3><figure><img src="//blog.isnap.cn/cdnimg/image-20220812083400537.png"alt="image-20220812083400537" /><figcaption aria-hidden="true">image-20220812083400537</figcaption></figure><blockquote><p><strong>wrk 返回结果示例</strong></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">wrk -d1m -t8 -c16 -s php.lua --latency --timeout=2s http://10.3.7.20<br>Running 1m test @ http://10.3.7.20<br>8 threads and 16 connections<br>Thread Stats Avg Stdev Max +/- Stdev<br>Latency 3.66ms 2.40ms 78.31ms 84.97%<br>Req/Sec 584.01 96.99 0.91k 71.88%<br>Latency Distribution<br><span class="hljs-meta prompt_">50% </span><span class="language-bash">3.03ms</span><br><span class="hljs-meta prompt_">75% </span><span class="language-bash">4.30ms</span><br><span class="hljs-meta prompt_">90% </span><span class="language-bash">6.23ms</span><br><span class="hljs-meta prompt_">99% </span><span class="language-bash">12.67ms</span><br>279176 requests in 1.00m, 74.00MB read<br>Requests/sec: 4649.39<br>Transfer/sec: 1.23MB<br></code></pre></td></tr></table></figure></blockquote><h2 id="优化方案">优化方案</h2><p>从测试结果可以看出 .env文件中数据条数越多，所带来的开销也越大。于是又对 env替换方案进行了调研，大致结果如下：</p><ol type="1"><li><p>相同压⼒情况下 Require once 结果更稳定，Yaconf(php扩展⽅案，也可测试 Zend_Config_Ini【未验证】) 与 Require ⽅案latency 为 99% 时变化较⼤；</p></li><li><p>Require once 与 Require⽅式对⽐，如果在同⼀个⽅法中多次使⽤结果有所不同（测试只在⼊⼝处调⽤⼀次）</p><ul><li><p>如果被 Require 的⽂件中定义为常量，Require 会报重复定义，Requireonce 不会；</p><ul><li>如果将 Require 的⽂件改成返回数组，那么灾难开始，耗时随着 Require次数增加。</li></ul></li></ul></li></ol><figure><img src="//blog.isnap.cn/cdnimg/image-20220812084605225.png"alt="image-20220812084605225" /><figcaption aria-hidden="true">image-20220812084605225</figcaption></figure><p>通过上述验证，最后 .env 的替换方案变成在 bootstrap 时先定义自己的加载env 配置功能：</p><ul><li>将所有配置写在 php 文件中，可返回数组</li><li>替换 Laravel逻辑中关于配置加载相关逻辑<ul><li>读取上述 php 中的文件内容</li><li>设置数组中数据到进程的环境变量</li></ul></li></ul><h2 id="方案成效">方案成效</h2><p>因业务复杂度较大，当前优化成交为资源节省 33+%。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+          <category> PHP </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> PHP </tag>
+            
+            <tag> env </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>String</title>
       <link href="/posts/9912b79f/"/>
       <url>/posts/9912b79f/</url>
