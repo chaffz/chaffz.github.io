@@ -346,7 +346,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/bfc079bb/" target="_self">
+          <img src="//blog.isnap.cn/cdnimg/image-20230308094943042.png" srcset="/img/loading.gif" lazyload alt="Calcite 应用于非大数据场景">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
         <a href="/posts/bfc079bb/" target="_self">
@@ -355,7 +361,7 @@
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/posts/bfc079bb/" target="_self">
+      <a class="index-excerpt " href="/posts/bfc079bb/" target="_self">
         <div>
           问题1、关于 order by 问题 如下图1，Mysql 中子查询中有 group by ... order by ...，父查询中不再有相关排序操作，结果能保证子查询的结果顺序不被改变。 但是在 Calcite 中同样操作，结果就会不一致。究其终极原因是 Calcite 面向大数据场景，并且能在可度量的时间范围内交付结果。  The story for ORDER BY is similar
         </div>
