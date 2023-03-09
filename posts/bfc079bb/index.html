@@ -26,7 +26,7 @@
 <meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20230308094943042.png">
 <meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20230308170035263.png">
 <meta property="article:published_time" content="2023-03-08T09:41:35.000Z">
-<meta property="article:modified_time" content="2023-03-08T09:25:18.794Z">
+<meta property="article:modified_time" content="2023-03-09T04:49:06.773Z">
 <meta property="article:author" content="三岁于辛">
 <meta property="article:tag" content="大数据">
 <meta name="twitter:card" content="summary_large_image">
@@ -346,7 +346,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          570 字
+          583 字
         
       </span>
     
@@ -423,7 +423,8 @@ key.</p>
 </blockquote>
 <p><strong>所以，开发者在条件为：非最外层查询、没有 offset、没有 limit
 等情况下移除语句中的 <code>order by</code>。</strong>如下图2。</p>
-<h4 id="当前解决方案">当前解决方案</h4>
+<h4 id="当前解决方案最外层增加-order-by">当前解决方案：最外层增加 ORDER
+BY</h4>
 <ol type="1">
 <li>在子查询结果中增加隐藏列（类 mysql
 未增加主键时默认添加行为），且只保留于内存中用于排序使用，如列名<code>column_name</code>；</li>
