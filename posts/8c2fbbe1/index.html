@@ -16,24 +16,24 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="问题1、关于 order by 问题 如下图1，Mysql 中子查询中有 group by ... order by ...，父查询中不再有相关排序操作，结果能保证子查询的结果顺序不被改变。 但是在 Calcite 中同样操作，结果就会不一致。究其终极原因是 Calcite 面向大数据场景，并且能在可度量的时间范围内交付结果。  The story for ORDER BY is similar">
+    <meta name="description" content="Breadth First Search (BFS) 宽度优先搜索，顾名思义，搜索的过程是平铺开进行搜索，即从起点开始，将所有相邻的节点都搜索一遍，然后再搜索这些相邻节点的相邻节点，一层一层铺开。其搜索过程就像水中的涟漪，从中心开始，向四周进行扩散，直到遍历完。有兴趣可查看历史文章   img  之前有很多题都是以递归实现算法，今天讲的是结合队列实现。正如上面所说的，需要将所有和它相邻的节点都搜索">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Calcite 应用于非大数据场景">
-<meta property="og:url" content="https://blog.isnap.cn/posts/bfc079bb/index.html">
+<meta property="og:title" content="【队列应用】Breadth First Search (BFS) 宽度优先搜索">
+<meta property="og:url" content="https://blog.isnap.cn/posts/8c2fbbe1/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="问题1、关于 order by 问题 如下图1，Mysql 中子查询中有 group by ... order by ...，父查询中不再有相关排序操作，结果能保证子查询的结果顺序不被改变。 但是在 Calcite 中同样操作，结果就会不一致。究其终极原因是 Calcite 面向大数据场景，并且能在可度量的时间范围内交付结果。  The story for ORDER BY is similar">
+<meta property="og:description" content="Breadth First Search (BFS) 宽度优先搜索，顾名思义，搜索的过程是平铺开进行搜索，即从起点开始，将所有相邻的节点都搜索一遍，然后再搜索这些相邻节点的相邻节点，一层一层铺开。其搜索过程就像水中的涟漪，从中心开始，向四周进行扩散，直到遍历完。有兴趣可查看历史文章   img  之前有很多题都是以递归实现算法，今天讲的是结合队列实现。正如上面所说的，需要将所有和它相邻的节点都搜索">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20230308094943042.png">
-<meta property="article:published_time" content="2023-03-08T09:41:35.000Z">
-<meta property="article:modified_time" content="2023-03-09T04:55:09.063Z">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/queue-bfs-gif.gif">
+<meta property="article:published_time" content="2023-03-11T06:41:35.000Z">
+<meta property="article:modified_time" content="2023-03-10T07:01:42.972Z">
 <meta property="article:author" content="三岁于辛">
-<meta property="article:tag" content="大数据">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20230308094943042.png">
+<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/queue-bfs-gif.gif">
   
   
   
-  <title>Calcite 应用于非大数据场景 - 三岁于辛博客</title>
+  <title>【队列应用】Breadth First Search (BFS) 宽度优先搜索 - 三岁于辛博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -322,7 +322,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Calcite 应用于非大数据场景"></span>
+            <span id="subtitle" data-typed-text="【队列应用】Breadth First Search (BFS) 宽度优先搜索"></span>
           
         </div>
 
@@ -333,8 +333,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-08 17:41" pubdate>
-          2023年3月8日 下午
+        <time datetime="2023-03-11 14:41" pubdate>
+          2023年3月11日 下午
         </time>
       </span>
     
@@ -345,7 +345,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          583 字
+          741 字
         
       </span>
     
@@ -356,7 +356,7 @@
         
         
         
-          5 分钟
+          7 分钟
         
       </span>
     
@@ -402,38 +402,44 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Calcite 应用于非大数据场景</h1>
+            <h1 style="display: none">【队列应用】Breadth First Search (BFS) 宽度优先搜索</h1>
             
             
               <div class="markdown-body">
                 
-                <h3 id="问题1关于-order-by-问题">问题1、关于 order by 问题</h3>
-<p>如下图1，Mysql 中子查询中有
-<code>group by ... order by ...</code>，父查询中不再有相关排序操作，结果能保证子查询的结果顺序不被改变。</p>
-<p><strong>但是在 Calcite
-中同样操作，结果就会不一致。</strong>究其终极原因是 Calcite
-面向大数据场景，并且能在<strong>可度量的时间范围内交付结果</strong>。</p>
-<blockquote>
-<p>The story for <code>ORDER BY</code> is similar to
-<code>GROUP BY</code>. The syntax looks like regular SQL, but Calcite
-must be sure that it can deliver timely results. It therefore requires a
-monotonic expression on the leading edge of your <code>ORDER BY</code>
-key.</p>
-</blockquote>
-<p><strong>所以，开发者在条件为：非最外层查询、没有 offset、没有 limit
-等情况下移除语句中的 <code>order by</code>。</strong>如下图2。</p>
-<h4 id="当前解决方案最外层增加-order-by">当前解决方案：最外层增加 ORDER
-BY</h4>
+                <p><strong>Breadth First Search (BFS)
+宽度优先搜索</strong>，顾名思义，搜索的过程是平铺开进行搜索，即从起点开始，将所有<strong>相邻的节点</strong>都搜索一遍，然后再搜索这些相邻节点的相邻节点，<strong>一层一层铺开</strong>。其搜索过程就像水中的涟漪，从中心开始，<strong>向四周进行扩散</strong>，直到遍历完。<em>有兴趣可查看历史文章</em></p>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/16001463T-0.jpg" srcset="/img/loading.gif" lazyload alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>之前有很多题都是以递归实现算法，今天讲的是结合队列实现。正如上面所说的，需要将所有和它<strong>相邻的节点</strong>都搜索一遍，再搜索相邻的相邻节点。这个过程与队列的<strong>FIFO</strong>是完全契合的。实现过程也非常直接：</p>
+<ul>
+<li><p>起始：将起点（起点[0,0]，树的根节点）放入队列中</p></li>
+<li><p>扩散：从队列中取出<strong>头节点</strong>，将它的相邻结点放入队列，不断重复这一步</p>
+<p><strong>值得注意的是，不同算法从队列中取出数据的终止条件是不同的，需要小心总结。</strong></p>
 <ol type="1">
-<li>在子查询结果中增加隐藏列（类 mysql
-未增加主键时默认添加行为），且只保留于内存中用于排序使用，如列名<code>column_name</code>；</li>
-<li>针对外层查询有聚合<code>group by</code>时主动增加<code>order by min(column_name)</code>；</li>
-<li>其它 case 暂不处理。</li>
+<li><p>可以是直接依赖队列是否为空来判断</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java">   <span class="hljs-keyword">while</span> (!q.isEmpty()) &#123;<br>     <span class="hljs-comment">//...</span><br>     q.offer();<br>     <span class="hljs-comment">//...</span><br>   &#125;<br><br><span class="hljs-number">2.</span> 需要依赖当前队列的长度来遍历<br><br>   ```java<br>   <span class="hljs-title function_">while</span> <span class="hljs-params">(!q.isEmpty()</span>) &#123;<br>     <span class="hljs-type">int</span> <span class="hljs-variable">sz</span> <span class="hljs-operator">=</span> q.size();<br>     <span class="hljs-keyword">while</span> (sz-- &gt; <span class="hljs-number">0</span>) &#123;<br>       <span class="hljs-comment">//...</span><br>       q.offer();<br>       <span class="hljs-comment">//...</span><br>     &#125;<br>   &#125;<br></code></pre></td></tr></table></figure></li>
+</ol></li>
+<li><p>终止：当<strong>队列为空</strong>时，说明我们遍历了所有的结点，整个图都被搜索了一遍</p></li>
+</ul>
+<h2 id="动图示例">动图示例</h2>
+<p>下图是《<a
+target="_blank" rel="noopener" href="https://leetcode.com/problems/shortest-bridge/?envType=study-plan&amp;id=graph-i">934.
+Shortest Bridge</a>》的计算过程中第一步，获取二维数组中的一座岛。</p>
+<ol type="1">
+<li>起点[0,0]入队；</li>
+<li>队列长度为1，从队列中取出一个，获得[0,1]、[1,0]入队；</li>
+<li>队列长度为2，分别出队后获得[1,1]、[2,0]入队；</li>
+<li>队列长度为2，分别出队后获得[3,0]入队；</li>
+<li>出队后队列为空，得到完整的岛信息。</li>
 </ol>
-<p><strong>图1：查询结果对比图（Mysql vs Calcite）</strong></p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20230308094943042.png" srcset="/img/loading.gif" lazyload alt="image-20230308094943042" style="width: 800px;" /></p>
-<p><strong>图2：Calcite 源码中针对 order by 处理逻辑</strong></p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20230308170035263.png" srcset="/img/loading.gif" lazyload alt="image-20230308170035263" style="width:800px;" /></p>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/queue-bfs-gif.gif" srcset="/img/loading.gif" lazyload
+alt="queue-bfs-gif" />
+<figcaption aria-hidden="true">queue-bfs-gif</figcaption>
+</figure>
 
                 
               </div>
@@ -452,12 +458,12 @@ BY</h4>
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="category-chain-item">大数据</a>
+  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
   
   
     <span>></span>
     
-  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/Calcite/" class="category-chain-item">Calcite</a>
+  <a href="/categories/%E7%AE%97%E6%B3%95/BFS/" class="category-chain-item">BFS</a>
   
   
 
@@ -474,7 +480,7 @@ BY</h4>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">#大数据</a>
+        <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
       
     </div>
   
@@ -486,8 +492,8 @@ BY</h4>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Calcite 应用于非大数据场景</div>
-      <div>https://blog.isnap.cn/posts/bfc079bb/</div>
+      <div>【队列应用】Breadth First Search (BFS) 宽度优先搜索</div>
+      <div>https://blog.isnap.cn/posts/8c2fbbe1/</div>
     </div>
     <div class="license-meta">
       
@@ -499,7 +505,7 @@ BY</h4>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月8日</div>
+          <div>2023年3月11日</div>
         </div>
       
       
@@ -531,18 +537,12 @@ BY</h4>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/posts/8c2fbbe1/" title="【队列应用】Breadth First Search (BFS) 宽度优先搜索">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【队列应用】Breadth First Search (BFS) 宽度优先搜索</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/posts/60deaa5a/" title="PHP 项目的 env 文件替换方案">
-                        <span class="hidden-mobile">PHP 项目的 env 文件替换方案</span>
+                      <a href="/posts/bfc079bb/" title="Calcite 应用于非大数据场景">
+                        <span class="hidden-mobile">Calcite 应用于非大数据场景</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
