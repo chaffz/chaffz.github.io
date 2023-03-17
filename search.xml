@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>InnerClass有无static主要区别</title>
+      <link href="/posts/b2196fb9/"/>
+      <url>/posts/b2196fb9/</url>
+      
+        <content type="html"><![CDATA[<ul><li>非 static类实现，为了能访问外部类，增加了<code>this$0</code>成员属性；</li><li>因为有了成员属性，所以在调用外部类时也就从了局部变量的加载操作，如下图所示，<code>putfield</code>后再调用<code>init</code>现<code>static</code>的直接<code>init</code>有鲜明对比。</li></ul><figure><img src="//blog.isnap.cn/cdnimg/image-20230317090643564.png"alt="内部类有无Static区别" /><figcaption aria-hidden="true">内部类有无Static区别</figcaption></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> JAVA </category>
+          
+          <category> Class文件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JAVA </tag>
+            
+            <tag> Class文件 </tag>
+            
+            <tag> InnerClass </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>【队列应用】Breadth First Search (BFS) 宽度优先搜索</title>
       <link href="/posts/8c2fbbe1/"/>
       <url>/posts/8c2fbbe1/</url>
