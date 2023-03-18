@@ -16,26 +16,25 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="非 static 类实现，为了能访问外部类，增加了this$0成员属性； 因为有了成员属性，所以在调用外部类时也就从了局部变量的加载操作，如下图所示，putfield后再调用init 现static的直接init有鲜明对比。    内部类有无Static区别">
+    <meta name="description" content="本文重点在后面两张图。 JVM类标志：     Flag Name Value Interpretation     ACC_PUBLIC 0x0001 公有类   ACC_FINAL 0x0010 Final标识，不可是超类   ACC_SUPER 0x0020 在被调用的特殊指令调用时，特别处理超类方法   ACC_INTERFACE 0x0200 接口类   ACC_ABSTRACT 0x0">
 <meta property="og:type" content="article">
-<meta property="og:title" content="InnerClass有无static主要区别">
+<meta property="og:title" content="结合代码理解JVM中的Flags">
 <meta property="og:url" content="https://blog.isnap.cn/posts/b2196fb9/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="非 static 类实现，为了能访问外部类，增加了this$0成员属性； 因为有了成员属性，所以在调用外部类时也就从了局部变量的加载操作，如下图所示，putfield后再调用init 现static的直接init有鲜明对比。    内部类有无Static区别">
+<meta property="og:description" content="本文重点在后面两张图。 JVM类标志：     Flag Name Value Interpretation     ACC_PUBLIC 0x0001 公有类   ACC_FINAL 0x0010 Final标识，不可是超类   ACC_SUPER 0x0020 在被调用的特殊指令调用时，特别处理超类方法   ACC_INTERFACE 0x0200 接口类   ACC_ABSTRACT 0x0">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20230317090643564.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20230318131113082.png">
 <meta property="article:published_time" content="2023-03-16T09:47:17.000Z">
-<meta property="article:modified_time" content="2023-03-17T10:09:23.579Z">
+<meta property="article:modified_time" content="2023-03-18T05:26:37.637Z">
 <meta property="article:author" content="三岁于辛">
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="Class文件">
-<meta property="article:tag" content="InnerClass">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20230317090643564.png">
+<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20230318131113082.png">
   
   
   
-  <title>InnerClass有无static主要区别 - 三岁于辛博客</title>
+  <title>结合代码理解JVM中的Flags - 三岁于辛博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -332,7 +331,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="InnerClass有无static主要区别"></span>
+            <span id="subtitle" data-typed-text="结合代码理解JVM中的Flags"></span>
           
         </div>
 
@@ -355,7 +354,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          121 字
+          751 字
         
       </span>
     
@@ -366,7 +365,7 @@
         
         
         
-          2 分钟
+          7 分钟
         
       </span>
     
@@ -412,21 +411,148 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">InnerClass有无static主要区别</h1>
+            <h1 style="display: none">结合代码理解JVM中的Flags</h1>
             
             
               <div class="markdown-body">
                 
-                <ul>
-<li>非 static
-类实现，为了能访问外部类，增加了<code>this$0</code>成员属性；</li>
-<li>因为有了成员属性，所以在调用外部类时也就从了局部变量的加载操作，如下图所示，<code>putfield</code>后再调用<code>init</code>
-现<code>static</code>的直接<code>init</code>有鲜明对比。</li>
-</ul>
+                <p>本文重点在后面两张图。</p>
+<p>JVM类标志：</p>
+<table>
+
+<thead>
+<tr class="header">
+<th>Flag Name</th>
+<th>Value</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ACC_PUBLIC</code></td>
+<td>0x0001</td>
+<td>公有类</td>
+</tr>
+<tr class="even">
+<td><code>ACC_FINAL</code></td>
+<td>0x0010</td>
+<td>Final标识，不可是超类</td>
+</tr>
+<tr class="odd">
+<td><code>ACC_SUPER</code></td>
+<td>0x0020</td>
+<td>在被调用的特殊指令调用时，特别处理超类方法</td>
+</tr>
+<tr class="even">
+<td><code>ACC_INTERFACE</code></td>
+<td>0x0200</td>
+<td>接口类</td>
+</tr>
+<tr class="odd">
+<td><code>ACC_ABSTRACT</code></td>
+<td>0x0400</td>
+<td>抽象类，如果类被ACC_INTERFACE标志，它也会被标志为ACC_ABSTRACT</td>
+</tr>
+<tr class="even">
+<td><code>ACC_SYNTHETIC</code></td>
+<td>0x1000</td>
+<td>由编译器生成的，并没有出现在源代码中</td>
+</tr>
+<tr class="odd">
+<td><code>ACC_ANNOTATION</code></td>
+<td>0x2000</td>
+<td>注释类型</td>
+</tr>
+<tr class="even">
+<td><code>ACC_ENUM</code></td>
+<td>0x4000</td>
+<td>类或者它的超类被声明为枚举类型</td>
+</tr>
+</tbody>
+</table>
+<p>JVM方法标志：</p>
+<table>
+<thead>
+<tr class="header">
+<th>Flag Name</th>
+<th>Value</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ACC_PUBLIC</code></td>
+<td>0x0001</td>
+<td>公有方法</td>
+</tr>
+<tr class="even">
+<td><code>ACC_PRIVATE</code></td>
+<td>0x0002</td>
+<td>私有方法</td>
+</tr>
+<tr class="odd">
+<td><code>ACC_PROTECTED</code></td>
+<td>0x0004</td>
+<td>保护方法</td>
+</tr>
+<tr class="even">
+<td><code>ACC_STATIC</code></td>
+<td>0x0008</td>
+<td>静态方法</td>
+</tr>
+<tr class="odd">
+<td><code>ACC_FINAL</code></td>
+<td>0x0010</td>
+<td>Final方法，不能 override</td>
+</tr>
+<tr class="even">
+<td><code>ACC_SYNCHRONIZED</code></td>
+<td>0x0020</td>
+<td>同步方法</td>
+</tr>
+<tr class="odd">
+<td><code>ACC_BRIDGE</code></td>
+<td>0x0040</td>
+<td>由编译器生成的桥接方法</td>
+</tr>
+<tr class="even">
+<td><code>ACC_VARARGS</code></td>
+<td>0x0080</td>
+<td>使用可变数量的参数声明</td>
+</tr>
+<tr class="odd">
+<td><code>ACC_NATIVE</code></td>
+<td>0x0100</td>
+<td>声明本地人，用 Java 以外的语言实现</td>
+</tr>
+<tr class="even">
+<td><code>ACC_ABSTRACT</code></td>
+<td>0x0400</td>
+<td>抽象标志，无实现</td>
+</tr>
+<tr class="odd">
+<td><code>ACC_STRICT</code></td>
+<td>0x0800</td>
+<td>严格的浮点运算规则</td>
+</tr>
+<tr class="even">
+<td><code>ACC_SYNTHETIC</code></td>
+<td>0x1000</td>
+<td>由编译器生成的，并没有出现在源代码中</td>
+</tr>
+</tbody>
+</table>
+<p>方法标志中较特殊的是BRIDGE和SYNTHETIC。可通过下面的代码理解。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20230317090643564.png" srcset="/img/loading.gif" lazyload
-alt="内部类有无Static区别" />
-<figcaption aria-hidden="true">内部类有无Static区别</figcaption>
+<img src="//blog.isnap.cn/cdnimg/image-20230318131113082.png" srcset="/img/loading.gif" lazyload
+alt="image-20230318131113082" />
+<figcaption aria-hidden="true">image-20230318131113082</figcaption>
+</figure>
+<p>面严格的浮点运算规则：</p>
+<figure>
+<img src="//blog.isnap.cn/cdnimg/image-20230318131920605.png" srcset="/img/loading.gif" lazyload
+alt="image-20230318131920605" />
+<figcaption aria-hidden="true">image-20230318131920605</figcaption>
 </figure>
 
                 
@@ -472,8 +598,6 @@ alt="内部类有无Static区别" />
       
         <a href="/tags/Class%E6%96%87%E4%BB%B6/">#Class文件</a>
       
-        <a href="/tags/InnerClass/">#InnerClass</a>
-      
     </div>
   
 </div>
@@ -484,7 +608,7 @@ alt="内部类有无Static区别" />
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>InnerClass有无static主要区别</div>
+      <div>结合代码理解JVM中的Flags</div>
       <div>https://blog.isnap.cn/posts/b2196fb9/</div>
     </div>
     <div class="license-meta">
@@ -528,6 +652,12 @@ alt="内部类有无Static区别" />
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/posts/b2196fb9/" title="InnerClass有无static主要区别">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">InnerClass有无static主要区别</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
