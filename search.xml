@@ -8,7 +8,7 @@
       <link href="/posts/606c4d62/"/>
       <url>/posts/606c4d62/</url>
       
-        <content type="html"><![CDATA[<p>接《<ahref="/posts/3c858c0b">结合代码理解JVM中的Flags</a>》着展开。</p><p>方法加同步标志后，在Class文件中会出现<code>ACC_SYNCHRONIZED</code>，但是它是如何运行的呢？</p><figure><img src="//blog.isnap.cn/cdnimg/image-20230320193543234.png"alt="image-20230320193543234" /><figcaption aria-hidden="true">image-20230320193543234</figcaption></figure><p>翻了下虚拟的介绍，虚拟机遇到此标志时会转成<code>monitor</code>，而且也介绍了它的逻辑与代码块的同步还是非常相近的（暂不展开虚拟机的实现），来看下代码块的同步是怎样的。如下图中所示，<code>synchronized</code>代码块转换成了<code>monitorenter</code>和<code>monitorexit</code>。</p><figure><img src="//blog.isnap.cn/cdnimg/image-20230320194602240.png"alt="image-20230320194602240" /><figcaption aria-hidden="true">image-20230320194602240</figcaption></figure>]]></content>
+        <content type="html"><![CDATA[<p>接《<ahref="/posts/3c858c0b">结合代码理解JVM中的Flags</a>》着展开。</p><p>方法加同步标志后，在Class文件中会出现<code>ACC_SYNCHRONIZED</code>，但是它是如何运行的呢？</p><figure><img src="//blog.isnap.cn/cdnimg/image-20230320193543234.png"alt="image-20230320193543234" /><figcaption aria-hidden="true">image-20230320193543234</figcaption></figure><p>翻了下虚拟的介绍，虚拟机遇到此标志时会转成<code>monitor</code>，而且也介绍了它的逻辑与代码块的同步还是非常相近的（暂不展开虚拟机的实现），来看下代码块的同步是怎样的。如下图中所示，<code>synchronized</code>代码块转换成了<code>monitorenter</code>和<code>monitorexit</code>。</p><p>对于方法的 flags中的<code>ACC_SYNCHRONIZED</code>其实也是会被转换成相关<code>monitor</code>管理的。</p><figure><img src="//blog.isnap.cn/cdnimg/image-20230320194602240.png"alt="image-20230320194602240" /><figcaption aria-hidden="true">image-20230320194602240</figcaption></figure>]]></content>
       
       
       <categories>
