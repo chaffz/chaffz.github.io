@@ -23,16 +23,16 @@
 <meta property="og:site_name" content="三岁于辛博客">
 <meta property="og:description" content="背景 一切源于同一份代码在开发机（云主机）中和测试环境（k8s容器）中运行的结果相关很大。如下图：左边是云主机，右边是优化前的 k8s 容器。   image-20220413162904064  是何原因导致？刚开始找我查这个问题时也是一脸的懞。先说下我的怀疑路径：  代码有问题（新开发的框架）； 环境配置有问题； 引用的包有问题； OPCache 配置有问题； ......  怀疑的过程就是一">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220413162904064.png">
-<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220413180420381.png">
-<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220413180942219.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220413162904064.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220413180420381.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220413180942219.png">
 <meta property="article:published_time" content="2022-04-13T08:21:22.000Z">
 <meta property="article:modified_time" content="2023-02-25T03:25:59.742Z">
 <meta property="article:author" content="三岁于辛">
 <meta property="article:tag" content="PHP">
 <meta property="article:tag" content="OPCache">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://cdn.isnap.cn/img/image-20220413162904064.png">
+<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20220413162904064.png">
   
   
   
@@ -430,7 +430,7 @@
 <p>一切源于同一份代码在开发机（云主机）中和测试环境（k8s容器）中运行的结果相关很大。如下图：左边是云主机，右边是优化前的
 k8s 容器。</p>
 <figure>
-<img src="http://cdn.isnap.cn/img/image-20220413162904064.png" srcset="/img/loading.gif" lazyload
+<img src="//blog.isnap.cn/cdnimg/image-20220413162904064.png" srcset="/img/loading.gif" lazyload
 alt="image-20220413162904064" />
 <figcaption aria-hidden="true">image-20220413162904064</figcaption>
 </figure>
@@ -474,11 +474,11 @@ OPCache 未生效。所以开始时用了入侵式的方案，在入口处增加
 一项未出现任何开源的包，只出现了业务代码与内部包。多次调整代码，发现入侵式的
 OPCache 信息查阅很不友好。幸亏马上就查到 <code>CacheTool</code>
 这一非入侵式的工具，为后续的排查带来质的飞越。</p>
-<p><img src="http://cdn.isnap.cn/img/image-20220413180420381.png" srcset="/img/loading.gif" lazyload alt="image-20220413180420381" style="zoom:50%;" /></p>
+<p><img src="//blog.isnap.cn/cdnimg/image-20220413180420381.png" srcset="/img/loading.gif" lazyload alt="image-20220413180420381" style="zoom:50%;" /></p>
 <p>通过在两个环境运行如下命令非常确定的是非私有包都未被加载到 cache
 中。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">cvm</span> <br>php cachetool.phar opcache:status:scripts --fcgi=127.0.0.1:9000 | grep illuminate<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">pod container</span><br>php cachetool.phar opcache:status:scripts --fcgi=127.0.0.1:9000<br></code></pre></td></tr></table></figure>
-<p><img src="http://cdn.isnap.cn/img/image-20220413180942219.png" srcset="/img/loading.gif" lazyload alt="image-20220413180942219" style="zoom:50%;" /></p>
+<p><img src="//blog.isnap.cn/cdnimg/image-20220413180942219.png" srcset="/img/loading.gif" lazyload alt="image-20220413180942219" style="zoom:50%;" /></p>
 <p>那么，到此为止，一切的问题就变成了<strong>为什么 OPCache
 在容器中对开源包不生效的问题了</strong>？</p>
 <h3 id="拨开云雾见真经">拨开云雾见真经</h3>

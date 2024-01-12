@@ -23,18 +23,18 @@
 <meta property="og:site_name" content="三岁于辛博客">
 <meta property="og:description" content="MFS 缩容操作指南 整体步骤指南 需要记住，当文件系统中某台 chunk server 拥有某个 chunk 的唯一副本(CGI监控会把它们标记为黄色)，断开这台chunk server是不明智的。你也可以断开(或者更改)单个硬盘。此操作的步骤如下：  可在管理后台操作变更为“维护状态”。 标记这块硬盘为移除（查看”如何标记一块磁盘为移除”） 重新加载(reload)chunk server进程">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220402103846851.png">
-<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220402104208319.png">
-<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220402104740860.png">
-<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220402104924608.png">
-<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220402105452827.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220402103846851.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220402104208319.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220402104740860.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220402104924608.png">
+<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220402105452827.png">
 <meta property="article:published_time" content="2022-04-15T05:52:05.000Z">
 <meta property="article:modified_time" content="2023-02-25T03:25:59.736Z">
 <meta property="article:author" content="三岁于辛">
 <meta property="article:tag" content="moosefs">
 <meta property="article:tag" content="分布式存储">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://cdn.isnap.cn/img/image-20220402103846851.png">
+<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20220402103846851.png">
   
   
   
@@ -452,12 +452,12 @@ server的配置文件mfshdd.cfg，在要移除的磁盘前添加”*”号，如
 <h2 id="测试操作记录">测试操作记录</h2>
 <p>原始 info 信息：</p>
 <figure>
-<img src="http://cdn.isnap.cn/img/image-20220402103846851.png" srcset="/img/loading.gif" lazyload
+<img src="//blog.isnap.cn/cdnimg/image-20220402103846851.png" srcset="/img/loading.gif" lazyload
 alt="image-20220402103846851" />
 <figcaption aria-hidden="true">image-20220402103846851</figcaption>
 </figure>
 <figure>
-<img src="http://cdn.isnap.cn/img/image-20220402104208319.png" srcset="/img/loading.gif" lazyload
+<img src="//blog.isnap.cn/cdnimg/image-20220402104208319.png" srcset="/img/loading.gif" lazyload
 alt="image-20220402104208319" />
 <figcaption aria-hidden="true">image-20220402104208319</figcaption>
 </figure>
@@ -467,19 +467,19 @@ alt="image-20220402104208319" />
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">mfschunkserver reload<br><span class="hljs-meta prompt_"># </span><span class="language-bash">会出现 reload signal has been sent</span><br></code></pre></td></tr></table></figure>
 <p>查看管理后台，可以看到</p>
 <figure>
-<img src="http://cdn.isnap.cn/img/image-20220402104740860.png" srcset="/img/loading.gif" lazyload
+<img src="//blog.isnap.cn/cdnimg/image-20220402104740860.png" srcset="/img/loading.gif" lazyload
 alt="image-20220402104740860" />
 <figcaption aria-hidden="true">image-20220402104740860</figcaption>
 </figure>
 <figure>
-<img src="http://cdn.isnap.cn/img/image-20220402104924608.png" srcset="/img/loading.gif" lazyload
+<img src="//blog.isnap.cn/cdnimg/image-20220402104924608.png" srcset="/img/loading.gif" lazyload
 alt="image-20220402104924608" />
 <figcaption aria-hidden="true">image-20220402104924608</figcaption>
 </figure>
 <p>最终状态应该是，disks 的chunk 值和 info 上的 overgoal
 一致，说明同步完成。</p>
 <figure>
-<img src="http://cdn.isnap.cn/img/image-20220402105452827.png" srcset="/img/loading.gif" lazyload
+<img src="//blog.isnap.cn/cdnimg/image-20220402105452827.png" srcset="/img/loading.gif" lazyload
 alt="image-20220402105452827" />
 <figcaption aria-hidden="true">image-20220402105452827</figcaption>
 </figure>
