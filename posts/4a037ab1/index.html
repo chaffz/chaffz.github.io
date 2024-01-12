@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="三岁于辛博客">
 <meta property="og:description" content="过去 4 年，从无到有的构建了公司的 Golang 微服务集群使用的框架，承载了公司每日近 100 亿的请求。除了框架初期的设计缺陷导致的故障（缓存穿透）外，后来的迭代升级都非常平稳。得益于每次迭代都要求小伙伴们提供足够的单元测试。  在编写单元测试过程中，团队也遇到了各种各样的问题，大部分都被 gomock、gomonkey、monkey 、goconvey 等等的开源包解决，有些问题团队通过">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220827143058333.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220827143058333.png">
 <meta property="article:published_time" content="2022-09-03T03:10:09.000Z">
 <meta property="article:modified_time" content="2023-02-25T03:25:59.794Z">
 <meta property="article:author" content="三岁于辛">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20220827143058333.png">
+<meta name="twitter:image" content="http://cdn.isnap.cn/img/image-20220827143058333.png">
   
   
   
@@ -219,6 +219,14 @@
                   <a class="dropdown-item" href="/java/">
                     <i class="iconfont icon-java"></i>
                     <span>Java</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/docker/">
+                    <i class="iconfont icon-java"></i>
+                    <span>Docker</span>
                   </a>
                 
               </div>
@@ -463,7 +471,7 @@ if the importing code is outside the tree rooted at the parent of the
 <code>timeSleep</code> 方法有注释为
 <code>//go:linename timeSleep time.Sleep</code>。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220827143058333.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220827143058333.png" srcset="/img/loading.gif" lazyload
 alt="image-20220827143058333" />
 <figcaption aria-hidden="true">image-20220827143058333</figcaption>
 </figure>
@@ -485,7 +493,7 @@ enabled in files that have imported "unsafe".</p>
 <h2 id="全局函数-全局变量">全局函数 &amp; 全局变量</h2>
 <p>答案肯定是可以的。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220827190633130.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220827190633130.png" srcset="/img/loading.gif" lazyload
 alt="image-20220827190633130" />
 <figcaption aria-hidden="true">image-20220827190633130</figcaption>
 </figure>
@@ -500,7 +508,7 @@ linkname，会收获的是错误：<code>Missing function body</code>，这时�
 <hr />
 <p>同样地，全局变量也可被导出了。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220827193235706.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220827193235706.png" srcset="/img/loading.gif" lazyload
 alt="image-20220827193235706" />
 <figcaption aria-hidden="true">image-20220827193235706</figcaption>
 </figure>
@@ -508,20 +516,20 @@ alt="image-20220827193235706" />
 <p>类私有属性的操作与 <code>linkname</code>
 主没什么关系了，主要使用的是<strong>内存映射</strong>。为了能拥有相同的内存偏移，所以需要定义一个类，用来对齐内存。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220827194459813.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220827194459813.png" srcset="/img/loading.gif" lazyload
 alt="image-20220827194459813" />
 <figcaption aria-hidden="true">image-20220827194459813</figcaption>
 </figure>
 <p>再来看类私有方法，它的思路与全局方法其实没什么区别，但因为涉及类对象，所以需要映射内存首地址，然后再找到具体的私有方法入口。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220827195613725.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220827195613725.png" srcset="/img/loading.gif" lazyload
 alt="image-20220827195613725" />
 <figcaption aria-hidden="true">image-20220827195613725</figcaption>
 </figure>
 <p>其实，如果对 Golang
 类方法编译后有深入了解过的小伙伴，私有方法其实还有其它 link 方式。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220827200541515.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220827200541515.png" srcset="/img/loading.gif" lazyload
 alt="image-20220827200541515" />
 <figcaption aria-hidden="true">image-20220827200541515</figcaption>
 </figure>
@@ -547,7 +555,7 @@ target="_blank" rel="noopener" href="https://github.com/alangpierce/go-forceexpo
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;time&quot;</span><br>	<span class="hljs-string">&quot;unsafe&quot;</span><br>	_ <span class="hljs-string">&quot;unsafe&quot;</span><br><br>	<span class="hljs-string">&quot;awesome/outer&quot;</span><br>	_ <span class="hljs-string">&quot;awesome/outer&quot;</span><br>)<br><br><span class="hljs-comment">//go:linkname MyNow time.now</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">MyNow</span><span class="hljs-params">()</span></span> (sec <span class="hljs-type">int64</span>, nsec <span class="hljs-type">int32</span>, mono <span class="hljs-type">int64</span>)<br><br><span class="hljs-comment">//go:linkname longDayNames time.longDayNames</span><br><span class="hljs-keyword">var</span> longDayNames []<span class="hljs-type">string</span><br><br><span class="hljs-comment">//go:linkname daysBefore time.daysBefore</span><br><span class="hljs-keyword">var</span> daysBefore [<span class="hljs-number">13</span>]<span class="hljs-type">int32</span><br><br><span class="hljs-keyword">type</span> MyTime <span class="hljs-keyword">struct</span> &#123;<br>	wall <span class="hljs-type">uint64</span><br>	ext  <span class="hljs-type">int64</span><br>	loc  *time.Location<br>&#125;<br><br><span class="hljs-comment">//go:linkname (*MyTime).nsec time.(*Time).nsec</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(*MyTime)</span></span> nsec() <span class="hljs-type">int32</span><br><br><span class="hljs-comment">//go:linkname nsec time.(*Time).nsec</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">nsec</span><span class="hljs-params">(*time.Time)</span></span> <span class="hljs-type">int32</span><br><br><span class="hljs-comment">//go:linkname add awesome/outer/internal/inner.Add</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">add</span><span class="hljs-params">(x, y <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-comment">// 全局方法</span><br>	fmt.Println(MyNow())<br><br>	<span class="hljs-comment">// 全局变量</span><br>	longDayNames[<span class="hljs-number">0</span>] = <span class="hljs-string">&quot;123123&quot;</span><br>	fmt.Println(longDayNames)<br>	fmt.Println(daysBefore)<br><br>	<span class="hljs-comment">// 类私有属性</span><br>	tm := time.Now()<br>	myTm := (*MyTime)(unsafe.Pointer(&amp;tm))<br>	fmt.Println(tm)<br>	myTm.wall = <span class="hljs-number">123123</span><br>	fmt.Println(tm)<br><br>	<span class="hljs-comment">// 类方法</span><br>	fmt.Println(myTm.nsec(), tm.Nanosecond())<br>	fmt.Println(nsec(&amp;tm), tm.Nanosecond())<br><br>	<span class="hljs-comment">// 私有(internal)包方法</span><br>	x, y := <span class="hljs-number">10</span>, <span class="hljs-number">20</span><br>	fmt.Println(add(x, y), outer.Add(x, y))<br>&#125;<br></code></pre></td></tr></table></figure>
 <figure>
 <img
-src="//blog.isnap.cn/cdnimg/%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E6%A0%87%E5%87%86%E8%89%B2%E7%89%88.png" srcset="/img/loading.gif" lazyload
+src="http://cdn.isnap.cn/img/%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E6%A0%87%E5%87%86%E8%89%B2%E7%89%88.png" srcset="/img/loading.gif" lazyload
 alt="扫码_搜索联合传播样式-标准色版" />
 <figcaption
 aria-hidden="true">扫码_搜索联合传播样式-标准色版</figcaption>

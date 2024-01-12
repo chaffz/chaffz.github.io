@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="三岁于辛博客">
 <meta property="og:description" content="本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此 Level 1和 Level 2 将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而 Level 3 用来帮助以顶级公司为目标的学习小伙伴。  本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交 。   前缀和（Prefix sum）是算法题中比">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20221004092908211.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20221004092908211.png">
 <meta property="article:published_time" content="2022-11-30T11:46:17.000Z">
 <meta property="article:modified_time" content="2023-02-25T03:25:59.918Z">
 <meta property="article:author" content="三岁于辛">
 <meta property="article:tag" content="LeetCode">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20221004092908211.png">
+<meta name="twitter:image" content="http://cdn.isnap.cn/img/image-20221004092908211.png">
   
   
   
@@ -219,6 +219,14 @@
                   <a class="dropdown-item" href="/java/">
                     <i class="iconfont icon-java"></i>
                     <span>Java</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/docker/">
+                    <i class="iconfont icon-java"></i>
+                    <span>Docker</span>
                   </a>
                 
               </div>
@@ -432,28 +440,28 @@ sum）是算法题中比较实用的一种技巧，当算法题的背景是整�
 <h2 id="第一题一维数组的动态和">第一题：<a
 target="_blank" rel="noopener" href="https://leetcode.cn/problems/running-sum-of-1d-array/">一维数组的动态和</a></h2>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20221003195616924.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20221003195616924.png" srcset="/img/loading.gif" lazyload
 alt="image-20221003195616924" />
 <figcaption aria-hidden="true">image-20221003195616924</figcaption>
 </figure>
 <p>从题目的解释中也表达的是一个连接累加前 n
 个数的过程。细心的读者可以发现它也可以被归类到动态规划题目中，因为它可以得到状态转移方程：</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20221003202208029.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20221003202208029.png" srcset="/img/loading.gif" lazyload
 alt="image-20221003202208029" />
 <figcaption aria-hidden="true">image-20221003202208029</figcaption>
 </figure>
 <p>这其实也同样满足 Prefix Sum
 的技巧。如下动图显示的是如何利用结果与数组来动态计算最终结果数组。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/running-sum.gif" srcset="/img/loading.gif" lazyload alt="running-sum" />
+<img src="http://cdn.isnap.cn/img/running-sum.gif" srcset="/img/loading.gif" lazyload alt="running-sum" />
 <figcaption aria-hidden="true">running-sum</figcaption>
 </figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RunningSumOf1dArray</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span>[] runningSum(<span class="hljs-type">int</span>[] nums) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt; nums.length; i++) &#123;<br>            nums[i] = nums[i] + nums[i-<span class="hljs-number">1</span>];<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> nums;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="第二题寻找数组的中心下标">第二题：<a
 target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-pivot-index/">寻找数组的中心下标</a></h2>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20221003202809473.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20221003202809473.png" srcset="/img/loading.gif" lazyload
 alt="image-20221003202809473" />
 <figcaption aria-hidden="true">image-20221003202809473</figcaption>
 </figure>
@@ -461,13 +469,13 @@ alt="image-20221003202809473" />
 的左边和与右边各相等。那假设左（右）边的各为 sum
 的话，那么就是整个数组的和为：</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20221003203626254.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20221003203626254.png" srcset="/img/loading.gif" lazyload
 alt="image-20221003203626254" />
 <figcaption aria-hidden="true">image-20221003203626254</figcaption>
 </figure>
 <p>然后就可以进行如下推导：</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20221004092908211.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20221004092908211.png" srcset="/img/loading.gif" lazyload
 alt="image-20221004092908211" />
 <figcaption aria-hidden="true">image-20221004092908211</figcaption>
 </figure>

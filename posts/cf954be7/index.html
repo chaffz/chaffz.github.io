@@ -23,23 +23,23 @@
 <meta property="og:site_name" content="三岁于辛博客">
 <meta property="og:description" content="1. 查看表结构 Mysql 中查看表结构，分析查询语句的命令，有相关工作经验的都能答上来：desc 或 explain，而且这两个命令的效果是相同的。不过，今天的内容中，因为要知道表的存储引擎是啥，所以我们使用的是 show create table 命令。这里我准备了两张表，分别是 myisam_user 和 user。通过命令查看下，我们可以看到 ENGINE 分别是 MyISAM 和 In">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220625115429080.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220625120544554.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626095459919.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626095738587.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626102510818.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626104537233.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626142730063.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626142605983.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626114944475.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626143608646.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626122216356.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626123201656.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626143848406.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626124444925.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626144402626.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626133848569.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20220626134239047.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220625115429080.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220625120544554.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626095459919.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626095738587.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626102510818.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626104537233.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626142730063.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626142605983.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626114944475.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626143608646.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626122216356.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626123201656.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626143848406.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626124444925.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626144402626.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626133848569.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20220626134239047.png">
 <meta property="article:published_time" content="2022-06-26T07:22:38.000Z">
 <meta property="article:modified_time" content="2023-02-25T03:25:59.811Z">
 <meta property="article:author" content="三岁于辛">
@@ -49,7 +49,7 @@
 <meta property="article:tag" content="索引">
 <meta property="article:tag" content="explain">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20220625115429080.png">
+<meta name="twitter:image" content="http://cdn.isnap.cn/img/image-20220625115429080.png">
   
   
   
@@ -239,6 +239,14 @@
                   <a class="dropdown-item" href="/java/">
                     <i class="iconfont icon-java"></i>
                     <span>Java</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/docker/">
+                    <i class="iconfont icon-java"></i>
+                    <span>Docker</span>
                   </a>
                 
               </div>
@@ -443,7 +451,7 @@ explain，而且这两个命令的效果是相同的。不过，今天的内容�
 myisam_user 和 user。通过命令查看下，我们可以看到 ENGINE 分别是 MyISAM
 和 InnoDB。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220625115429080.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220625115429080.png" srcset="/img/loading.gif" lazyload
 alt="image-20220625115429080" />
 <figcaption aria-hidden="true">image-20220625115429080</figcaption>
 </figure>
@@ -451,7 +459,7 @@ alt="image-20220625115429080" />
 <p>查看下表中的数据，当前两张表中都只有一条数据数据，执行
 <code>explain select user</code> 后，可看到返回结果。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220625120544554.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220625120544554.png" srcset="/img/loading.gif" lazyload
 alt="image-20220625120544554" />
 <figcaption aria-hidden="true">image-20220625120544554</figcaption>
 </figure>
@@ -531,13 +539,13 @@ union2,3 了。</p>
 <p>第三条语句展示的是子查询 subquery 的情况。</p>
 <p>第四条语句展示的是 dependent subquery 和 dependent union 了。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626095459919.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626095459919.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626095459919" />
 <figcaption aria-hidden="true">image-20220626095459919</figcaption>
 </figure>
 <p>需要注意的是，in 查询与 “=” 号查询是有区别的。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626095738587.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626095738587.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626095738587" />
 <figcaption aria-hidden="true">image-20220626095738587</figcaption>
 </figure>
@@ -552,7 +560,7 @@ Memory 存储引擎中才会出现，但是在 InnoDB
 Memory 了。下面是针对 MyISAM 和 InnoDB 中实验结果。system
 类型在项目遇到不多。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626102510818.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626102510818.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626102510818" />
 <figcaption aria-hidden="true">image-20220626102510818</figcaption>
 </figure>
@@ -567,7 +575,7 @@ null。</p>
 <code>unique index</code>。这是最好的连接类型。为了防止 const 或者
 system 类型干扰，在两张表中分别扩充到 2 条以上数据。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626104537233.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626104537233.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626104537233" />
 <figcaption aria-hidden="true">image-20220626104537233</figcaption>
 </figure>
@@ -576,7 +584,7 @@ alt="image-20220626104537233" />
 类型的区别在于采用的索引不是主键或者唯一索引。<strong>一个好的查询最次也得到ref级别，再低就准备优化吧</strong>。</p>
 <p>为了验证此类型需要在 name 字段上增加索引。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626142730063.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626142730063.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626142730063" />
 <figcaption aria-hidden="true">image-20220626142730063</figcaption>
 </figure>
@@ -584,14 +592,14 @@ alt="image-20220626142730063" />
 <p>ref_or_null 经常用于子查询，它和 ref 类似，只是在查询的时候会搜索
 null 值的记录。这里我修改了表结构，并将数据增加到了 7
 条，防止索引失效。</p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20220626142605983.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img src="http://cdn.isnap.cn/img/image-20220626142605983.png" srcset="/img/loading.gif" lazyload /></p>
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> <span class="hljs-keyword">user</span>;<br><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span>;<br><span class="hljs-keyword">explain</span> <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> <span class="hljs-type">name</span> = <span class="hljs-string">&#x27;aa&#x27;</span> <span class="hljs-keyword">or</span> <span class="hljs-type">name</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">null</span>;<br></code></pre></td></tr></table></figure>
 <p>fulltext
 是全文索引，要注意的是全文索引的优先级很高，若全文索引和普通索引同时存在时，MySQL
 不管代价，优先选择使用全文索引。为了验证此功能，将 name
 字段的索引类型修改为 fulltext。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626114944475.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626114944475.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626114944475" />
 <figcaption aria-hidden="true">image-20220626114944475</figcaption>
 </figure>
@@ -600,7 +608,7 @@ alt="image-20220626114944475" />
 类型表示查询使用了两个以上的索引，最后取交集或者并集，常见 and/or
 的条件使用了不同的索引。注意，index_merge看上去是使用了索引，但当表的数量非常大时，其实查询速度还是非常的慢。这里把索引改回普通索引。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626143608646.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626143608646.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626143608646" />
 <figcaption aria-hidden="true">image-20220626143608646</figcaption>
 </figure>
@@ -613,7 +621,7 @@ alt="image-20220626143608646" />
 会对select 进行优化，基本无法出现这个场景，只能用 update
 这种语句了。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626122216356.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626122216356.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626122216356" />
 <figcaption aria-hidden="true">image-20220626122216356</figcaption>
 </figure>
@@ -623,14 +631,14 @@ alt="image-20220626122216356" />
 <p>常见的范围查询比如 <code>between and</code>，&gt;，&lt;，like，in
 都有可能出现 range。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626123201656.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626123201656.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626123201656" />
 <figcaption aria-hidden="true">image-20220626123201656</figcaption>
 </figure>
 <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">explain</span> <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> id &gt; <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
 <p>index 跟全表扫描类似，只是扫表是按照索引顺序进行。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626143848406.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626143848406.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626143848406" />
 <figcaption aria-hidden="true">image-20220626143848406</figcaption>
 </figure>
@@ -642,7 +650,7 @@ alt="image-20220626143848406" />
 <p><strong>Using index</strong>
 是覆盖索引。简单来说就是查询的数据在索引只已经存在，直接拿出结果就可以了</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626124444925.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626124444925.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626124444925" />
 <figcaption aria-hidden="true">image-20220626124444925</figcaption>
 </figure>
@@ -652,7 +660,7 @@ alt="image-20220626124444925" />
 age &gt;= 17 的数据有 3 条，但是名字以 a
 开头的只有一条，所以我们在查询时，存储引擎会主动帮我们过滤掉不必要的数据。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626144402626.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626144402626.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626144402626" />
 <figcaption aria-hidden="true">image-20220626144402626</figcaption>
 </figure>
@@ -662,7 +670,7 @@ alt="image-20220626144402626" />
 case，但是 distinct 和 group by 都会触发展示 Using index for
 group-by。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626133848569.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626133848569.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626133848569" />
 <figcaption aria-hidden="true">image-20220626133848569</figcaption>
 </figure>
@@ -672,7 +680,7 @@ alt="image-20220626133848569" />
 <p><strong>Using temporary</strong>
 使用了临时表排序。文件排序、临时表排序理论上是我们一定要优化的语句了，当然有特殊需求除外。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20220626134239047.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20220626134239047.png" srcset="/img/loading.gif" lazyload
 alt="image-20220626134239047" />
 <figcaption aria-hidden="true">image-20220626134239047</figcaption>
 </figure>

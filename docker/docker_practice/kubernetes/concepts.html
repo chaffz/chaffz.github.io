@@ -1,0 +1,711 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.jpeg">
+  <link rel="icon" href="/img/avatar.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="三岁于辛">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="基本概念   节点（Node）：一个节点是一个运行 Kubernetes 中的主机。 容器组（Pod）：一个 Pod 对应于由若干容器组成的一个容器组，同个组内的容器共享一个存储卷(volume)。 容器组生命周期（pos-states）：包含所有容器状态集合，包括容器组状态类型，容器组生命周期，事件，重启策略，以及 replication controllers。 Replication Con">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://blog.isnap.cn/docker/docker_practice/kubernetes/concepts.html">
+<meta property="og:site_name" content="三岁于辛博客">
+<meta property="og:description" content="基本概念   节点（Node）：一个节点是一个运行 Kubernetes 中的主机。 容器组（Pod）：一个 Pod 对应于由若干容器组成的一个容器组，同个组内的容器共享一个存储卷(volume)。 容器组生命周期（pos-states）：包含所有容器状态集合，包括容器组状态类型，容器组生命周期，事件，重启策略，以及 replication controllers。 Replication Con">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.isnap.cn/docker/docker_practice/kubernetes/_images/kubernetes_design.jpg">
+<meta property="article:published_time" content="2024-01-12T00:55:00.492Z">
+<meta property="article:modified_time" content="2024-01-12T00:55:00.492Z">
+<meta property="article:author" content="三岁于辛">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.isnap.cn/docker/docker_practice/kubernetes/_images/kubernetes_design.jpg">
+  
+  
+  
+  <title>page.title - 三岁于辛博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont-menu/iconfont.css">
+<link rel="stylesheet" href="/css/mac.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.isnap.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"4d6b2454c24110cf12701644d6c772b0","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"I7vkjjN9XQqZFwCKC4hd7WEu-gzGzoHsz","app_key":"tlMbjvJzlishc29XFCmKtMj9","server_url":"https://i7vkjjn9.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?4d6b2454c24110cf12701644d6c772b0";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>三岁于辛博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>算法</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/leetcode/">
+                    <i class="iconfont icon-leetcode"></i>
+                    <span>力扣(LeetCode)</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-stack-overflow-fill"></i>
+                <span>专题</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/mysql/">
+                    <i class="iconfont icon-MySQL"></i>
+                    <span>MySQL</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/golang/">
+                    <i class="iconfont icon-PITAO-tuboshu"></i>
+                    <span>Golang</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/java/">
+                    <i class="iconfont icon-java"></i>
+                    <span>Java</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/docker/">
+                    <i class="iconfont icon-java"></i>
+                    <span>Docker</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/weekly/">
+                <i class="iconfont icon-kakao-talk-fill"></i>
+                <span>笔记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-note"></i>
+                <span>传送门</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    <span>归档</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    <span>分类</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    <span>标签</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="基本概念">基本概念</h1>
+<p><img src="./_images/kubernetes_design.jpg" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li>节点（<code>Node</code>）：一个节点是一个运行 Kubernetes
+中的主机。</li>
+<li>容器组（<code>Pod</code>）：一个 Pod
+对应于由若干容器组成的一个容器组，同个组内的容器共享一个存储卷(volume)。</li>
+<li>容器组生命周期（<code>pos-states</code>）：包含所有容器状态集合，包括容器组状态类型，容器组生命周期，事件，重启策略，以及
+replication controllers。</li>
+<li>Replication Controllers：主要负责指定数量的 pod
+在同一时间一起运行。</li>
+<li>服务（<code>services</code>）：一个 Kubernetes
+服务是容器组逻辑的高级抽象，同时也对外提供访问容器组的策略。</li>
+<li>卷（<code>volumes</code>）：一个卷就是一个目录，容器对其有访问权限。</li>
+<li>标签（<code>labels</code>）：标签是用来连接一组对象的，比如容器组。标签可以被用来组织和选择子对象。</li>
+<li>接口权限（<code>accessing_the_api</code>）：端口，IP
+地址和代理的防火墙规则。</li>
+<li>web 界面（<code>ux</code>）：用户可以通过 web 界面操作
+Kubernetes。</li>
+<li>命令行操作（<code>cli</code>）：<code>kubectl</code>命令。</li>
+</ul>
+<h2 id="节点">节点</h2>
+<p>在 <code>Kubernetes</code>
+中，节点是实际工作的点，节点可以是虚拟机或者物理机器，依赖于一个集群环境。每个节点都有一些必要的服务以运行容器组，并且它们都可以通过主节点来管理。必要服务包括
+Docker，kubelet 和代理服务。</p>
+<h3 id="容器状态">容器状态</h3>
+<p>容器状态用来描述节点的当前状态。现在，其中包含三个信息：</p>
+<h4 id="主机ip">主机IP</h4>
+<p>主机 IP 需要云平台来查询，<code>Kubernetes</code>
+把它作为状态的一部分来保存。如果 <code>Kubernetes</code>
+没有运行在云平台上，节点 ID 就是必需的。IP
+地址可以变化，并且可以包含多种类型的 IP 地址，如公共 IP，私有 IP，动态
+IP，ipv6 等等。</p>
+<h4 id="节点周期">节点周期</h4>
+<p>通常来说节点有
+<code>Pending</code>，<code>Running</code>，<code>Terminated</code>
+三个周期，如果 Kubernetes 发现了一个节点并且其可用，那么 Kubernetes
+就把它标记为 <code>Pending</code>。然后在某个时刻，Kubernetes
+将会标记其为 <code>Running</code>。节点的结束周期称为
+<code>Terminated</code>。一个已经 <code>Terminated</code>
+的节点不会接受和调度任何请求，并且已经在其上运行的容器组也会删除。</p>
+<h4 id="节点状态">节点状态</h4>
+<p>节点的状态主要是用来描述处于 <code>Running</code>
+的节点。当前可用的有 <code>NodeReachable</code> 和
+<code>NodeReady</code>。以后可能会增加其他状态。<code>NodeReachable</code>
+表示集群可达。<code>NodeReady</code> 表示 kubelet 返回 Status Ok 并且
+HTTP 状态检查健康。</p>
+<h3 id="节点管理">节点管理</h3>
+<p>节点并非 Kubernetes
+创建，而是由云平台创建，或者就是物理机器、虚拟机。在 Kubernetes
+中，节点仅仅是一条记录，节点创建之后，Kubernetes 会检查其是否可用。在
+Kubernetes 中，节点用如下结构保存：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;10.1.2.3&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;kind&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Minion&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;apiVersion&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;v1beta1&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;resources&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;capacity&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;cpu&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1000</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;memory&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1073741824</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;labels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;my-first-k8s-node&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<p>Kubernetes 校验节点可用依赖于
+ID。在当前的版本中，有两个接口可以用来管理节点：节点控制和 Kube
+管理。</p>
+<h3 id="节点控制">节点控制</h3>
+<p>在 Kubernetes 主节点中，节点控制器是用来管理节点的组件。主要包含： *
+集群范围内节点同步 * 单节点生命周期管理</p>
+<p>节点控制有一个同步轮询，主要监听所有云平台的虚拟实例，会根据节点状态创建和删除。可以通过
+<code>--node_sync_period</code>标志来控制该轮询。如果一个实例已经创建，节点控制将会为其创建一个结构。同样的，如果一个节点被删除，节点控制也会删除该结构。在
+Kubernetes 启动时可用通过
+<code>--machines</code>标记来显示指定节点。同样可以使用
+<code>kubectl</code> 来一条一条的添加节点，两者是相同的。通过设置
+<code>--sync_nodes=false</code>标记来禁止集群之间的节点同步，你也可以使用
+api/kubectl 命令行来增删节点。</p>
+<h2 id="容器组">容器组</h2>
+<p>在 Kubernetes
+中，使用的最小单位是容器组，容器组是创建，调度，管理的最小单位。
+一个容器组使用相同的 Docker
+容器并共享卷（挂载点）。一个容器组是一个特定应用的打包集合，包含一个或多个容器。</p>
+<p>和运行的容器类似，一个容器组被认为只有很短的运行周期。容器组被调度到一组节点运行，直到容器的生命周期结束或者其被删除。如果节点死掉，运行在其上的容器组将会被删除而不是重新调度。（也许在将来的版本中会添加容器组的移动）。</p>
+<h3 id="容器组设计的初衷">容器组设计的初衷</h3>
+<h3 id="资源共享和通信">资源共享和通信</h3>
+<p>容器组主要是为了数据共享和它们之间的通信。</p>
+<p>在一个容器组中，容器都使用相同的网络地址和端口，可以通过本地网络来相互通信。每个容器组都有独立的
+IP，可用通过网络来和其他物理主机或者容器通信。</p>
+<p>容器组有一组存储卷（挂载点），主要是为了让容器在重启之后可以不丢失数据。</p>
+<h3 id="容器组管理">容器组管理</h3>
+<p>容器组是一个应用管理和部署的高层次抽象，同时也是一组容器的接口。容器组是部署、水平放缩的最小单位。</p>
+<h3 id="容器组的使用">容器组的使用</h3>
+<p>容器组可以通过组合来构建复杂的应用，其本来的意义包含：</p>
+<ul>
+<li>内容管理，文件和数据加载以及本地缓存管理等。</li>
+<li>日志和检查点备份，压缩，快照等。</li>
+<li>监听数据变化，跟踪日志，日志和监控代理，消息发布等。</li>
+<li>代理，网桥</li>
+<li>控制器，管理，配置以及更新</li>
+</ul>
+<h3 id="替代方案">替代方案</h3>
+<p>为什么不在一个单一的容器里运行多个程序？</p>
+<ul>
+<li>1.透明化。为了使容器组中的容器保持一致的基础设施和服务，比如进程管理和资源监控。这样设计是为了用户的便利性。</li>
+<li>2.解偶软件之间的依赖。每个容器都可能重新构建和发布，Kubernetes
+必须支持热发布和热更新（将来）。</li>
+<li>3.方便使用。用户不必运行独立的程序管理，也不用担心每个应用程序的退出状态。</li>
+<li>4.高效。考虑到基础设施有更多的职责，容器必须要轻量化。</li>
+</ul>
+<h3 id="容器组的生命状态">容器组的生命状态</h3>
+<p>包括若干状态值：<code>pending</code>、<code>running</code>、<code>succeeded</code>、<code>failed</code>。</p>
+<h4 id="pending">pending</h4>
+<p>容器组已经被节点接受，但有一个或多个容器还没有运行起来。这将包含某些节点正在下载镜像的时间，这种情形会依赖于网络情况。</p>
+<h4 id="running">running</h4>
+<p>容器组已经被调度到节点，并且所有的容器都已经启动。至少有一个容器处于运行状态（或者处于重启状态）。</p>
+<h4 id="succeeded">succeeded</h4>
+<p>所有的容器都正常退出。</p>
+<h4 id="failed">failed</h4>
+<p>容器组中所有容器都意外中断了。</p>
+<h3 id="容器组生命周期">容器组生命周期</h3>
+<p>通常来说，如果容器组被创建了就不会自动销毁，除非被某种行为触发，而触发此种情况可能是人为，或者复制控制器所为。唯一例外的是容器组由
+succeeded 状态成功退出，或者在一定时间内重试多次依然失败。</p>
+<p>如果某个节点死掉或者不能连接，那么节点控制器将会标记其上的容器组的状态为
+<code>failed</code>。</p>
+<p>举例如下。</p>
+<ul>
+<li>容器组状态 <code>running</code>，有 1 容器，容器正常退出
+<ul>
+<li>记录完成事件</li>
+<li>如果重启策略为：
+<ul>
+<li>始终：重启容器，容器组保持 <code>running</code></li>
+<li>失败时：容器组变为 <code>succeeded</code></li>
+<li>从不：容器组变为 <code>succeeded</code></li>
+</ul></li>
+</ul></li>
+<li>容器组状态 <code>running</code>，有1容器，容器异常退出
+<ul>
+<li>记录失败事件</li>
+<li>如果重启策略为：
+<ul>
+<li>始终：重启容器，容器组保持 <code>running</code></li>
+<li>失败时：重启容器，容器组保持 <code>running</code></li>
+<li>从不：容器组变为 <code>failed</code></li>
+</ul></li>
+</ul></li>
+<li>容器组状态 <code>running</code>，有2容器，有1容器异常退出
+<ul>
+<li>记录失败事件</li>
+<li>如果重启策略为：
+<ul>
+<li>始终：重启容器，容器组保持 <code>running</code></li>
+<li>失败时：重启容器，容器组保持 <code>running</code></li>
+<li>从不：容器组保持 <code>running</code></li>
+</ul></li>
+<li>当有2容器退出
+<ul>
+<li>记录失败事件</li>
+<li>如果重启策略为：
+<ul>
+<li>始终：重启容器，容器组保持 <code>running</code></li>
+<li>失败时：重启容器，容器组保持 <code>running</code></li>
+<li>从不：容器组变为 <code>failed</code></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>容器组状态 <code>running</code>，容器内存不足
+<ul>
+<li>标记容器错误中断</li>
+<li>记录内存不足事件</li>
+<li>如果重启策略为：
+<ul>
+<li>始终：重启容器，容器组保持 <code>running</code></li>
+<li>失败时：重启容器，容器组保持 <code>running</code></li>
+<li>从不：记录错误事件，容器组变为 <code>failed</code></li>
+</ul></li>
+</ul></li>
+<li>容器组状态 <code>running</code>，一块磁盘死掉
+<ul>
+<li>杀死所有容器</li>
+<li>记录事件</li>
+<li>容器组变为 <code>failed</code></li>
+<li>如果容器组运行在一个控制器下，容器组将会在其他地方重新创建</li>
+</ul></li>
+<li>容器组状态 <code>running</code>，对应的节点段溢出
+<ul>
+<li>节点控制器等到超时</li>
+<li>节点控制器标记容器组 <code>failed</code></li>
+<li>如果容器组运行在一个控制器下，容器组将会在其他地方重新创建</li>
+</ul></li>
+</ul>
+<h2 id="replication-controllers">Replication Controllers</h2>
+<h2 id="服务">服务</h2>
+<h2 id="卷">卷</h2>
+<h2 id="标签">标签</h2>
+<h2 id="接口权限">接口权限</h2>
+<h2 id="web界面">web界面</h2>
+<h2 id="命令行操作">命令行操作</h2>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      浙ICP备2021036888号
+    </a>
+  </span>
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

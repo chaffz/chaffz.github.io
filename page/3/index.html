@@ -210,6 +210,14 @@
                     <span>Java</span>
                   </a>
                 
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/docker/">
+                    <i class="iconfont icon-java"></i>
+                    <span>Docker</span>
+                  </a>
+                
               </div>
             </li>
           
@@ -354,6 +362,606 @@
   <div class="row mx-auto index-card">
     
     
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/4a037ab1/" target="_self">
+          <img src="http://cdn.isnap.cn/img/image-20220827143058333.png" srcset="/img/loading.gif" lazyload alt="Golang 单元测试篇：优雅地导出私有（unexported）项">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/4a037ab1/" target="_self">
+          Golang 单元测试篇：优雅地导出私有（unexported）项
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/posts/4a037ab1/" target="_self">
+        <div>
+          过去 4 年，从无到有的构建了公司的 Golang 微服务集群使用的框架，承载了公司每日近 100 亿的请求。除了框架初期的设计缺陷导致的故障（缓存穿透）外，后来的迭代升级都非常平稳。得益于每次迭代都要求小伙伴们提供足够的单元测试。  在编写单元测试过程中，团队也遇到了各种各样的问题，大部分都被 gomock、gomonkey、monkey 、goconvey 等等的开源包解决，有些问题团队通过
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-03 11:10" pubdate>
+              2022-09-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%90%8E%E7%AB%AF/Golang/" class="category-chain-item">Golang</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Golang/">#Golang</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/cf954be7/" target="_self">
+          Mysql实验：快速入门 explain 命令
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/cf954be7/" target="_self">
+        <div>
+          1. 查看表结构 Mysql 中查看表结构，分析查询语句的命令，有相关工作经验的都能答上来：desc 或 explain，而且这两个命令的效果是相同的。不过，今天的内容中，因为要知道表的存储引擎是啥，所以我们使用的是 show create table 命令。这里我准备了两张表，分别是 myisam_user 和 user。通过命令查看下，我们可以看到 ENGINE 分别是 MyISAM 和 In
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-06-26 15:22" pubdate>
+              2022-06-26
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Mysql/">#Mysql</a>
+            
+              <a href="/tags/InnoDB/">#InnoDB</a>
+            
+              <a href="/tags/MyISAM/">#MyISAM</a>
+            
+              <a href="/tags/%E7%B4%A2%E5%BC%95/">#索引</a>
+            
+              <a href="/tags/explain/">#explain</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/f020ccb1/" target="_self">
+          Mysql实验：理解事务隔离级别
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/f020ccb1/" target="_self">
+        <div>
+          以下为文稿：具体可见 B站视频 实验理解 Mysql 事务隔离级别 欢迎关注：三岁于辛 今天的实验课开始前，我开启了三个终端连接我的数据库实例：第一个使用的库是 information_schema，它提供了访问数据库元数据的方式。另外两个使用的库是 awesome，也就是我们接下来要操作的数据库实例。 我们先看下 information_schema 中的表，它有很多，这里先埋个坑，后面有空都一
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-06-22 14:52" pubdate>
+              2022-06-22
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Mysql/">#Mysql</a>
+            
+              <a href="/tags/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">#事务隔离级别</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/bf49c7/" target="_self">
+          Moosefs 删除数据盘
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/bf49c7/" target="_self">
+        <div>
+          MFS 缩容操作指南 整体步骤指南 需要记住，当文件系统中某台 chunk server 拥有某个 chunk 的唯一副本(CGI监控会把它们标记为黄色)，断开这台chunk server是不明智的。你也可以断开(或者更改)单个硬盘。此操作的步骤如下：  可在管理后台操作变更为“维护状态”。 标记这块硬盘为移除（查看”如何标记一块磁盘为移除”） 重新加载(reload)chunk server进程
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-15 13:52" pubdate>
+              2022-04-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%90%8E%E7%AB%AF/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%98%E5%82%A8/" class="category-chain-item">分布式存储</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/moosefs/">#moosefs</a>
+            
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%98%E5%82%A8/">#分布式存储</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/ca12726f/" target="_self">
+          折磨人的 OPCache
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/ca12726f/" target="_self">
+        <div>
+          背景 一切源于同一份代码在开发机（云主机）中和测试环境（k8s容器）中运行的结果相关很大。如下图：左边是云主机，右边是优化前的 k8s 容器。   image-20220413162904064  是何原因导致？刚开始找我查这个问题时也是一脸的懞。先说下我的怀疑路径：  代码有问题（新开发的框架）； 环境配置有问题； 引用的包有问题； OPCache 配置有问题； ......  怀疑的过程就是一
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-13 16:21" pubdate>
+              2022-04-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%90%8E%E7%AB%AF/PHP/" class="category-chain-item">PHP</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/PHP/">#PHP</a>
+            
+              <a href="/tags/OPCache/">#OPCache</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/dded9f04/" target="_self">
+          ELK甩锅记
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/dded9f04/" target="_self">
+        <div>
+          事情的起因是想从全链路日志中清洗出需要调整的接口，在 jaeger ui 中查看时，发现几乎每条数据都会出现invalid parent span IDs=xxxx错误，开始怀疑是不是因为迭代就 go context 中的数据丢失了。所以直接找运维同学上线上服务确定了日志文件中是否有相关数据。幸运的是日志文件中确实存在相关数据的。   image-20220309101254791  现在问题转变
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-07 13:54" pubdate>
+              2022-03-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%90%8E%E7%AB%AF/ElasticSearch/" class="category-chain-item">ElasticSearch</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ES/">#ES</a>
+            
+              <a href="/tags/ElasticSearch/">#ElasticSearch</a>
+            
+              <a href="/tags/Kibana/">#Kibana</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/7b01beed/" target="_self">
+          MacOS 12 如何在根目录下增加文件夹？
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/7b01beed/" target="_self">
+        <div>
+          MacOS 升级到最新版本后，在要目录创建文件夹时会出现错误：  mkdir: /data: Read-only file system  要解决上述问题，开始最多的是如何如何开启 root 用户，然后用 root 用户创建文件夹或者开启软链等。但是 MacOS 从 11 版本后增加了开启软链的特殊方式。 第一步：运行下面命令，修改 synthetic.conf 文件 1sudo vi /etc/
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-02 17:31" pubdate>
+              2022-03-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%97%A5%E8%AE%B0/" class="category-chain-item">日记</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E6%97%A5%E8%AE%B0/%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/" class="category-chain-item">工作记录</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MacOS/">#MacOS</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/cb6c3b10/" target="_self">
+          Hexo 使用 Gitalk 评论插件
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/cb6c3b10/" target="_self">
+        <div>
+          评论是博客中一个必要的功能，除非你想写个博客，然后不允许别人逼逼那种。 本人的博客一直是断断续续的维护着，之前一直没添加评论功能，但是最近又立志了，所以想把博客系统处理好。调研了下决定使用 Gitalk 插件。 申请 Application Gitalk 是使用了 github 的 issue 功能，所以需要围绕一个 github 项目展开，对于个人 blog 登陆是需要授权的，所以这里又引入了一
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-25 19:54" pubdate>
+              2022-02-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%89%8D%E7%AB%AF/node/" class="category-chain-item">node</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Hexo/">#Hexo</a>
+            
+              <a href="/tags/Theme-Next/">#Theme Next</a>
+            
+              <a href="/tags/LaTex/">#LaTex</a>
+            
+              <a href="/tags/KaTex/">#KaTex</a>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/">#数学公式</a>
+            
+              <a href="/tags/mathjax/">#mathjax</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/4af5ee11/" target="_self">
+          Hexo + Next 如何展示数学公式
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/4af5ee11/" target="_self">
+        <div>
+          计算机科学中，免不了会遇到需要编辑数学公式的情况，比如作者在写《Mysql学习笔记：索引之B-Tree、B+Tree》时就针对回盘次数做了公式说明。那么 Hexo + Next 中如何能够正确的渲染数学公式？ 开始说解决方案前需要做以下信息的同步：  文章的编辑是以 Markdown 进行的； 文章的编辑是使用TeX作为它的格式化引擎，无论你使用的是 LaTeX 还是 KaTeX 作为你的排版系统
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-25 17:19" pubdate>
+              2022-02-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%89%8D%E7%AB%AF/node/" class="category-chain-item">node</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Hexo/">#Hexo</a>
+            
+              <a href="/tags/Theme-Next/">#Theme Next</a>
+            
+              <a href="/tags/LaTex/">#LaTex</a>
+            
+              <a href="/tags/KaTex/">#KaTex</a>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/">#数学公式</a>
+            
+              <a href="/tags/mathjax/">#mathjax</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
@@ -419,679 +1027,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/f804bd31/" target="_self">
-          树莓派配件选型
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/posts/f804bd31/" target="_self">
-        <div>
-          本人使用的 3b+ 的树莓派，在起步过程中担心了很多点，主要围绕着的是配件相关。 # 散热片的必要性？ 在购买树莓派时都会配上几块散热片，但是如何安装与怎么安装或者是否必需安装呢？在翻了一些文档后，包括官方文档与一些测评文章后，网卡和内存可以贴上，但是 cpu 不推荐。  # TF 卡如何选择？ 见引用的文章《microSD Card Benchmarks》，根据自己的实际情况选择即可。 推荐阅读
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-04-12 10:34" pubdate>
-              2020-04-12
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%B3%BB%E7%BB%9F/" class="category-chain-item">系统</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%B3%BB%E7%BB%9F/%E6%A0%91%E8%8E%93%E6%B4%BE/" class="category-chain-item">树莓派</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/">#树莓派</a>
-            
-              <a href="/tags/3b/">#3b+</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/88fde648/" target="_self">
-          Centos: 迁移 Docker 容器存储位置
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/posts/88fde648/" target="_self">
-        <div>
-          遇到问题 近来，团队协作中，越来越多的使用 Docker，无论是环境统一还是工具共享~ 但是，随着使用的频率越来越高，遇到的问题也越来越多，今天要说的是如果在云服务器中，安装 Docker 时没有主动对 Dcoker 配置做过修改时，那么，总有一天会遇到系统盘点用过高的情况。如： 12345678910[root@test ~]# df -hFilesystem      Size  Used A
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-12 16:41" pubdate>
-              2020-01-12
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E5%90%8E%E7%AB%AF/Docker/" class="category-chain-item">Docker</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/docker/">#docker</a>
-            
-              <a href="/tags/centos/">#centos</a>
-            
-              <a href="/tags/%E5%AE%B9%E5%99%A8/">#容器</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/7ed85540/" target="_self">
-          node/electron插件: 由监听 Windows 打印机状态功能深入理解原生node插件编写过程
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/posts/7ed85540/" target="_self">
-        <div>
-          写在前面 这里说的插件，其实是基于 node-addon-api 编写的插件。有人会说，其实 github 上已经有人开源的打印机相关的组件。 但是，它不是本人要的。 本人需要的是：第一时间知道打印机的及打印任务的所有状态！ ## 最初实现 开始写第一个版本时，因为进度需要，本人快速实现了一个 dll 版本，然后在 electron 中通过 ffi 组件调用本人的 dll 。它工作得很好，但是它调
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-03-24 12:05" pubdate>
-              2019-03-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E5%89%8D%E7%AB%AF/node/" class="category-chain-item">node</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/node/">#node</a>
-            
-              <a href="/tags/electron/">#electron</a>
-            
-              <a href="/tags/node-addon/">#node-addon</a>
-            
-              <a href="/tags/node-addon-api/">#node-addon-api</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/1ef1d0bc/" target="_self">
-          Mysql学习笔记：事务隔离级别理解
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/posts/1ef1d0bc/" target="_self">
-        <div>
-          这个问题其实有很多人都已经教科书式的总结了很多遍，如：    隔离级别 中文描述 此级别问题(面试官喜欢用这个)     READ UNCOMMITED 未提交读 脏读   READ COMMITED 提交读 不可重复读   REPEATABLE READ 可重复读 幻读   SERIALIZABLE 串行化 锁    但是在这个表格中最后一列的问题因何产生，很多人会不明白其中的缘由。我先说下我的
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-01-13 15:47" pubdate>
-              2019-01-13
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E5%90%8E%E7%AB%AF/Mysql/" class="category-chain-item">Mysql</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Mysql/">#Mysql</a>
-            
-              <a href="/tags/InnoDB/">#InnoDB</a>
-            
-              <a href="/tags/%E4%BA%8B%E5%8A%A1/">#事务</a>
-            
-              <a href="/tags/%E9%9A%94%E7%A6%BB/">#隔离</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/f56f3718/" target="_self">
-          Mysql学习笔记：存储引擎MyISAM和InnoDB的区别
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/posts/f56f3718/" target="_self">
-        <div>
-          在整理文章《Mysql学习笔记：索引之B-Tree、B+Tree》时，突然对“MyISAM和InnoDB存储引擎区别”有了一个新的理解：两者之间区别之间是有很大关联性的。后面我会慢慢说明。 ### 构成上的区别 Mysql 在设计时把表信息和数据是分开，这在 Mysql8 以前表现为 .frm(表信息元数据)以及 xxx 文件。这是为什么是 xxx 文件，因为这里是本文整理的第一个区别。 ####
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2018-12-25 15:34" pubdate>
-              2018-12-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E5%90%8E%E7%AB%AF/Mysql/" class="category-chain-item">Mysql</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Mysql/">#Mysql</a>
-            
-              <a href="/tags/InnoDB/">#InnoDB</a>
-            
-              <a href="/tags/MyISAM/">#MyISAM</a>
-            
-              <a href="/tags/%E7%B4%A2%E5%BC%95/">#索引</a>
-            
-              <a href="/tags/B-Tree/">#B-Tree</a>
-            
-              <a href="/tags/B-Tree/">#B+Tree</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/7f90db05/" target="_self">
-          Mysql学习笔记：索引之B-Tree、B+Tree
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/posts/7f90db05/" target="_self">
-        <div>
-          为什么会使用B-Tree和B+Tree，而不是二叉树、红黑树 数据结构 说索引之前需要先提到一点，树结构做查找时，最坏情况需要查找的次数是树的高度H，而对于Mysql来说，当数据文件很大时，就需要根据树的节点把对应的数据加载到内存中，也就是I/O。 上面的描述中有几点信息： 1. 树高H影响查找次数； 2. 上一点中的每一次查找还会涉及到磁盘I/O;  记 N 为 B-tree 中的 Key 的数
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2018-12-14 17:40" pubdate>
-              2018-12-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E5%90%8E%E7%AB%AF/Mysql/" class="category-chain-item">Mysql</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Mysql/">#Mysql</a>
-            
-              <a href="/tags/InnoDB/">#InnoDB</a>
-            
-              <a href="/tags/MyISAM/">#MyISAM</a>
-            
-              <a href="/tags/%E7%B4%A2%E5%BC%95/">#索引</a>
-            
-              <a href="/tags/B-Tree/">#B-Tree</a>
-            
-              <a href="/tags/B-Tree/">#B+Tree</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/9d85171f/" target="_self">
-          Docker学习笔记：docker compose 中难缠的网络问题
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/posts/9d85171f/" target="_self">
-        <div>
-          越来越多的开发者被带到Docker的使用中，至少我的所有开发环境都是Docker的，Github直达。本人习惯用 Docker compose 来管理，在各种各样的容器之间，网络问题时不时的就蹦出来，现我就过程中遇到的问题做出自己的总结。 同一个 docker-compose 文件中的容器如何互联？ 在整理开发环境时，我习惯性的把php和nginx放在一起，方便启动时能够同时启动。所以会把 ngi
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2018-12-04 20:57" pubdate>
-              2018-12-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E5%90%8E%E7%AB%AF/Docker/" class="category-chain-item">Docker</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Docker/">#Docker</a>
-            
-              <a href="/tags/%E7%BD%91%E7%BB%9C/">#网络</a>
-            
-              <a href="/tags/docker-compose/">#docker-compose</a>
-            
-              <a href="/tags/network/">#network</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/40c20fdb/" target="_self">
-          Python与C混合编程时遇到的问题及解决方案(持续更新)
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/posts/40c20fdb/" target="_self">
-        <div>
-          相互调用的方式选择 在做项目时，调研过两种方式：一是扩展Python ctypes 类型；二是引入Python开发文件实现Python的扩展。 #### 扩展 ctypes 类型 项目中遇到的第一个需要扩展的地方是，C/C++项目中用了C++ stl::vector。问题来了，在Python 的 ctypes 中没相关类型的封装呀，于是第一时间想到的是扩展 ctypes 类型。可是在实现的时候才发
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2018-12-02 15:12" pubdate>
-              2018-12-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E5%90%8E%E7%AB%AF/Python/" class="category-chain-item">Python</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">#python</a>
-            
-              <a href="/tags/c/">#c</a>
-            
-              <a href="/tags/c/">#c++</a>
-            
-              <a href="/tags/%E6%B7%B7%E7%BC%96/">#混编</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/4453c31c/" target="_self">
-          Golang学习笔记：当关键字“go”遇上“runtime” 2
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/posts/4453c31c/" target="_self">
-        <div>
-          前文“Golang学习笔记：当关键字“go”遇上“runtime””最后留了几个问题： 12345678910111213func main() &#123;    runtime.GOMAXPROCS(1)    for i := 0; i &lt; 10; i++ &#123;        go println(i)    &#125;    runtime.Gosched()    tim
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2018-11-25 21:35" pubdate>
-              2018-11-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E5%90%8E%E7%AB%AF/Golang/" class="category-chain-item">Golang</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Golang/">#Golang</a>
-            
-              <a href="/tags/runtime/">#runtime</a>
-            
-              <a href="/tags/%E5%85%B3%E9%94%AE%E5%AD%97/">#关键字</a>
-            
-              <a href="/tags/go/">#go</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

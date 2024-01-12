@@ -1,0 +1,777 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.jpeg">
+  <link rel="icon" href="/img/avatar.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="三岁于辛">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Dockerfile 最佳实践 本附录是笔者对 Docker 官方文档中 Best practices for writing Dockerfiles 的理解与翻译。 一般性的指南和建议 容器应该是短暂的 通过 Dockerfile 构建的镜像所启动的容器应该尽可能短暂（生命周期短）。「短暂」意味着可以停止和销毁容器，并且创建一个新容器并部署好所需的设置和配置工作量应该是极小的。 使用 .dock">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://blog.isnap.cn/docker/docker_practice/appendix/best_practices.html">
+<meta property="og:site_name" content="三岁于辛博客">
+<meta property="og:description" content="Dockerfile 最佳实践 本附录是笔者对 Docker 官方文档中 Best practices for writing Dockerfiles 的理解与翻译。 一般性的指南和建议 容器应该是短暂的 通过 Dockerfile 构建的镜像所启动的容器应该尽可能短暂（生命周期短）。「短暂」意味着可以停止和销毁容器，并且创建一个新容器并部署好所需的设置和配置工作量应该是极小的。 使用 .dock">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-12T00:55:00.353Z">
+<meta property="article:modified_time" content="2024-01-12T00:55:00.353Z">
+<meta property="article:author" content="三岁于辛">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - 三岁于辛博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont-menu/iconfont.css">
+<link rel="stylesheet" href="/css/mac.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.isnap.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"4d6b2454c24110cf12701644d6c772b0","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"I7vkjjN9XQqZFwCKC4hd7WEu-gzGzoHsz","app_key":"tlMbjvJzlishc29XFCmKtMj9","server_url":"https://i7vkjjn9.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?4d6b2454c24110cf12701644d6c772b0";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>三岁于辛博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>算法</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/leetcode/">
+                    <i class="iconfont icon-leetcode"></i>
+                    <span>力扣(LeetCode)</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-stack-overflow-fill"></i>
+                <span>专题</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/mysql/">
+                    <i class="iconfont icon-MySQL"></i>
+                    <span>MySQL</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/golang/">
+                    <i class="iconfont icon-PITAO-tuboshu"></i>
+                    <span>Golang</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/java/">
+                    <i class="iconfont icon-java"></i>
+                    <span>Java</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/docker/">
+                    <i class="iconfont icon-java"></i>
+                    <span>Docker</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/weekly/">
+                <i class="iconfont icon-kakao-talk-fill"></i>
+                <span>笔记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-note"></i>
+                <span>传送门</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    <span>归档</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    <span>分类</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    <span>标签</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="dockerfile-最佳实践">Dockerfile 最佳实践</h1>
+<p>本附录是笔者对 Docker 官方文档中 <a
+target="_blank" rel="noopener" href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">Best
+practices for writing Dockerfiles</a> 的理解与翻译。</p>
+<h2 id="一般性的指南和建议">一般性的指南和建议</h2>
+<h3 id="容器应该是短暂的">容器应该是短暂的</h3>
+<p>通过 <code>Dockerfile</code>
+构建的镜像所启动的容器应该尽可能短暂（生命周期短）。「短暂」意味着可以停止和销毁容器，并且创建一个新容器并部署好所需的设置和配置工作量应该是极小的。</p>
+<h3 id="使用-.dockerignore-文件">使用 <code>.dockerignore</code>
+文件</h3>
+<p>使用 <code>Dockerfile</code> 构建镜像时最好是将
+<code>Dockerfile</code>
+放置在一个新建的空目录下。然后将构建镜像所需要的文件添加到该目录中。为了提高构建镜像的效率，你可以在目录下新建一个
+<code>.dockerignore</code>
+文件来指定要忽略的文件和目录。<code>.dockerignore</code>
+文件的排除模式语法和 Git 的 <code>.gitignore</code> 文件相似。</p>
+<h3 id="使用多阶段构建">使用多阶段构建</h3>
+<p>在 <code>Docker 17.05</code> 以上版本中，你可以使用 <a
+href="../image/multistage-builds.md">多阶段构建</a>
+来减少所构建镜像的大小。</p>
+<h3 id="避免安装不必要的包">避免安装不必要的包</h3>
+<p>为了降低复杂性、减少依赖、减小文件大小、节约构建时间，你应该避免安装任何不必要的包。例如，不要在数据库镜像中包含一个文本编辑器。</p>
+<h3 id="一个容器只运行一个进程">一个容器只运行一个进程</h3>
+<p>应该保证在一个容器中只运行一个进程。将多个应用解耦到不同容器中，保证了容器的横向扩展和复用。例如
+web 应用应该包含三个容器：web应用、数据库、缓存。</p>
+<p>如果容器互相依赖，你可以使用 <a href="../network/linking.md">Docker
+自定义网络</a> 来把这些容器连接起来。</p>
+<h3 id="镜像层数尽可能少">镜像层数尽可能少</h3>
+<p>你需要在 <code>Dockerfile</code>
+可读性（也包括长期的可维护性）和减少层数之间做一个平衡。</p>
+<h3 id="将多行参数排序">将多行参数排序</h3>
+<p>将多行参数按字母顺序排序（比如要安装多个包时）。这可以帮助你避免重复包含同一个包，更新包列表时也更容易。也便于
+<code>PRs</code> 阅读和审查。建议在反斜杠符号 <code>\</code>
+之前添加一个空格，以增加可读性。</p>
+<p>下面是来自 <code>buildpack-deps</code> 镜像的例子：</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y \</span><br><span class="language-bash">  bzr \</span><br><span class="language-bash">  cvs \</span><br><span class="language-bash">  git \</span><br><span class="language-bash">  mercurial \</span><br><span class="language-bash">  subversion</span><br></code></pre></td></tr></table></figure>
+<h3 id="构建缓存">构建缓存</h3>
+<p>在镜像的构建过程中，Docker 会遍历 <code>Dockerfile</code>
+文件中的指令，然后按顺序执行。在执行每条指令之前，Docker
+都会在缓存中查找是否已经存在可重用的镜像，如果有就使用现存的镜像，不再重复创建。如果你不想在构建过程中使用缓存，你可以在
+<code>docker build</code> 命令中使用 <code>--no-cache=true</code>
+选项。</p>
+<p>但是，如果你想在构建的过程中使用缓存，你得明白什么时候会，什么时候不会找到匹配的镜像，遵循的基本规则如下：</p>
+<ul>
+<li>从一个基础镜像开始（<code>FROM</code>
+指令指定），下一条指令将和该基础镜像的所有子镜像进行匹配，检查这些子镜像被创建时使用的指令是否和被检查的指令完全一样。如果不是，则缓存失效。</li>
+<li>在大多数情况下，只需要简单地对比 <code>Dockerfile</code>
+中的指令和子镜像。然而，有些指令需要更多的检查和解释。</li>
+<li>对于 <code>ADD</code> 和 <code>COPY</code>
+指令，镜像中对应文件的内容也会被检查，每个文件都会计算出一个校验和。文件的最后修改时间和最后访问时间不会纳入校验。在缓存的查找过程中，会将这些校验和和已存在镜像中的文件校验和进行对比。如果文件有任何改变，比如内容和元数据，则缓存失效。</li>
+<li>除了 <code>ADD</code> 和 <code>COPY</code>
+指令，缓存匹配过程不会查看临时容器中的文件来决定缓存是否匹配。例如，当执行完
+<code>RUN apt-get -y update</code> 指令后，容器中一些文件被更新，但
+Docker
+不会检查这些文件。这种情况下，只有指令字符串本身被用来匹配缓存。</li>
+</ul>
+<p>一旦缓存失效，所有后续的 <code>Dockerfile</code>
+指令都将产生新的镜像，缓存不会被使用。</p>
+<h2 id="dockerfile-指令">Dockerfile 指令</h2>
+<p>下面针对 <code>Dockerfile</code>
+中各种指令的最佳编写方式给出建议。</p>
+<h3 id="from">FROM</h3>
+<p>尽可能使用当前官方仓库作为你构建镜像的基础。推荐使用 <a
+target="_blank" rel="noopener" href="https://hub.docker.com/_/alpine/">Alpine</a>
+镜像，因为它被严格控制并保持最小尺寸（目前小于 5
+MB），但它仍然是一个完整的发行版。</p>
+<h3 id="label">LABEL</h3>
+<p>你可以给镜像添加标签来帮助组织镜像、记录许可信息、辅助自动化构建等。每个标签一行，由
+<code>LABEL</code>
+开头加上一个或多个标签对。下面的示例展示了各种不同的可能格式。<code>#</code>
+开头的行是注释内容。</p>
+<blockquote>
+<p>注意：如果你的字符串中包含空格，必须将字符串放入引号中或者对空格使用转义。如果字符串内容本身就包含引号，必须对引号使用转义。</p>
+</blockquote>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-comment"># Set one or more individual labels</span><br><span class="hljs-keyword">LABEL</span><span class="language-bash"> com.example.version=<span class="hljs-string">&quot;0.0.1-beta&quot;</span></span><br><br><span class="hljs-keyword">LABEL</span><span class="language-bash"> vendor=<span class="hljs-string">&quot;ACME Incorporated&quot;</span></span><br><br><span class="hljs-keyword">LABEL</span><span class="language-bash"> com.example.release-date=<span class="hljs-string">&quot;2015-02-12&quot;</span></span><br><br><span class="hljs-keyword">LABEL</span><span class="language-bash"> com.example.version.is-production=<span class="hljs-string">&quot;&quot;</span></span><br></code></pre></td></tr></table></figure>
+<p>一个镜像可以包含多个标签，但建议将多个标签放入到一个
+<code>LABEL</code> 指令中。</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-comment"># Set multiple labels at once, using line-continuation characters to break long lines</span><br><span class="hljs-keyword">LABEL</span><span class="language-bash"> vendor=ACME\ Incorporated \</span><br><span class="language-bash">      com.example.is-beta= \</span><br><span class="language-bash">      com.example.is-production=<span class="hljs-string">&quot;&quot;</span> \</span><br><span class="language-bash">      com.example.version=<span class="hljs-string">&quot;0.0.1-beta&quot;</span> \</span><br><span class="language-bash">      com.example.release-date=<span class="hljs-string">&quot;2015-02-12&quot;</span></span><br></code></pre></td></tr></table></figure>
+<p>关于标签可以接受的键值对，参考 <a
+target="_blank" rel="noopener" href="https://docs.docker.com/config/labels-custom-metadata/">Understanding
+object labels</a>。关于查询标签信息，参考 <a
+target="_blank" rel="noopener" href="https://docs.docker.com/config/labels-custom-metadata/">Managing
+labels on objects</a>。</p>
+<h3 id="run">RUN</h3>
+<p>为了保持 <code>Dockerfile</code>
+文件的可读性，可理解性，以及可维护性，建议将长的或复杂的
+<code>RUN</code> 指令用反斜杠 <code>\</code> 分割成多行。</p>
+<h4 id="apt-get">apt-get</h4>
+<p><code>RUN</code> 指令最常见的用法是安装包用的
+<code>apt-get</code>。因为 <code>RUN apt-get</code>
+指令会安装包，所以有几个问题需要注意。</p>
+<p>不要使用 <code>RUN apt-get upgrade</code> 或
+<code>dist-upgrade</code>，因为许多基础镜像中的「必须」包不会在一个非特权容器中升级。如果基础镜像中的某个包过时了，你应该联系它的维护者。如果你确定某个特定的包，比如
+<code>foo</code>，需要升级，使用 <code>apt-get install -y foo</code>
+就行，该指令会自动升级 <code>foo</code> 包。</p>
+<p>永远将 <code>RUN apt-get update</code> 和
+<code>apt-get install</code> 组合成一条 <code>RUN</code>
+声明，例如：</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y \</span><br><span class="language-bash">        package-bar \</span><br><span class="language-bash">        package-baz \</span><br><span class="language-bash">        package-foo</span><br></code></pre></td></tr></table></figure>
+<p>将 <code>apt-get update</code> 放在一条单独的 <code>RUN</code>
+声明中会导致缓存问题以及后续的 <code>apt-get install</code>
+失败。比如，假设你有一个 <code>Dockerfile</code> 文件：</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">FROM</span> ubuntu:<span class="hljs-number">18.04</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> apt-get update</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> apt-get install -y curl</span><br></code></pre></td></tr></table></figure>
+<p>构建镜像后，所有的层都在 Docker 的缓存中。假设你后来又修改了其中的
+<code>apt-get install</code> 添加了一个包：</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">FROM</span> ubuntu:<span class="hljs-number">18.04</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> apt-get update</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> apt-get install -y curl nginx</span><br></code></pre></td></tr></table></figure>
+<p>Docker 发现修改后的 <code>RUN apt-get update</code>
+指令和之前的完全一样。所以，<code>apt-get update</code>
+不会执行，而是使用之前的缓存镜像。因为 <code>apt-get update</code>
+没有运行，后面的 <code>apt-get install</code> 可能安装的是过时的
+<code>curl</code> 和 <code>nginx</code> 版本。</p>
+<p>使用 <code>RUN apt-get update &amp;&amp; apt-get install -y</code>
+可以确保你的 Dockerfiles
+每次安装的都是包的最新的版本，而且这个过程不需要进一步的编码或额外干预。这项技术叫作
+<code>cache busting</code>。你也可以显示指定一个包的版本号来达到
+<code>cache-busting</code>，这就是所谓的固定版本，例如：</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y \</span><br><span class="language-bash">    package-bar \</span><br><span class="language-bash">    package-baz \</span><br><span class="language-bash">    package-foo=1.3.*</span><br></code></pre></td></tr></table></figure>
+<p>固定版本会迫使构建过程检索特定的版本，而不管缓存中有什么。这项技术也可以减少因所需包中未预料到的变化而导致的失败。</p>
+<p>下面是一个 <code>RUN</code> 指令的示例模板，展示了所有关于
+<code>apt-get</code> 的建议。</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y \</span><br><span class="language-bash">    aufs-tools \</span><br><span class="language-bash">    automake \</span><br><span class="language-bash">    build-essential \</span><br><span class="language-bash">    curl \</span><br><span class="language-bash">    dpkg-sig \</span><br><span class="language-bash">    libcap-dev \</span><br><span class="language-bash">    libsqlite3-dev \</span><br><span class="language-bash">    mercurial \</span><br><span class="language-bash">    reprepro \</span><br><span class="language-bash">    ruby1.9.1 \</span><br><span class="language-bash">    ruby1.9.1-dev \</span><br><span class="language-bash">    s3cmd=1.1.* \</span><br><span class="language-bash"> &amp;&amp; <span class="hljs-built_in">rm</span> -rf /var/lib/apt/lists/*</span><br></code></pre></td></tr></table></figure>
+<p>其中 <code>s3cmd</code> 指令指定了一个版本号
+<code>1.1.*</code>。如果之前的镜像使用的是更旧的版本，指定新的版本会导致
+<code>apt-get update</code> 缓存失效并确保安装的是新版本。</p>
+<p>另外，清理掉 apt 缓存 <code>var/lib/apt/lists</code>
+可以减小镜像大小。因为 <code>RUN</code> 指令的开头为
+<code>apt-get update</code>，包缓存总是会在 <code>apt-get install</code>
+之前刷新。</p>
+<blockquote>
+<p>注意：官方的 Debian 和 Ubuntu 镜像会自动运行 apt-get
+clean，所以不需要显式的调用 apt-get clean。</p>
+</blockquote>
+<h3 id="cmd">CMD</h3>
+<p><code>CMD</code>
+指令用于执行目标镜像中包含的软件，可以包含参数。<code>CMD</code>
+大多数情况下都应该以
+<code>CMD ["executable", "param1", "param2"...]</code>
+的形式使用。因此，如果创建镜像的目的是为了部署某个服务(比如
+<code>Apache</code>)，你可能会执行类似于
+<code>CMD ["apache2", "-DFOREGROUND"]</code>
+形式的命令。我们建议任何服务镜像都使用这种形式的命令。</p>
+<p>多数情况下，<code>CMD</code> 都需要一个交互式的 <code>shell</code>
+(bash, Python, perl 等)，例如 <code>CMD ["perl", "-de0"]</code>，或者
+<code>CMD ["PHP", "-a"]</code>。使用这种形式意味着，当你执行类似
+<code>docker run -it python</code> 时，你会进入一个准备好的
+<code>shell</code> 中。<code>CMD</code> 应该在极少的情况下才能以
+<code>CMD ["param", "param"]</code> 的形式与 <code>ENTRYPOINT</code>
+协同使用，除非你和你的镜像使用者都对 <code>ENTRYPOINT</code>
+的工作方式十分熟悉。</p>
+<h3 id="expose">EXPOSE</h3>
+<p><code>EXPOSE</code>
+指令用于指定容器将要监听的端口。因此，你应该为你的应用程序使用常见的端口。例如，提供
+<code>Apache</code> web 服务的镜像应该使用
+<code>EXPOSE 80</code>，而提供 <code>MongoDB</code> 服务的镜像使用
+<code>EXPOSE 27017</code>。</p>
+<p>对于外部访问，用户可以在执行 <code>docker run</code>
+时使用一个标志来指示如何将指定的端口映射到所选择的端口。</p>
+<h3 id="env">ENV</h3>
+<p>为了方便新程序运行，你可以使用 <code>ENV</code>
+来为容器中安装的程序更新 <code>PATH</code> 环境变量。例如使用
+<code>ENV PATH /usr/local/nginx/bin:$PATH</code> 来确保
+<code>CMD ["nginx"]</code> 能正确运行。</p>
+<p><code>ENV</code>
+指令也可用于为你想要容器化的服务提供必要的环境变量，比如 Postgres 需要的
+<code>PGDATA</code>。</p>
+<p>最后，<code>ENV</code> 也能用于设置常见的版本号，比如下面的示例：</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">ENV</span> PG_MAJOR <span class="hljs-number">9.3</span><br><br><span class="hljs-keyword">ENV</span> PG_VERSION <span class="hljs-number">9.3</span>.<span class="hljs-number">4</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> curl -SL http://example.com/postgres-<span class="hljs-variable">$PG_VERSION</span>.tar.xz | tar -xJC /usr/src/postgress &amp;&amp; …</span><br><br><span class="hljs-keyword">ENV</span> PATH /usr/local/postgres-$PG_MAJOR/bin:$PATH<br></code></pre></td></tr></table></figure>
+<p>类似于程序中的常量，这种方法可以让你只需改变 <code>ENV</code>
+指令来自动的改变容器中的软件版本。</p>
+<h3 id="add-和-copy">ADD 和 COPY</h3>
+<p>虽然 <code>ADD</code> 和 <code>COPY</code> 功能类似，但一般优先使用
+<code>COPY</code>。因为它比 <code>ADD</code> 更透明。<code>COPY</code>
+只支持简单将本地文件拷贝到容器中，而 <code>ADD</code>
+有一些并不明显的功能（比如本地 tar 提取和远程 URL
+支持）。因此，<code>ADD</code> 的最佳用例是将本地 tar
+文件自动提取到镜像中，例如 <code>ADD rootfs.tar.xz</code>。</p>
+<p>如果你的 <code>Dockerfile</code>
+有多个步骤需要使用上下文中不同的文件。单独 <code>COPY</code>
+每个文件，而不是一次性的 <code>COPY</code>
+所有文件，这将保证每个步骤的构建缓存只在特定的文件变化时失效。例如：</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">COPY</span><span class="language-bash"> requirements.txt /tmp/</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> pip install --requirement /tmp/requirements.txt</span><br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> . /tmp/</span><br></code></pre></td></tr></table></figure>
+<p>如果将 <code>COPY . /tmp/</code> 放置在 <code>RUN</code>
+指令之前，只要 <code>.</code>
+目录中任何一个文件变化，都会导致后续指令的缓存失效。</p>
+<p>为了让镜像尽量小，最好不要使用 <code>ADD</code> 指令从远程 URL
+获取包，而是使用 <code>curl</code> 和
+<code>wget</code>。这样你可以在文件提取完之后删掉不再需要的文件来避免在镜像中额外添加一层。比如尽量避免下面的用法：</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">ADD</span><span class="language-bash"> http://example.com/big.tar.xz /usr/src/things/</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> tar -xJf /usr/src/things/big.tar.xz -C /usr/src/things</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> make -C /usr/src/things all</span><br></code></pre></td></tr></table></figure>
+<p>而是应该使用下面这种方法：</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">mkdir</span> -p /usr/src/things \</span><br><span class="language-bash">    &amp;&amp; curl -SL http://example.com/big.tar.xz \</span><br><span class="language-bash">    | tar -xJC /usr/src/things \</span><br><span class="language-bash">    &amp;&amp; make -C /usr/src/things all</span><br></code></pre></td></tr></table></figure>
+<p>上面使用的管道操作，所以没有中间文件需要删除。</p>
+<p>对于其他不需要 <code>ADD</code>
+的自动提取功能的文件或目录，你应该使用 <code>COPY</code>。</p>
+<h3 id="entrypoint">ENTRYPOINT</h3>
+<p><code>ENTRYPOINT</code>
+的最佳用处是设置镜像的主命令，允许将镜像当成命令本身来运行（用
+<code>CMD</code> 提供默认选项）。</p>
+<p>例如，下面的示例镜像提供了命令行工具 <code>s3cmd</code>:</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="hljs-string">&quot;s3cmd&quot;</span>]</span><br><br><span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">&quot;--help&quot;</span>]</span><br></code></pre></td></tr></table></figure>
+<p>现在直接运行该镜像创建的容器会显示命令帮助：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker run s3cmd<br></code></pre></td></tr></table></figure>
+<p>或者提供正确的参数来执行某个命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker run s3cmd <span class="hljs-built_in">ls</span> s3://mybucket<br></code></pre></td></tr></table></figure>
+<p>这样镜像名可以当成命令行的参考。</p>
+<p><code>ENTRYPOINT</code>
+指令也可以结合一个辅助脚本使用，和前面命令行风格类似，即使启动工具需要不止一个步骤。</p>
+<p>例如，<code>Postgres</code> 官方镜像使用下面的脚本作为
+<code>ENTRYPOINT</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><span class="hljs-built_in">set</span> -e<br><br><span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span> = <span class="hljs-string">&#x27;postgres&#x27;</span> ]; <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">chown</span> -R postgres <span class="hljs-string">&quot;<span class="hljs-variable">$PGDATA</span>&quot;</span><br><br>    <span class="hljs-keyword">if</span> [ -z <span class="hljs-string">&quot;<span class="hljs-subst">$(ls -A <span class="hljs-string">&quot;<span class="hljs-variable">$PGDATA</span>&quot;</span>)</span>&quot;</span> ]; <span class="hljs-keyword">then</span><br>        gosu postgres initdb<br>    <span class="hljs-keyword">fi</span><br><br>    <span class="hljs-built_in">exec</span> gosu postgres <span class="hljs-string">&quot;<span class="hljs-variable">$@</span>&quot;</span><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;<span class="hljs-variable">$@</span>&quot;</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：该脚本使用了 Bash 的内置命令 exec，所以最后运行的进程就是容器的
+PID 为 1 的进程。这样，进程就可以接收到任何发送给容器的 Unix
+信号了。</p>
+</blockquote>
+<p>该辅助脚本被拷贝到容器，并在容器启动时通过 <code>ENTRYPOINT</code>
+执行：</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">COPY</span><span class="language-bash"> ./docker-entrypoint.sh /</span><br><br><span class="hljs-keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="hljs-string">&quot;/docker-entrypoint.sh&quot;</span>]</span><br></code></pre></td></tr></table></figure>
+<p>该脚本可以让用户用几种不同的方式和 <code>Postgres</code> 交互。</p>
+<p>你可以很简单地启动 <code>Postgres</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker run postgres<br></code></pre></td></tr></table></figure>
+<p>也可以执行 <code>Postgres</code> 并传递参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker run postgres postgres --<span class="hljs-built_in">help</span><br></code></pre></td></tr></table></figure>
+<p>最后，你还可以启动另外一个完全不同的工具，比如
+<code>Bash</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker run --<span class="hljs-built_in">rm</span> -it postgres bash<br></code></pre></td></tr></table></figure>
+<h3 id="volume">VOLUME</h3>
+<p><code>VOLUME</code>
+指令用于暴露任何数据库存储文件，配置文件，或容器创建的文件和目录。强烈建议使用
+<code>VOLUME</code> 来管理镜像中的可变部分和用户可以改变的部分。</p>
+<h3 id="user">USER</h3>
+<p>如果某个服务不需要特权执行，建议使用 <code>USER</code> 指令切换到非
+root 用户。先在 <code>Dockerfile</code> 中使用类似
+<code>RUN groupadd -r postgres &amp;&amp; useradd -r -g postgres postgres</code>
+的指令创建用户和用户组。</p>
+<blockquote>
+<p>注意：在镜像中，用户和用户组每次被分配的 UID/GID
+都是不确定的，下次重新构建镜像时被分配到的 UID/GID
+可能会不一样。如果要依赖确定的 UID/GID，你应该显式的指定一个
+UID/GID。</p>
+</blockquote>
+<p>你应该避免使用 <code>sudo</code>，因为它不可预期的 TTY
+和信号转发行为可能造成的问题比它能解决的问题还多。如果你真的需要和
+<code>sudo</code> 类似的功能（例如，以 root 权限初始化某个守护进程，以非
+root 权限执行它），你可以使用 <a
+target="_blank" rel="noopener" href="https://github.com/tianon/gosu">gosu</a>。</p>
+<p>最后，为了减少层数和复杂度，避免频繁地使用 <code>USER</code>
+来回切换用户。</p>
+<h3 id="workdir">WORKDIR</h3>
+<p>为了清晰性和可靠性，你应该总是在 <code>WORKDIR</code>
+中使用绝对路径。另外，你应该使用 <code>WORKDIR</code> 来替代类似于
+<code>RUN cd ... &amp;&amp; do-something</code>
+的指令，后者难以阅读、排错和维护。</p>
+<h2 id="官方镜像示例">官方镜像示例</h2>
+<p>这些官方镜像的 Dockerfile
+都是参考典范：https://github.com/docker-library/docs</p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      浙ICP备2021036888号
+    </a>
+  </span>
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

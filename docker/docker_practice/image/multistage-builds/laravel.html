@@ -1,0 +1,574 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.jpeg">
+  <link rel="icon" href="/img/avatar.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="三岁于辛">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="实战多阶段构建 Laravel 镜像  本节适用于 PHP 开发者阅读。Laravel 基于 8.x 版本，各个版本的文件结构可能会有差异，请根据实际自行修改。  准备 新建一个 Laravel 项目或在已有的 Laravel 项目根目录下新建 Dockerfile .dockerignore laravel.conf 文件。 在 .dockerignore 文件中写入以下内容。 12345678">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://blog.isnap.cn/docker/docker_practice/image/multistage-builds/laravel.html">
+<meta property="og:site_name" content="三岁于辛博客">
+<meta property="og:description" content="实战多阶段构建 Laravel 镜像  本节适用于 PHP 开发者阅读。Laravel 基于 8.x 版本，各个版本的文件结构可能会有差异，请根据实际自行修改。  准备 新建一个 Laravel 项目或在已有的 Laravel 项目根目录下新建 Dockerfile .dockerignore laravel.conf 文件。 在 .dockerignore 文件中写入以下内容。 12345678">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-12T00:55:00.452Z">
+<meta property="article:modified_time" content="2024-01-12T00:55:00.452Z">
+<meta property="article:author" content="三岁于辛">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - 三岁于辛博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont-menu/iconfont.css">
+<link rel="stylesheet" href="/css/mac.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.isnap.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"4d6b2454c24110cf12701644d6c772b0","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"I7vkjjN9XQqZFwCKC4hd7WEu-gzGzoHsz","app_key":"tlMbjvJzlishc29XFCmKtMj9","server_url":"https://i7vkjjn9.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?4d6b2454c24110cf12701644d6c772b0";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>三岁于辛博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>算法</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/leetcode/">
+                    <i class="iconfont icon-leetcode"></i>
+                    <span>力扣(LeetCode)</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-stack-overflow-fill"></i>
+                <span>专题</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/mysql/">
+                    <i class="iconfont icon-MySQL"></i>
+                    <span>MySQL</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/golang/">
+                    <i class="iconfont icon-PITAO-tuboshu"></i>
+                    <span>Golang</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/java/">
+                    <i class="iconfont icon-java"></i>
+                    <span>Java</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/docker/">
+                    <i class="iconfont icon-java"></i>
+                    <span>Docker</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/weekly/">
+                <i class="iconfont icon-kakao-talk-fill"></i>
+                <span>笔记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-note"></i>
+                <span>传送门</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    <span>归档</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    <span>分类</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    <span>标签</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="实战多阶段构建-laravel-镜像">实战多阶段构建 Laravel 镜像</h1>
+<blockquote>
+<p>本节适用于 PHP 开发者阅读。<code>Laravel</code> 基于 8.x
+版本，各个版本的文件结构可能会有差异，请根据实际自行修改。</p>
+</blockquote>
+<h2 id="准备">准备</h2>
+<p>新建一个 <code>Laravel</code> 项目或在已有的 <code>Laravel</code>
+项目根目录下新建 <code>Dockerfile</code> <code>.dockerignore</code>
+<code>laravel.conf</code> 文件。</p>
+<p>在 <code>.dockerignore</code> 文件中写入以下内容。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">.idea/<br>.git/<br><br>vendor/<br><br>node_modules/<br><br>public/js/<br>public/css/<br>public/mix-manifest.json<br><br>yarn-error.log<br><br>bootstrap/cache/*<br>storage/<br><br><span class="hljs-comment"># 自行添加其他需要排除的文件，例如 .env.* 文件</span><br></code></pre></td></tr></table></figure>
+<p>在 <code>laravel.conf</code> 文件中写入 nginx 配置。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">server</span> &#123;<br>  <span class="hljs-attribute">listen</span> <span class="hljs-number">80</span> default_server;<br>  <span class="hljs-attribute">root</span> /app/laravel/public;<br>  <span class="hljs-attribute">index</span> index.php index.html;<br><br>  <span class="hljs-section">location</span> / &#123;<br>      <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /index.php?<span class="hljs-variable">$query_string</span>;<br>  &#125;<br><br>  <span class="hljs-section">location</span> <span class="hljs-regexp">~ .*\.php(\/.*)*$</span> &#123;<br>    <span class="hljs-attribute">fastcgi_pass</span>   laravel:<span class="hljs-number">9000</span>;<br>    <span class="hljs-attribute">include</span>        fastcgi.conf;<br><br>    <span class="hljs-comment"># fastcgi_connect_timeout 300;</span><br>    <span class="hljs-comment"># fastcgi_send_timeout 300;</span><br>    <span class="hljs-comment"># fastcgi_read_timeout 300;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="前端构建">前端构建</h2>
+<p>第一阶段进行前端构建。</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">FROM</span> node:alpine as frontend<br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> package.json /app/</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">set</span> -x ; <span class="hljs-built_in">cd</span> /app \</span><br><span class="language-bash">      &amp;&amp; npm install --registry=https://registry.npmmirror.com</span><br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> webpack.mix.js webpack.config.js tailwind.config.js /app/</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> resources/ /app/resources/</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">set</span> -x ; <span class="hljs-built_in">cd</span> /app \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">touch</span> artisan \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p public \</span><br><span class="language-bash">      &amp;&amp; npm run production</span><br></code></pre></td></tr></table></figure>
+<h2 id="安装-composer-依赖">安装 Composer 依赖</h2>
+<p>第二阶段安装 Composer 依赖。</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">FROM</span> composer as composer<br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> database/ /app/database/</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> composer.json composer.lock /app/</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">set</span> -x ; <span class="hljs-built_in">cd</span> /app \</span><br><span class="language-bash">      &amp;&amp; composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ \</span><br><span class="language-bash">      &amp;&amp; composer install \</span><br><span class="language-bash">           --ignore-platform-reqs \</span><br><span class="language-bash">           --no-interaction \</span><br><span class="language-bash">           --no-plugins \</span><br><span class="language-bash">           --no-scripts \</span><br><span class="language-bash">           --prefer-dist</span><br></code></pre></td></tr></table></figure>
+<h2 id="整合以上阶段所生成的文件">整合以上阶段所生成的文件</h2>
+<p>第三阶段对以上阶段生成的文件进行整合。</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">FROM</span> php:<span class="hljs-number">7.4</span>-fpm-alpine as laravel<br><br><span class="hljs-keyword">ARG</span> LARAVEL_PATH=/app/laravel<br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=composer /app/vendor/ <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span>/vendor/</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> . <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span></span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=frontend /app/public/js/ <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span>/public/js/</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=frontend /app/public/css/ <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span>/public/css/</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=frontend /app/public/mix-manifest.json <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span>/public/mix-manifest.json</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">set</span> -x ; <span class="hljs-built_in">cd</span> <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span> \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p storage \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p storage/framework/cache \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p storage/framework/sessions \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p storage/framework/testing \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p storage/framework/views \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p storage/logs \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">chmod</span> -R 777 storage \</span><br><span class="language-bash">      &amp;&amp; php artisan package:discover</span><br></code></pre></td></tr></table></figure>
+<h2 id="最后一个阶段构建-nginx-镜像">最后一个阶段构建 NGINX 镜像</h2>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">FROM</span> nginx:alpine as nginx<br><br><span class="hljs-keyword">ARG</span> LARAVEL_PATH=/app/laravel<br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> laravel.conf /etc/nginx/conf.d/</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=laravel <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span>/public <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span>/public</span><br></code></pre></td></tr></table></figure>
+<h2 id="构建-laravel-及-nginx-镜像">构建 Laravel 及 Nginx 镜像</h2>
+<p>使用 <code>docker build</code> 命令构建镜像。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker build -t my/laravel --target=laravel .<br><br>$ docker build -t my/nginx --target=nginx .<br></code></pre></td></tr></table></figure>
+<h2 id="启动容器并测试">启动容器并测试</h2>
+<p>新建 Docker 网络</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker network create laravel<br></code></pre></td></tr></table></figure>
+<p>启动 laravel 容器， <code>--name=laravel</code> 参数设定的名字必须与
+<code>nginx</code> 配置文件中的
+<code>fastcgi_pass   laravel:9000;</code> 一致</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker run -dit --<span class="hljs-built_in">rm</span> --name=laravel --network=laravel my/laravel<br></code></pre></td></tr></table></figure>
+<p>启动 nginx 容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker run -dit --<span class="hljs-built_in">rm</span> --network=laravel -p 8080:80 my/nginx<br></code></pre></td></tr></table></figure>
+<p>浏览器访问 <code>127.0.0.1:8080</code> 可以看到 Laravel
+项目首页。</p>
+<blockquote>
+<p>也许 Laravel 项目依赖其他外部服务，例如
+redis、MySQL，请自行启动这些服务之后再进行测试，本小节不再赘述。</p>
+</blockquote>
+<h2 id="生产环境优化">生产环境优化</h2>
+<p>本小节内容为了方便测试，将配置文件直接放到了镜像中，实际在使用时
+<strong>建议</strong> 将配置文件作为 <code>config</code> 或
+<code>secret</code> 挂载到容器中，请读者自行学习 <code>Swarm mode</code>
+或 <code>Kubernetes</code> 的相关内容。</p>
+<p>由于篇幅所限本小节只是简单列出，更多内容可以参考
+https://github.com/khs1994-docker/laravel-demo 项目。</p>
+<h2 id="附录">附录</h2>
+<p>完整的 <code>Dockerfile</code> 文件如下。</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs docker"><span class="hljs-keyword">FROM</span> node:alpine as frontend<br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> package.json /app/</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">set</span> -x ; <span class="hljs-built_in">cd</span> /app \</span><br><span class="language-bash">      &amp;&amp; npm install --registry=https://registry.npmmirror.com</span><br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> webpack.mix.js webpack.config.js tailwind.config.js /app/</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> resources/ /app/resources/</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">set</span> -x ; <span class="hljs-built_in">cd</span> /app \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">touch</span> artisan \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p public \</span><br><span class="language-bash">      &amp;&amp; npm run production</span><br><br><span class="hljs-keyword">FROM</span> composer as composer<br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> database/ /app/database/</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> composer.json /app/</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">set</span> -x ; <span class="hljs-built_in">cd</span> /app \</span><br><span class="language-bash">      &amp;&amp; composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ \</span><br><span class="language-bash">      &amp;&amp; composer install \</span><br><span class="language-bash">           --ignore-platform-reqs \</span><br><span class="language-bash">           --no-interaction \</span><br><span class="language-bash">           --no-plugins \</span><br><span class="language-bash">           --no-scripts \</span><br><span class="language-bash">           --prefer-dist</span><br><br><span class="hljs-keyword">FROM</span> php:<span class="hljs-number">7.4</span>-fpm-alpine as laravel<br><br><span class="hljs-keyword">ARG</span> LARAVEL_PATH=/app/laravel<br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=composer /app/vendor/ <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span>/vendor/</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> . <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span></span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=frontend /app/public/js/ <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span>/public/js/</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=frontend /app/public/css/ <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span>/public/css/</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=frontend /app/public/mix-manifest.json <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span>/public/mix-manifest.json</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">set</span> -x ; <span class="hljs-built_in">cd</span> <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span> \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p storage \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p storage/framework/cache \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p storage/framework/sessions \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p storage/framework/testing \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p storage/framework/views \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">mkdir</span> -p storage/logs \</span><br><span class="language-bash">      &amp;&amp; <span class="hljs-built_in">chmod</span> -R 777 storage \</span><br><span class="language-bash">      &amp;&amp; php artisan package:discover</span><br><br><span class="hljs-keyword">FROM</span> nginx:alpine as nginx<br><br><span class="hljs-keyword">ARG</span> LARAVEL_PATH=/app/laravel<br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> laravel.conf /etc/nginx/conf.d/</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=laravel <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span>/public <span class="hljs-variable">$&#123;LARAVEL_PATH&#125;</span>/public</span><br></code></pre></td></tr></table></figure>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      浙ICP备2021036888号
+    </a>
+  </span>
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

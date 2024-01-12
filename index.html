@@ -210,6 +210,14 @@
                     <span>Java</span>
                   </a>
                 
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/docker/">
+                    <i class="iconfont icon-java"></i>
+                    <span>Docker</span>
+                  </a>
+                
               </div>
             </li>
           
@@ -355,8 +363,611 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/62b992be/" target="_self">
+          <img src="http://cdn.isnap.cn/img/image-20220827143058333.png" srcset="/img/loading.gif" lazyload alt="Docker 仓库">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/62b992be/" target="_self">
+          Docker 仓库
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/posts/62b992be/" target="_self">
+        <div>
+          Docker Registry 镜像构建完成后，可以很容易的在当前宿主机上运行，但是，如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务，Docker Registry 就是这样的服务。 一个 Docker Registry 中可以包含多个 仓库（Repository）；每个仓库可以包含多个 标签（Tag）；每个标签对应一个镜像。 通常，一个仓库会包含同一个软件不同版本的
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 09:09" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">#Docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/e230d1a6/" target="_self">
+          <img src="http://cdn.isnap.cn/img/image-20220827143058333.png" srcset="/img/loading.gif" lazyload alt="Docker 镜像">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/e230d1a6/" target="_self">
+          Docker 镜像
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/posts/e230d1a6/" target="_self">
+        <div>
+          Docker 镜像 Docker 镜像 是一个特殊的文件系统，提供容了器运行时所需的程序、库、资源、配置等，还提供了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。因为是文件系统，所以镜像 不包含 任何动态数据。 分层存储 因为镜像包含完整操作系统的文件系统，其体积往往是庞大的，因此在 Docker 设计时，就充分利用了分层存储 Union FS 的架构。所以严格来说，镜像并非是像一
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 09:09" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">#Docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/c1c888f6/" target="_self">
+          <img src="http://cdn.isnap.cn/img/image-20220827143058333.png" srcset="/img/loading.gif" lazyload alt="Docker 容器">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/c1c888f6/" target="_self">
+          Docker 容器
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/posts/c1c888f6/" target="_self">
+        <div>
+          镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的 类 和 实例 一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。 容器的实质是进程，但与直接在宿主执行的进程不同，容器进程运行于属于自己的独立的 命名空间。因此容器可以拥有自己的 root 文件系统、自己的网络配置、自己的进程空间，甚至自己的用户 ID 空间。容器内的进程是运行
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 09:09" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">#Docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/457e5fca/" target="_self">
+          <img src="http://cdn.isnap.cn/img/image-20220827143058333.png" srcset="/img/loading.gif" lazyload alt="Ubuntu 安装 Docker">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/457e5fca/" target="_self">
+          Ubuntu 安装 Docker
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/posts/457e5fca/" target="_self">
+        <div>
+          警告：切勿在没有配置 Docker APT 源的情况下直接使用 apt 命令安装 Docker.  准备工作 系统要求 Docker 支持以下版本的 Ubuntu 操作系统：  Ubuntu Hirsute 21.04 Ubuntu Groovy 20.10 Ubuntu Focal 20.04 (LTS) Ubuntu Bionic 18.04 (LTS)  Docker 可以安装在 64 位
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 08:55" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">#Docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/da318389/" target="_self">
+          <img src="http://cdn.isnap.cn/img/image-20220827143058333.png" srcset="/img/loading.gif" lazyload alt="Windows 10 安装 Docker">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/da318389/" target="_self">
+          Windows 10 安装 Docker
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/posts/da318389/" target="_self">
+        <div>
+          系统要求 Docker Desktop for Windows 支持 64 位版本的 Windows 10 Pro，且必须开启 Hyper-V（若版本为 v1903 及以上则无需开启 Hyper-V），或者 64 位版本的 Windows 10 Home v1903 及以上版本。 安装 手动下载安装 点击以下 链接 下载 Docker Desktop for Windows。 下载好之后双击 Do
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 08:55" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">#Docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/3d459ae0/" target="_self">
+          <img src="http://cdn.isnap.cn/img/image-20220827143058333.png" srcset="/img/loading.gif" lazyload alt="MacOS 安装 Docker">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/3d459ae0/" target="_self">
+          MacOS 安装 Docker
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/posts/3d459ae0/" target="_self">
+        <div>
+          系统要求 Docker Desktop for Mac 要求系统最低为 macOS 必须是 10.15 或更高版本， Catalina、Big Sur 或者 Monterey，建议升级到最新版本的 macOS。 安装 使用 Homebrew 安装 Homebrew 的 Cask 已经支持 Docker Desktop for Mac，因此可以很方便的使用 Homebrew Cask 来进行安装：
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 08:55" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">#Docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/2c4ededf/" target="_self">
+          <img src="http://cdn.isnap.cn/img/image-20220827143058333.png" srcset="/img/loading.gif" lazyload alt="镜像加速器">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/2c4ededf/" target="_self">
+          镜像加速器
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/posts/2c4ededf/" target="_self">
+        <div>
+          国内从 Docker Hub 拉取镜像有时会遇到困难，此时可以配置镜像加速器。国内很多云服务商都提供了国内加速器服务，例如：  阿里云加速器(点击管理控制台 -&gt; 登录账号(淘宝账号) -&gt; 左侧镜像工具 -&gt; 镜像加速器 -&gt; 复制加速器地址) 网易云加速器 https://hub-mirror.c.163.com 百度云加速器 https://mirror.baidub
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 08:55" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">#Docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/6316b4ec/" target="_self">
+          <img src="http://cdn.isnap.cn/img/image-20220827143058333.png" srcset="/img/loading.gif" lazyload alt="Debian 安装 Docker">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/6316b4ec/" target="_self">
+          Debian 安装 Docker
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/posts/6316b4ec/" target="_self">
+        <div>
+          警告：切勿在没有配置 Docker APT 源的情况下直接使用 apt 命令安装 Docker.  准备工作 系统要求 Docker 支持以下版本的 Debian 操作系统：  Debian Bullseye 11 Debian Buster 10  卸载旧版本 旧版本的 Docker 称为 docker 或者 docker-engine，使用以下命令卸载旧版本： 123$ sudo apt-g
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 08:55" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">#Docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/e230d1a6/" target="_self">
+          <img src="http://cdn.isnap.cn/img/image-20220827143058333.png" srcset="/img/loading.gif" lazyload alt="CentOS 安装 Docker">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/e230d1a6/" target="_self">
+          CentOS 安装 Docker
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/posts/e230d1a6/" target="_self">
+        <div>
+          警告：切勿在没有配置 Docker YUM 源的情况下直接使用 yum 命令安装 Docker.  准备工作 系统要求 Docker 支持 64 位版本 CentOS 7/8，并且要求内核版本不低于 3.10。 CentOS 7 满足最低内核的要求，但由于内核版本比较低，部分功能（如 overlay2 存储层驱动）无法使用，并且部分功能可能不太稳定。 卸载旧版本 旧版本的 Docker 称为 d
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 08:55" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">#Docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/posts/606c4d62/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/image-20230320194602240.png" srcset="/img/loading.gif" lazyload alt="结合代码理解Class文件中的Flags(2)">
+          <img src="http://cdn.isnap.cn/img/image-20230320194602240.png" srcset="/img/loading.gif" lazyload alt="结合代码理解Class文件中的Flags(2)">
         </a>
       </div>
     
@@ -427,685 +1038,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/3c858c0b/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/image-20230318131113082.png" srcset="/img/loading.gif" lazyload alt="结合代码理解Class文件中的Flags">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/3c858c0b/" target="_self">
-          结合代码理解Class文件中的Flags
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/3c858c0b/" target="_self">
-        <div>
-          本文重点在后面两张图。 JVM类标志：     Flag Name Value Interpretation     ACC_PUBLIC 0x0001 公有类   ACC_FINAL 0x0010 Final标识，不可是超类   ACC_SUPER 0x0020 在被调用的特殊指令调用时，特别处理超类方法   ACC_INTERFACE 0x0200 接口类   ACC_ABSTRACT 0x0
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-03-17 13:27" pubdate>
-              2023-03-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/JAVA/" class="category-chain-item">JAVA</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/JAVA/Class%E6%96%87%E4%BB%B6/" class="category-chain-item">Class文件</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/JAVA/">#JAVA</a>
-            
-              <a href="/tags/Class%E6%96%87%E4%BB%B6/">#Class文件</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/b2196fb9/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/image-20230317090643564.png" srcset="/img/loading.gif" lazyload alt="InnerClass有无static主要区别">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/b2196fb9/" target="_self">
-          InnerClass有无static主要区别
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/b2196fb9/" target="_self">
-        <div>
-          非 static 类实现，为了能访问外部类，增加了this$0成员属性； 因为有了成员属性，所以在调用外部类时也就从了局部变量的加载操作，如下图所示，putfield后再调用init 现static的直接init有鲜明对比。    内部类有无Static区别
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-03-16 17:47" pubdate>
-              2023-03-16
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/JAVA/" class="category-chain-item">JAVA</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/JAVA/Class%E6%96%87%E4%BB%B6/" class="category-chain-item">Class文件</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/JAVA/">#JAVA</a>
-            
-              <a href="/tags/Class%E6%96%87%E4%BB%B6/">#Class文件</a>
-            
-              <a href="/tags/InnerClass/">#InnerClass</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/8c2fbbe1/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/queue-bfs-gif.gif" srcset="/img/loading.gif" lazyload alt="【队列应用】Breadth First Search (BFS) 宽度优先搜索">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/8c2fbbe1/" target="_self">
-          【队列应用】Breadth First Search (BFS) 宽度优先搜索
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/8c2fbbe1/" target="_self">
-        <div>
-          Breadth First Search (BFS) 宽度优先搜索，顾名思义，搜索的过程是平铺开进行搜索，即从起点开始，将所有相邻的节点都搜索一遍，然后再搜索这些相邻节点的相邻节点，一层一层铺开。其搜索过程就像水中的涟漪，从中心开始，向四周进行扩散，直到遍历完。有兴趣可查看历史文章   img  之前有很多题都是以递归实现算法，今天讲的是结合队列实现。正如上面所说的，需要将所有和它相邻的节点都搜索
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-03-11 14:41" pubdate>
-              2023-03-11
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%AE%97%E6%B3%95/BFS/" class="category-chain-item">BFS</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/bfc079bb/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/image-20230308094943042.png" srcset="/img/loading.gif" lazyload alt="Calcite 应用于非大数据场景">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/bfc079bb/" target="_self">
-          Calcite 应用于非大数据场景
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/bfc079bb/" target="_self">
-        <div>
-          问题1、关于 order by 问题 如下图1，Mysql 中子查询中有 group by ... order by ...，父查询中不再有相关排序操作，结果能保证子查询的结果顺序不被改变。 但是在 Calcite 中同样操作，结果就会不一致。究其终极原因是 Calcite 面向大数据场景，并且能在可度量的时间范围内交付结果。  The story for ORDER BY is similar
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-03-08 17:41" pubdate>
-              2023-03-08
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="category-chain-item">大数据</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/Calcite/" class="category-chain-item">Calcite</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">#大数据</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/60deaa5a/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/image-20220812083400537.png" srcset="/img/loading.gif" lazyload alt="PHP 项目的 env 文件替换方案">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/60deaa5a/" target="_self">
-          PHP 项目的 env 文件替换方案
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/60deaa5a/" target="_self">
-        <div>
-          读完本文，宁宁组希望读者能从中了解到：  .env 文件内容越多，服务资源消耗越大 .env 的替换方案有很多，ini 文件其实与 .env 没有区别，扩展的形式可尝试，但是对扩展的稳定性有要求 要适当的选择 require/require_once  问题描述 基于 Lumen 框架开发的项目，5 台 8c16g 的 cvm，跑空接⼝，当 qps 达到 3600+ 时，cpu 就已经达到了 60
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-02-27 18:57" pubdate>
-              2023-02-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E5%90%8E%E7%AB%AF/PHP/" class="category-chain-item">PHP</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/PHP/">#PHP</a>
-            
-              <a href="/tags/env/">#env</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/13b90652/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/2-pointer-3sum.gif" srcset="/img/loading.gif" lazyload alt="算法套路 - 双指针">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/13b90652/" target="_self">
-          算法套路 - 双指针
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/13b90652/" target="_self">
-        <div>
-          以前读过关于算法的10+种解题套路。如《【算法】一篇讲完12种方法》、《总结 2021 面试中的常见 14 种算法套路》等。小编非常同意这些总结，也推荐读者朋友们去一个一个方法突破。不过，小编今天想说的是，结合不同的数据结构来理解算法套路将会事关功倍（不绝对）。 双指针是各种算法套路总结中都会提到的一种。今天小编也来讲讲。 小编认为双指针其实是一种范围较大的方法，它其实还可以再细分：  快慢指针
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-02-26 08:01" pubdate>
-              2023-02-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%AE%97%E6%B3%95/%E5%8F%8C%E6%8C%87%E9%92%88/" class="category-chain-item">双指针</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/f227003e/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/image-20220912130158950.png" srcset="/img/loading.gif" lazyload alt="gRPC 连接池的一种实现方案">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/f227003e/" target="_self">
-          gRPC 连接池的一种实现方案
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/f227003e/" target="_self">
-        <div>
-          Google远程过程调用（Google Remote Procedure Call，gRPC）是基于HTTP 2.0传输层协议承载的高性能开源 RPC 软件框架，为管理和配置网络设备提供了一种 API 接口设计的方法。gRPC提供了多种编程语言，如C、Java、golong、python等。 gRPC可以作为数据传输协议与Telemetry技术配合使用，可实时、高速、精确的监控网络设备的运行状态
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-02-19 16:01" pubdate>
-              2023-02-19
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%AE%97%E6%B3%95/%E8%BF%9E%E6%8E%A5%E6%B1%A0/" class="category-chain-item">连接池</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/9912b79f/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/image-20221005124847817.png" srcset="/img/loading.gif" lazyload alt="String">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/9912b79f/" target="_self">
-          String
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/9912b79f/" target="_self">
-        <div>
-          本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此 Level 1和 Level 2 将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而 Level 3 用来帮助以顶级公司为目标的学习小伙伴。  本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交。   第一题：同构字符串  从题目条件中可以分析出
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-12-03 13:47" pubdate>
-              2022-12-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%AE%97%E6%B3%95/String/" class="category-chain-item">String</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/LeetCode/">#LeetCode</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/bd7c8870/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/image-20221004092908211.png" srcset="/img/loading.gif" lazyload alt="Prefix Sum">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/bd7c8870/" target="_self">
-          Prefix Sum
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/bd7c8870/" target="_self">
-        <div>
-          本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此 Level 1和 Level 2 将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而 Level 3 用来帮助以顶级公司为目标的学习小伙伴。  本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交 。   前缀和（Prefix sum）是算法题中比
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-11-30 19:46" pubdate>
-              2022-11-30
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%AE%97%E6%B3%95/Prefix-Sum/" class="category-chain-item">Prefix Sum</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/LeetCode/">#LeetCode</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
