@@ -1,6 +1,8 @@
 @font-face {
-  font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1679118001631') format('truetype');
+  font-family: "iconfont"; /* Project id 4411258 */
+  src: url('iconfont.woff2?t=1705301803903') format('woff2'),
+       url('iconfont.woff?t=1705301803903') format('woff'),
+       url('iconfont.ttf?t=1705301803903') format('truetype');
 }
 
 .iconfont {
@@ -11,15 +13,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-java:before {
+  content: "\f1d7";
+}
+
+.icon-icon_file-dockerfile:before {
+  content: "\e61c";
+}
+
 .icon-MySQL:before {
   content: "\e63b";
 }
 
-.icon-PITAO-tuboshu:before {
-  content: "\e609";
-}
-
-.icon-java:before {
-  content: "\e639";
+.icon-golang:before {
+  content: "\e84f";
 }
 
