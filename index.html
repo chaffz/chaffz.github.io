@@ -362,6 +362,138 @@
   <div class="row mx-auto index-card">
     
     
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/0/" target="_self">
+          
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/0/" target="_self">
+        <div>
+          其它制作镜像的方式 除了标准的使用 Dockerfile 生成镜像的方法外，由于各种特殊需求和历史原因，还提供了一些其它方法用以生成镜像。 从 rootfs 压缩包导入 格式：docker import [选项] &lt;文件&gt;|&lt;URL&gt;|- [&lt;仓库名&gt;[:&lt;标签&gt;]] 压缩包可以是本地文件、远程 Web 文件，甚至是从标准输入中得到。压缩包将会在镜像
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 08:55" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/0/" target="_self">
+          
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/0/" target="_self">
+        <div>
+          镜像的实现原理 Docker 镜像是怎么实现增量的修改和维护的？ 每个镜像都由很多层次构成，Docker 使用 Union FS 将这些不同的层结合到一个镜像中去。 通常 Union FS 有两个用途, 一方面可以实现不借助 LVM、RAID 将多个 disk 挂到同一个目录下,另一个更常用的就是将一个只读的分支和一个可写的分支联合在一起，Live CD 正是基于此方法可以允许在镜像不变的基础上允
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 08:55" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/0/" target="_self">
+          
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/0/" target="_self">
+        <div>
+          构建多种系统架构支持的 Docker 镜像 -- docker manifest 命令详解 我们知道使用镜像创建一个容器，该镜像必须与 Docker 宿主机系统架构一致，例如 Linux x86_64 架构的系统中只能使用 Linux x86_64 的镜像创建容器。  Windows、macOS 除外，其使用了 binfmt_misc 提供了多种架构支持，在 Windows、macOS 系统上 (
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 08:55" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/posts/0/" target="_self">
+          
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/0/" target="_self">
+        <div>
+          利用 commit 理解镜像构成  注意：如果您是初学者，您可以暂时跳过后面的内容，直接学习 容器 一节。  注意： docker commit 命令除了学习之外，还有一些特殊的应用场合，比如被入侵后保存现场等。但是，不要使用 docker commit 定制镜像，定制镜像应该使用 Dockerfile 来完成。如果你想要定制镜像请查看下一小节。 镜像是容器的基础，每次执行 docker run
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-12 08:55" pubdate>
+              2024-01-12
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/posts/606c4d62/" target="_self">
           <img src="//blog.isnap.cn/cdnimg/image-20230320194602240.png" srcset="/img/loading.gif" lazyload alt="结合代码理解Class文件中的Flags(2)">
@@ -806,302 +938,6 @@
               <a href="/tags/PHP/">#PHP</a>
             
               <a href="/tags/env/">#env</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/13b90652/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/2-pointer-3sum.gif" srcset="/img/loading.gif" lazyload alt="算法套路 - 双指针">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/13b90652/" target="_self">
-          算法套路 - 双指针
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/13b90652/" target="_self">
-        <div>
-          以前读过关于算法的10+种解题套路。如《【算法】一篇讲完12种方法》、《总结 2021 面试中的常见 14 种算法套路》等。小编非常同意这些总结，也推荐读者朋友们去一个一个方法突破。不过，小编今天想说的是，结合不同的数据结构来理解算法套路将会事关功倍（不绝对）。 双指针是各种算法套路总结中都会提到的一种。今天小编也来讲讲。 小编认为双指针其实是一种范围较大的方法，它其实还可以再细分：  快慢指针
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-02-26 08:01" pubdate>
-              2023-02-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%AE%97%E6%B3%95/%E5%8F%8C%E6%8C%87%E9%92%88/" class="category-chain-item">双指针</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/f227003e/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/image-20220912130158950.png" srcset="/img/loading.gif" lazyload alt="gRPC 连接池的一种实现方案">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/f227003e/" target="_self">
-          gRPC 连接池的一种实现方案
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/f227003e/" target="_self">
-        <div>
-          Google远程过程调用（Google Remote Procedure Call，gRPC）是基于HTTP 2.0传输层协议承载的高性能开源 RPC 软件框架，为管理和配置网络设备提供了一种 API 接口设计的方法。gRPC提供了多种编程语言，如C、Java、golong、python等。 gRPC可以作为数据传输协议与Telemetry技术配合使用，可实时、高速、精确的监控网络设备的运行状态
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-02-19 16:01" pubdate>
-              2023-02-19
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%AE%97%E6%B3%95/%E8%BF%9E%E6%8E%A5%E6%B1%A0/" class="category-chain-item">连接池</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/9912b79f/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/image-20221005124847817.png" srcset="/img/loading.gif" lazyload alt="String">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/9912b79f/" target="_self">
-          String
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/9912b79f/" target="_self">
-        <div>
-          本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此 Level 1和 Level 2 将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而 Level 3 用来帮助以顶级公司为目标的学习小伙伴。  本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交。   第一题：同构字符串  从题目条件中可以分析出
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-12-03 13:47" pubdate>
-              2022-12-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%AE%97%E6%B3%95/String/" class="category-chain-item">String</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/LeetCode/">#LeetCode</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/posts/bd7c8870/" target="_self">
-          <img src="//blog.isnap.cn/cdnimg/image-20221004092908211.png" srcset="/img/loading.gif" lazyload alt="Prefix Sum">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/bd7c8870/" target="_self">
-          Prefix Sum
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/posts/bd7c8870/" target="_self">
-        <div>
-          本学习计划适用于那些想要准备技术面试但不确定他们应该关注哪些问题的人。这些问题经过精心策划，因此 Level 1和 Level 2 将指导初级和中级用户解决涵盖大多数中端公司面试所需的数据结构和算法的问题。而 Level 3 用来帮助以顶级公司为目标的学习小伙伴。  本学习计划的题目小编解答在英文版 LeetCode 中尽可能超越 100% 提交 。   前缀和（Prefix sum）是算法题中比
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-11-30 19:46" pubdate>
-              2022-11-30
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%AE%97%E6%B3%95/Prefix-Sum/" class="category-chain-item">Prefix Sum</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/LeetCode/">#LeetCode</a>
             
           </div>
         
