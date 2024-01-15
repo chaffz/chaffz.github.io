@@ -16,22 +16,25 @@
   <meta name="author" content="三岁于辛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="系统要求 Docker Desktop for Windows 支持 64 位版本的 Windows 10 Pro，且必须开启 Hyper-V（若版本为 v1903 及以上则无需开启 Hyper-V），或者 64 位版本的 Windows 10 Home v1903 及以上版本。 安装 手动下载安装 点击以下 链接 下载 Docker Desktop for Windows。 下载好之后双击 Do">
+    <meta name="description" content="注意：如果您是初学者，您可以暂时跳过后面的内容，直接学习 容器 一节。  注意： docker commit 命令除了学习之外，还有一些特殊的应用场合，比如被入侵后保存现场等。但是，不要使用 docker commit 定制镜像，定制镜像应该使用 Dockerfile 来完成。如果你想要定制镜像请查看下一小节。 镜像是容器的基础，每次执行 docker run 的时候都会指定哪个镜像作为容器运行">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Windows 10 安装 Docker">
-<meta property="og:url" content="https://blog.isnap.cn/posts/da318389/index.html">
+<meta property="og:title" content="利用 commit 理解镜像构成">
+<meta property="og:url" content="https://blog.isnap.cn/posts/9ad7a438/index.html">
 <meta property="og:site_name" content="三岁于辛博客">
-<meta property="og:description" content="系统要求 Docker Desktop for Windows 支持 64 位版本的 Windows 10 Pro，且必须开启 Hyper-V（若版本为 v1903 及以上则无需开启 Hyper-V），或者 64 位版本的 Windows 10 Home v1903 及以上版本。 安装 手动下载安装 点击以下 链接 下载 Docker Desktop for Windows。 下载好之后双击 Do">
+<meta property="og:description" content="注意：如果您是初学者，您可以暂时跳过后面的内容，直接学习 容器 一节。  注意： docker commit 命令除了学习之外，还有一些特殊的应用场合，比如被入侵后保存现场等。但是，不要使用 docker commit 定制镜像，定制镜像应该使用 Dockerfile 来完成。如果你想要定制镜像请查看下一小节。 镜像是容器的基础，每次执行 docker run 的时候都会指定哪个镜像作为容器运行">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-01-12T00:55:00.469Z">
-<meta property="article:modified_time" content="2024-01-15T06:09:43.436Z">
+<meta property="og:image" content="https://blog.isnap.cn/posts/9ad7a438/_images/images-mac-example-nginx.png">
+<meta property="og:image" content="https://blog.isnap.cn/posts/9ad7a438/_images/images-create-nginx-docker.png">
+<meta property="article:published_time" content="2024-01-15T06:07:52.267Z">
+<meta property="article:modified_time" content="2024-01-15T06:08:19.019Z">
 <meta property="article:author" content="三岁于辛">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.isnap.cn/posts/9ad7a438/_images/images-mac-example-nginx.png">
   
   
   
-  <title>Windows 10 安装 Docker - 三岁于辛博客</title>
+  <title>利用 commit 理解镜像构成 - 三岁于辛博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -336,7 +339,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Windows 10 安装 Docker"></span>
+            <span id="subtitle" data-typed-text="利用 commit 理解镜像构成"></span>
           
         </div>
 
@@ -347,8 +350,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-01-12 08:55" pubdate>
-          2024年1月12日 早上
+        <time datetime="2024-01-15 14:07" pubdate>
+          2024年1月15日 下午
         </time>
       </span>
     
@@ -359,7 +362,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          598 字
+          3.7k 字
         
       </span>
     
@@ -370,7 +373,7 @@
         
         
         
-          5 分钟
+          31 分钟
         
       </span>
     
@@ -416,58 +419,85 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Windows 10 安装 Docker</h1>
+            <h1 style="display: none">利用 commit 理解镜像构成</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="系统要求">系统要求</h2>
-<p><a target="_blank" rel="noopener" href="https://docs.docker.com/docker-for-windows/install/">Docker
-Desktop for Windows</a> 支持 64 位版本的 Windows 10 Pro，且必须开启
-Hyper-V（若版本为 v1903 及以上则无需开启 Hyper-V），或者 64 位版本的
-Windows 10 Home v1903 及以上版本。</p>
-<h2 id="安装">安装</h2>
-<p><strong>手动下载安装</strong></p>
-<p>点击以下 <a
-target="_blank" rel="noopener" href="https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe">链接</a>
-下载 Docker Desktop for Windows。</p>
-<p>下载好之后双击 <code>Docker Desktop Installer.exe</code>
-开始安装。</p>
-<p><strong>使用 <a
-target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/package-manager/">winget</a>
-安装</strong></p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$</span> winget install Docker.DockerDesktop<br></code></pre></td></tr></table></figure>
-<h2 id="在-wsl2-运行-docker">在 WSL2 运行 Docker</h2>
-<p>若你的 Windows 版本为 Windows 10 专业版或家庭版 v1903
-及以上版本可以使用 WSL2 运行 Docker，具体请查看 <a
-target="_blank" rel="noopener" href="https://docs.docker.com/docker-for-windows/wsl/">Docker Desktop
-WSL 2 backend</a>。</p>
-<h2 id="运行">运行</h2>
-<p>在 Windows 搜索栏输入 <strong>Docker</strong> 点击 <strong>Docker
-Desktop</strong> 开始运行。</p>
-<p><img
-src="//blog.isnap.cn/cdnimg/install-win-docker-app-search.png" srcset="/img/loading.gif" lazyload /></p>
-<p>Docker 启动之后会在 Windows 任务栏出现鲸鱼图标。</p>
-<p><img
-src="//blog.isnap.cn/cdnimg/install-win-taskbar-circle.png" srcset="/img/loading.gif" lazyload /></p>
-<p>等待片刻，当鲸鱼图标静止时，说明 Docker 启动成功，之后你可以打开
-PowerShell 使用 Docker。</p>
-<blockquote>
-<p>推荐使用 <a
-target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/terminal/get-started">Windows
-Terminal</a> 在终端使用 Docker。</p>
+                <blockquote>
+<p>注意：如果您是初学者，您可以暂时跳过后面的内容，直接学习 <a
+href="../container">容器</a> 一节。</p>
 </blockquote>
-<h2 id="镜像加速">镜像加速</h2>
-<p>如果在使用过程中发现拉取 Docker 镜像十分缓慢，可以配置 Docker <a
-href="mirror.md">国内镜像加速</a>。</p>
-<h2 id="参考链接">参考链接</h2>
-<ul>
-<li><a
-target="_blank" rel="noopener" href="https://docs.docker.com/docker-for-windows/install/">官方文档</a></li>
-<li><a
-target="_blank" rel="noopener" href="https://devblogs.microsoft.com/commandline/wsl-2-support-is-coming-to-windows-10-versions-1903-and-1909/">WSL
-2 Support is coming to Windows 10 Versions 1903 and 1909</a></li>
-</ul>
+<p>注意： <code>docker commit</code>
+命令除了学习之外，还有一些特殊的应用场合，比如被入侵后保存现场等。但是，不要使用
+<code>docker commit</code> 定制镜像，定制镜像应该使用
+<code>Dockerfile</code> 来完成。如果你想要定制镜像请查看下一小节。</p>
+<p>镜像是容器的基础，每次执行 <code>docker run</code>
+的时候都会指定哪个镜像作为容器运行的基础。在之前的例子中，我们所使用的都是来自于
+Docker Hub
+的镜像。直接使用这些镜像是可以满足一定的需求，而当这些镜像无法直接满足需求时，我们就需要定制这些镜像。接下来的几节就将讲解如何定制镜像。</p>
+<p>回顾一下之前我们学到的知识，镜像是多层存储，每一层是在前一层的基础上进行的修改；而容器同样也是多层存储，是在以镜像为基础层，在其基础上加一层作为容器运行时的存储层。</p>
+<p>现在让我们以定制一个 Web 服务器为例子，来讲解镜像是如何构建的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker run --name webserver -d -p 80:80 nginx<br></code></pre></td></tr></table></figure>
+<p>这条命令会用 <code>nginx</code> 镜像启动一个容器，命名为
+<code>webserver</code>，并且映射了 80
+端口，这样我们可以用浏览器去访问这个 <code>nginx</code> 服务器。</p>
+<p>如果是在本机运行的
+Docker，那么可以直接访问：<code>http://localhost</code>
+，如果是在虚拟机、云服务器上安装的 Docker，则需要将
+<code>localhost</code> 换为虚拟机地址或者实际云服务器地址。</p>
+<p>直接用浏览器访问的话，我们会看到默认的 Nginx 欢迎页面。</p>
+<p><img src="./_images/images-mac-example-nginx.png" srcset="/img/loading.gif" lazyload /></p>
+<p>现在，假设我们非常不喜欢这个欢迎页面，我们希望改成欢迎 Docker
+的文字，我们可以使用 <code>docker exec</code>
+命令进入容器，修改其内容。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker <span class="hljs-built_in">exec</span> -it webserver bash<br>root@3729b97e8226:/<span class="hljs-comment"># echo &#x27;&lt;h1&gt;Hello, Docker!&lt;/h1&gt;&#x27; &gt; /usr/share/nginx/html/index.html</span><br>root@3729b97e8226:/<span class="hljs-comment"># exit</span><br><span class="hljs-built_in">exit</span><br></code></pre></td></tr></table></figure>
+<p>我们以交互式终端方式进入 <code>webserver</code> 容器，并执行了
+<code>bash</code> 命令，也就是获得一个可操作的 Shell。</p>
+<p>然后，我们用 <code>&lt;h1&gt;Hello, Docker!&lt;/h1&gt;</code> 覆盖了
+<code>/usr/share/nginx/html/index.html</code> 的内容。</p>
+<p>现在我们再刷新浏览器的话，会发现内容被改变了。</p>
+<p><img src="./_images/images-create-nginx-docker.png" srcset="/img/loading.gif" lazyload /></p>
+<p>我们修改了容器的文件，也就是改动了容器的存储层。我们可以通过
+<code>docker diff</code> 命令看到具体的改动。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker diff webserver<br>C /root<br>A /root/.bash_history<br>C /run<br>C /usr<br>C /usr/share<br>C /usr/share/nginx<br>C /usr/share/nginx/html<br>C /usr/share/nginx/html/index.html<br>C /var<br>C /var/cache<br>C /var/cache/nginx<br>A /var/cache/nginx/client_temp<br>A /var/cache/nginx/fastcgi_temp<br>A /var/cache/nginx/proxy_temp<br>A /var/cache/nginx/scgi_temp<br>A /var/cache/nginx/uwsgi_temp<br></code></pre></td></tr></table></figure>
+<p>现在我们定制好了变化，我们希望能将其保存下来形成镜像。</p>
+<p>要知道，当我们运行一个容器的时候（如果不使用卷的话），我们做的任何文件修改都会被记录于容器存储层里。而
+Docker 提供了一个 <code>docker commit</code>
+命令，可以将容器的存储层保存下来成为镜像。换句话说，就是在原有镜像的基础上，再叠加上容器的存储层，并构成新的镜像。以后我们运行这个新镜像的时候，就会拥有原有容器最后的文件变化。</p>
+<p><code>docker commit</code> 的语法格式为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker commit [选项] &lt;容器ID或容器名&gt; [&lt;仓库名&gt;[:&lt;标签&gt;]]<br></code></pre></td></tr></table></figure>
+<p>我们可以用下面的命令将容器保存为镜像：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker commit \<br>    --author <span class="hljs-string">&quot;Tao Wang &lt;twang2218@gmail.com&gt;&quot;</span> \<br>    --message <span class="hljs-string">&quot;修改了默认网页&quot;</span> \<br>    webserver \<br>    nginx:v2<br>sha256:07e33465974800ce65751acc279adc6ed2dc5ed4e0838f8b86f0c87aa1795214<br></code></pre></td></tr></table></figure>
+<p>其中 <code>--author</code> 是指定修改的作者，而
+<code>--message</code> 则是记录本次修改的内容。这点和 <code>git</code>
+版本控制相似，不过这里这些信息可以省略留空。</p>
+<p>我们可以在 <code>docker image ls</code> 中看到这个新定制的镜像：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker image <span class="hljs-built_in">ls</span> nginx<br>REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE<br>nginx               v2                  07e334659748        9 seconds ago       181.5 MB<br>nginx               1.11                05a60462f8ba        12 days ago         181.5 MB<br>nginx               latest              e43d811ce2f4        4 weeks ago         181.5 MB<br></code></pre></td></tr></table></figure>
+<p>我们还可以用 <code>docker history</code>
+具体查看镜像内的历史记录，如果比较 <code>nginx:latest</code>
+的历史记录，我们会发现新增了我们刚刚提交的这一层。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker <span class="hljs-built_in">history</span> nginx:v2<br>IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT<br>07e334659748        54 seconds ago      nginx -g daemon off;                            95 B                修改了默认网页<br>e43d811ce2f4        4 weeks ago         /bin/sh -c <span class="hljs-comment">#(nop)  CMD [&quot;nginx&quot; &quot;-g&quot; &quot;daemon    0 B</span><br>&lt;missing&gt;           4 weeks ago         /bin/sh -c <span class="hljs-comment">#(nop)  EXPOSE 443/tcp 80/tcp        0 B</span><br>&lt;missing&gt;           4 weeks ago         /bin/sh -c <span class="hljs-built_in">ln</span> -sf /dev/stdout /var/log/nginx/   22 B<br>&lt;missing&gt;           4 weeks ago         /bin/sh -c apt-key adv --keyserver hkp://pgp.   58.46 MB<br>&lt;missing&gt;           4 weeks ago         /bin/sh -c <span class="hljs-comment">#(nop)  ENV NGINX_VERSION=1.11.5-1   0 B</span><br>&lt;missing&gt;           4 weeks ago         /bin/sh -c <span class="hljs-comment">#(nop)  MAINTAINER NGINX Docker Ma   0 B</span><br>&lt;missing&gt;           4 weeks ago         /bin/sh -c <span class="hljs-comment">#(nop)  CMD [&quot;/bin/bash&quot;]            0 B</span><br>&lt;missing&gt;           4 weeks ago         /bin/sh -c <span class="hljs-comment">#(nop) ADD file:23aa4f893e3288698c   123 MB</span><br></code></pre></td></tr></table></figure>
+<p>新的镜像定制好后，我们可以来运行这个镜像。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run --name web2 -d -p 81:80 nginx:v2<br></code></pre></td></tr></table></figure>
+<p>这里我们命名为新的服务为 <code>web2</code>，并且映射到
+<code>81</code> 端口。访问 <code>http://localhost:81</code>
+看到结果，其内容应该和之前修改后的 <code>webserver</code> 一样。</p>
+<p>至此，我们第一次完成了定制镜像，使用的是 <code>docker commit</code>
+命令，手动操作给旧的镜像添加了新的一层，形成新的镜像，对镜像多层存储应该有了更直观的感觉。</p>
+<h2 id="慎用-docker-commit">慎用 <code>docker commit</code></h2>
+<p>使用 <code>docker commit</code>
+命令虽然可以比较直观的帮助理解镜像分层存储的概念，但是实际环境中并不会这样使用。</p>
+<p>首先，如果仔细观察之前的 <code>docker diff webserver</code>
+的结果，你会发现除了真正想要修改的
+<code>/usr/share/nginx/html/index.html</code>
+文件外，由于命令的执行，还有很多文件被改动或添加了。这还仅仅是最简单的操作，如果是安装软件包、编译构建，那会有大量的无关内容被添加进来，将会导致镜像极为臃肿。</p>
+<p>此外，使用 <code>docker commit</code>
+意味着所有对镜像的操作都是黑箱操作，生成的镜像也被称为
+<strong>黑箱镜像</strong>，换句话说，就是除了制作镜像的人知道执行过什么命令、怎么生成的镜像，别人根本无从得知。而且，即使是这个制作镜像的人，过一段时间后也无法记清具体的操作。这种黑箱镜像的维护工作是非常痛苦的。</p>
+<p>而且，回顾之前提及的镜像所使用的分层存储的概念，除当前层外，之前的每一层都是不会发生改变的，换句话说，任何修改的结果仅仅是在当前层进行标记、添加、修改，而不会改动上一层。如果使用
+<code>docker commit</code>
+制作镜像，以及后期修改的话，每一次修改都会让镜像更加臃肿一次，所删除的上一层的东西并不会丢失，会一直如影随形的跟着这个镜像，即使根本无法访问到。这会让镜像更加臃肿。</p>
 
                 
               </div>
@@ -503,8 +533,8 @@ target="_blank" rel="noopener" href="https://devblogs.microsoft.com/commandline/
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Windows 10 安装 Docker</div>
-      <div>https://blog.isnap.cn/posts/da318389/</div>
+      <div>利用 commit 理解镜像构成</div>
+      <div>https://blog.isnap.cn/posts/9ad7a438/</div>
     </div>
     <div class="license-meta">
       
@@ -516,7 +546,7 @@ target="_blank" rel="noopener" href="https://devblogs.microsoft.com/commandline/
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年1月12日</div>
+          <div>2024年1月15日</div>
         </div>
       
       
