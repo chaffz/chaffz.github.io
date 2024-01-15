@@ -24,7 +24,7 @@
 <meta property="og:description" content="Docker Registry 镜像构建完成后，可以很容易的在当前宿主机上运行，但是，如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务，Docker Registry 就是这样的服务。 一个 Docker Registry 中可以包含多个 仓库（Repository）；每个仓库可以包含多个 标签（Tag）；每个标签对应一个镜像。 通常，一个仓库会包含同一个软件不同版本的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-12T01:09:47.115Z">
-<meta property="article:modified_time" content="2024-01-15T06:10:09.165Z">
+<meta property="article:modified_time" content="2024-01-15T06:28:12.843Z">
 <meta property="article:author" content="三岁于辛">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary_large_image">
@@ -423,7 +423,7 @@
                 
                 <h1 id="docker-registry">Docker Registry</h1>
 <p>镜像构建完成后，可以很容易的在当前宿主机上运行，但是，如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务，<a
-href="../repository/registry.md">Docker Registry</a>
+href="https://blog.isnap.cn/posts/62b992be/">Docker Registry</a>
 就是这样的服务。</p>
 <p>一个 <strong>Docker Registry</strong> 中可以包含多个
 <strong>仓库</strong>（<code>Repository</code>）；每个仓库可以包含多个
@@ -464,7 +464,8 @@ target="_blank" rel="noopener" href="https://www.aliyun.com/product/acr?source=5
 target="_blank" rel="noopener" href="https://www.daocloud.io/mirror#accelerator-doc">DaoCloud
 加速器</a> 等。使用加速器会直接从国内的地址下载 Docker Hub
 的镜像，比直接从 Docker Hub 下载速度会提高很多。在 <a
-href="../install/mirror.md">安装 Docker</a> 一节中有详细的配置方法。</p>
+href="https://blog.isnap.cn/posts/2c4ededf/">安装 Docker</a>
+一节中有详细的配置方法。</p>
 <p>国内也有一些云服务商提供类似于 Docker Hub 的公开服务。比如 <a
 target="_blank" rel="noopener" href="https://c.163.com/hub#/m/library/">网易云镜像服务</a>、<a
 target="_blank" rel="noopener" href="https://hub.daocloud.io/">DaoCloud 镜像市场</a>、<a
@@ -474,7 +475,7 @@ target="_blank" rel="noopener" href="https://www.aliyun.com/product/acr?source=5
 <p>除了使用公开服务外，用户还可以在本地搭建私有 Docker Registry。Docker
 官方提供了 <a target="_blank" rel="noopener" href="https://hub.docker.com/_/registry/">Docker
 Registry</a> 镜像，可以直接使用做为私有 Registry 服务。在 <a
-href="../repository/registry.md">私有仓库</a>
+href="https://blog.isnap.cn/posts/62b992be/">私有仓库</a>
 一节中，会有进一步的搭建私有 Registry 服务的讲解。</p>
 <p>开源的 Docker Registry 镜像只提供了 <a
 target="_blank" rel="noopener" href="https://docs.docker.com/registry/spec/api/">Docker Registry
@@ -483,7 +484,8 @@ API</a> 的服务端实现，足以支持 <code>docker</code>
 <p>除了官方的 Docker Registry 外，还有第三方软件实现了 Docker Registry
 API，甚至提供了用户界面以及一些高级功能。比如，<a
 target="_blank" rel="noopener" href="https://github.com/goharbor/harbor">Harbor</a> 和 <a
-href="../repository/nexus3_registry.md">Sonatype Nexus</a>。</p>
+target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/repository/nexus3_registry">Sonatype
+Nexus</a>。</p>
 
                 
               </div>
