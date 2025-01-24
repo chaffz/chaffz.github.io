@@ -23,15 +23,15 @@
 <meta property="og:site_name" content="三岁于辛博客">
 <meta property="og:description" content="折腾的单元测试 - Spring 篇 1. @Value(&quot;$&amp;#123;…&amp;#125;&quot;)问题 代码中出现 @Value 属性时，在单元测试中会出现类型错误或者找不到配置时，试过很多方法：如以 SpringBootApplication 或 ContextConfiguration 或其它方式，但是觉得运行时逻辑太重，甚至有些项目可能根本无法运行。最后结论应该为使用 @TestPropertyS">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20230129104808357.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20230129141059124.png">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20230129141355197.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20230129104808357.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20230129141059124.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20230129141355197.png">
 <meta property="article:published_time" content="2023-01-29T06:15:26.000Z">
 <meta property="article:modified_time" content="2023-02-25T03:25:59.879Z">
 <meta property="article:author" content="三岁于辛">
 <meta property="article:tag" content="weekly">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20230129104808357.png">
+<meta name="twitter:image" content="http://cdn.isnap.cn/img/image-20230129104808357.png">
   
   
   
@@ -434,7 +434,7 @@ SpringBootApplication 或 ContextConfiguration
 <code>@TestPropertySource</code> 或者是 <code>@SpringBootTest</code> 的
 properties 属性来主动指定更新优雅。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20230129104808357.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20230129104808357.png" srcset="/img/loading.gif" lazyload
 alt="image-20230129104808357" />
 <figcaption aria-hidden="true">image-20230129104808357</figcaption>
 </figure>
@@ -444,13 +444,13 @@ Bean 时，如果仅仅是 SpringBootTest 是不会帮初始化的，这时就�
 MockBean 了，理论上 MockBean
 会是有一个复杂的使用，涉及嵌套等。这里对于单元测试最简单的是当前文件冗余使用。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20230129141059124.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20230129141059124.png" srcset="/img/loading.gif" lazyload
 alt="image-20230129141059124" />
 <figcaption aria-hidden="true">image-20230129141059124</figcaption>
 </figure>
 <p>当然这样做只会对应调用位置不会报错了，<strong>但是调用结果会返回空</strong>，要解决这问题则需要引入<strong>Mockito</strong>了，可针对非当前方法测试的必要逻辑，可使其返回预期结果即可。</p>
 <figure>
-<img src="//blog.isnap.cn/cdnimg/image-20230129141355197.png" srcset="/img/loading.gif" lazyload
+<img src="http://cdn.isnap.cn/img/image-20230129141355197.png" srcset="/img/loading.gif" lazyload
 alt="image-20230129141355197" />
 <figcaption aria-hidden="true">image-20230129141355197</figcaption>
 </figure>

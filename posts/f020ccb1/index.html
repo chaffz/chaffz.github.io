@@ -472,7 +472,7 @@ key 的报错了。这就是说在 RR 级别下是存在幻读的。</p>
 <p>今天的实验到此结束，最后总结下。</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>事务隔离级别</th>
 <th>脏读</th>
 <th>不可重复读</th>
@@ -480,25 +480,25 @@ key 的报错了。这就是说在 RR 级别下是存在幻读的。</p>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Read Uncommitted</td>
 <td>✅</td>
 <td>✅</td>
 <td>✅</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Read Committed (RC)</td>
 <td>❌</td>
 <td>✅</td>
 <td>✅</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Repeatable Read (RR)</td>
 <td>❌</td>
 <td>❌</td>
 <td>✅</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Serializable</td>
 <td>❌</td>
 <td>❌</td>

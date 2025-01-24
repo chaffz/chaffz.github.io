@@ -427,29 +427,29 @@
                 <p>这个问题其实有很多人都已经教科书式的总结了很多遍，如：</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>隔离级别</th>
 <th>中文描述</th>
 <th>此级别问题(面试官喜欢用这个)</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>READ UNCOMMITED</td>
 <td>未提交读</td>
 <td>脏读</td>
 </tr>
-<tr class="even">
+<tr>
 <td>READ COMMITED</td>
 <td>提交读</td>
 <td>不可重复读</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>REPEATABLE READ</td>
 <td>可重复读</td>
 <td>幻读</td>
 </tr>
-<tr class="even">
+<tr>
 <td>SERIALIZABLE</td>
 <td>串行化</td>
 <td>锁</td>
@@ -473,29 +473,29 @@
 时间片内完成，那么可把 A&amp;B 的事务拆成如下逻辑调用段：</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>#</th>
 <th>事务A</th>
 <th>事务B</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>1</td>
 <td>begin</td>
 <td>begin</td>
 </tr>
-<tr class="even">
+<tr>
 <td>2</td>
 <td>update</td>
 <td>select</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>3</td>
 <td>commit</td>
 <td>commit</td>
 </tr>
-<tr class="even">
+<tr>
 <td>4</td>
 <td>rollback</td>
 <td>rollback</td>
