@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="三岁于辛博客">
 <meta property="og:description" content="问题1、关于 order by 问题 如下图1，Mysql 中子查询中有 group by ... order by ...，父查询中不再有相关排序操作，结果能保证子查询的结果顺序不被改变。 但是在 Calcite 中同样操作，结果就会不一致。究其终极原因是 Calcite 面向大数据场景，并且能在可度量的时间范围内交付结果。  The story for ORDER BY is similar">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="//blog.isnap.cn/cdnimg/image-20230308094943042.png">
+<meta property="og:image" content="http://cdn.isnap.cn/img/image-20230308094943042.png">
 <meta property="article:published_time" content="2023-03-08T09:41:35.000Z">
-<meta property="article:modified_time" content="2023-03-09T04:55:09.063Z">
+<meta property="article:modified_time" content="2023-03-09T04:55:09.000Z">
 <meta property="article:author" content="三岁于辛">
 <meta property="article:tag" content="大数据">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="//blog.isnap.cn/cdnimg/image-20230308094943042.png">
+<meta name="twitter:image" content="http://cdn.isnap.cn/img/image-20230308094943042.png">
   
   
   
@@ -250,6 +250,18 @@
           
           
             <li class="nav-item">
+              <a class="nav-link" href="/ballad/">
+                <i class="iconfont icon-speakernotes"></i>
+                <span>牛马沉浮录</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
               <a class="nav-link" href="/live/">
                 <i class="iconfont icon-speakernotes"></i>
                 <span>生活</span>
@@ -459,9 +471,9 @@ BY</h4>
 <li>其它 case 暂不处理。</li>
 </ol>
 <p><strong>图1：查询结果对比图（Mysql vs Calcite）</strong></p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20230308094943042.png" srcset="/img/loading.gif" lazyload alt="image-20230308094943042" style="width: 800px;" /></p>
+<p><img src="http://cdn.isnap.cn/img/image-20230308094943042.png" srcset="/img/loading.gif" lazyload alt="image-20230308094943042" style="width: 800px;" /></p>
 <p><strong>图2：Calcite 源码中针对 order by 处理逻辑</strong></p>
-<p><img src="//blog.isnap.cn/cdnimg/image-20230308170035263.png" srcset="/img/loading.gif" lazyload alt="image-20230308170035263" style="width:800px;" /></p>
+<p><img src="http://cdn.isnap.cn/img/image-20230308170035263.png" srcset="/img/loading.gif" lazyload alt="image-20230308170035263" style="width:800px;" /></p>
 
                 
               </div>
